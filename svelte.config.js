@@ -13,8 +13,8 @@ const config = {
                     resolve: {
                             alias: {
                                 $static: path.resolve("./static"),
-                                $data: path.resolve("./src/data"),
-                                $layout: path.resolve("./src/layout")
+                                $layout: path.resolve("./src/layout"),
+                                $data: path.resolve("./src/data")
                             }
                     }
             },
