@@ -13,6 +13,7 @@ const config = {
                     resolve: {
                             alias: {
                                 $static: path.resolve("./static"),
+                                $lib: path.resolve("./src/lib"),
                                 $layout: path.resolve("./src/layout"),
                                 $data: path.resolve("./src/data")
                             }
