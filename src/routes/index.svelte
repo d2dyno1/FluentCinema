@@ -1,7 +1,6 @@
 <script lang="ts">
-    import { HeroSection } from "$layout";
+    import { HeroSection } from "../layout";
 </script>
-
 
 <HeroSection/>
 
