@@ -5,7 +5,15 @@
     overflow: hidden;
 }
 
-.hero-left {
+img {
+    position: fixed;
     @include flex($align: center);
-    flex: 1 1 auto;
+    overflow: hidden;
+    block-size: auto;
+}
+
+.hero-left {
+    background: linear-gradient(to right, #101010, transparent, transparent, transparent, transparent);
+    z-index: 10;
+    @include flex($direction: column, $align: start);
 }
