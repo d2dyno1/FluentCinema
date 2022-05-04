@@ -1,0 +1,12 @@
+@import "fluent-svelte/theme.css";
+
+
+a {
+  color: var(--fds-accent-tertiary);
+  text-decoration: none;
+}
+
+body {
+  background-color: var(--fds-solid-background-base);
+  color: var(--fds-text-primary);
+}

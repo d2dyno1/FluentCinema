@@ -1,7 +1,5 @@
 <script lang="ts">
     import { Navbar } from "$layout";
-
-    import "fluent-svelte/theme.css";
 </script>
 
 <Navbar/>
@@ -9,8 +7,5 @@
 <!-- <Footer/> -->
 
 <style>
-  :global(body) {
-    background-color: var(--fds-solid-background-base);
-    color: var(--fds-text-primary);
-  }
+    @import "../styles/_global.scss";
 </style>
