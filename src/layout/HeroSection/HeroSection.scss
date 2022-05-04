@@ -1,10 +1,17 @@
 @use "src/styles/mixins" as *;
 
 :global {
-    img {
+    .banner-img {
         @include flex($align: center);
         overflow: hidden;
         block-size: auto;
+    }
+
+    .cards {
+        background: inherit;
+    }
+
+    .card {
     }
 
     .details-button {
