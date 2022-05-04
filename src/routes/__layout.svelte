@@ -8,7 +8,9 @@
 <slot/>
 <!-- <Footer/> -->
 
-<style>
+<style global lang="scss">
+  @use "src/styles/global";
+
   :global(body) {
     background-color: var(--fds-solid-background-base);
     color: var(--fds-text-primary);
