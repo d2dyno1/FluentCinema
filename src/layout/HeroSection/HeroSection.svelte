@@ -9,7 +9,7 @@
     <div class="hero-left">
         <h1>John Wick</h1>
         <p>Chapter 3 Parabellum</p>
-        <Button>See details</Button>
+        <Button class="details-button">See details</Button>
     </div>
 </div>
 

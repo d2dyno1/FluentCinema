@@ -1,3 +1,21 @@
+@font-face {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 100 900;
+    font-display: swap;
+    src: url("/static/fonts/Inter-roman.var.woff2") format("woff2");
+	font-named-instance: "Regular";
+}
+
 :root {
-    --font-family-sans-serif: "Segoe UI Variable Display", "Segoe UI", "Inter", sans-serif;
+	--font-family-sans-serif: "Segoe UI Variable Display", "Segoe UI", "Inter", sans-serif;
+}
+
+::-webkit-input-placeholder,
+body,
+button,
+input,
+select,
+textarea {
+	font-family: var(--font-family-sans-serif);
 }
