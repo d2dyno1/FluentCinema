@@ -1,5 +1,10 @@
-node_modules/
+.DS_Store
+node_modules
+/build
 /.svelte-kit
 /package
-/.idea
-/build
+.env
+.env.*
+!.env.example
+.idea
+.npmrc
