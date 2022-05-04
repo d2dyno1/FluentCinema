@@ -1,6 +1,5 @@
 <script lang="ts">
     import { Button } from "fluent-svelte";
-    import { PageSection } from "$lib";
 </script>
 
 <div class="hero-section">

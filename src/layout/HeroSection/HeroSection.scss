@@ -1,19 +1,22 @@
 @use "src/styles/mixins" as *;
 
-.hero-section {
-    position: relative;
-    overflow: hidden;
-}
-
 img {
-    position: fixed;
     @include flex($align: center);
     overflow: hidden;
     block-size: auto;
 }
 
+.hero-section {
+    position: relative;
+    overflow: hidden;
+}
+
 .hero-left {
-    background: linear-gradient(to right, #101010, transparent, transparent, transparent, transparent);
-    z-index: 10;
-    @include flex($direction: column, $align: start);
+    @include flex($direction: column, $align: start, $justify: center);
+    flex: 1 1 auto;
+    top: 50%;
+    transform: translateY(-50%);
+    position: absolute;
+    height: 100%;
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.6), transparent );
 }
