@@ -1,27 +1,25 @@
 <script lang="ts">
     import { InfoBar, TextBox, TextBlock, Button } from "fluent-svelte";
 
-    let validEmailRegex = /.*@.*\..*/;
+    let emailValidationRegex = /.*@.*\..*/;
 
     let email: String;
     let password: String;
 
-    let isEmailValid = true;
+    let isEmailInvalid = false;
 
     function onLogin() {
-        isEmailValid = validEmailRegex.test(email);
+        isEmailInvalid = !emailValidationRegex.test(email);
     }
 </script>
 
 <div>
     <TextBlock variant="title">Log in</TextBlock>
-    {#if !isEmailValid}
-        <InfoBar title="Invalid e-mail address." severity="critical"/>
-    {/if}
+    <InfoBar bind:open={isEmailInvalid} message="Invalid e-mail address." severity="critical" class="full-width"/>
     <TextBox bind:value={email} type="email" placeholder="E-mail"></TextBox>
     <TextBox bind:value={password} type="password" placeholder="Password"></TextBox>
     <Button variant="accent" on:click={onLogin}>Log in</Button>
-    <a href="/resetpassword">Forgot password?</a>
+    <TextBlock><a href="/resetpassword">Forgot password?</a></TextBlock>
     <hr>
     <TextBlock>Don't have an account? <a href="/register">Sign up</a></TextBlock>
 </div>
