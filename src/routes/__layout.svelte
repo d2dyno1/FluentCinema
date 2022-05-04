@@ -1,10 +1,12 @@
-<script>
+<script lang="ts">
+    import { Navbar } from "$layout";
+
     import "fluent-svelte/theme.css";
 </script>
 
-<main>
-    <slot/>
-</main>
+<Navbar/>
+<slot/>
+<!-- <Footer/> -->
 
 <style>
   :global(body) {
