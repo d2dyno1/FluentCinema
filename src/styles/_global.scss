@@ -1,3 +1,28 @@
+@use "src/styles/mixins" as * ;
+@import "fluent-svelte/theme.css";
+
+a {
+    color: var(--fds-accent-tertiary);
+    text-decoration: none;
+}
+
+:global(body) {
+    background-color: var(--fds-solid-background-base);
+    color: var(--fds-text-primary);
+}
+
+:global(.full-width) {
+    width: 100%;
+}
+
+:global(.horizontal-flex) {
+    @include flex($align: center, $direction: row);
+}
+
+hr {
+    width: 100%;
+}
+
 @font-face {
     font-family: "Inter";
     font-style: normal;
