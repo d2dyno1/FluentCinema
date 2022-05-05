@@ -7,7 +7,6 @@
 
     .banner-img {
         @include flex($align: center);
-        max-width: 1080px;
         overflow: hidden;
         block-size: auto;
         user-select: none;
@@ -31,6 +30,7 @@
     .hero-section {
         position: relative;
         overflow: hidden;
+        width: 100%;
     }
 
     .hero-left {
