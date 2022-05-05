@@ -24,11 +24,6 @@
         transition-duration: 500ms;
         border-radius: 8px;
         pointer-events: all;
-
-        &:hover {
-            transform: scale(94%);
-            transition-duration: 750ms;
-        }
     }
 
     .banner-subtitle {
@@ -59,6 +54,16 @@
         &:hover {
             border-color: $accent-color;
             transition-duration: 250ms;
+
+            .small-banner-img {
+                transform: scale(94%);
+                transition-duration: 750ms;
+            }
+
+            .card-name {
+                opacity: 1;
+                transition-duration: 750ms;
+            }
         }
     }
 
@@ -79,16 +84,12 @@
         position: absolute;
         height: 100%;
         padding: 16px;
+        left: 0;
         color: white;
         background: linear-gradient(90deg, rgba(0, 0, 0, 0.6) 75%, transparent);
         opacity: 0;
         transition-duration: 500ms;
         transition-property: opacity;
-
-        &:hover {
-            opacity: 1;
-            transition-duration: 750ms;
-        }
     }
 
     .hero-left {
