@@ -19,7 +19,7 @@
     function onLogin() {
         let isEmailValid = emailValidationRegex.test(email);
         if (!isEmailValid) {
-            showError("Invalid e-mail.");
+            showError("Invalid e-mail address.");
         } else if (password.length == 0) {
             showError("Password cannot be empty.");
         } else {

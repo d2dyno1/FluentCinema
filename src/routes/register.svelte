@@ -22,7 +22,7 @@
 
     function onRegister() {
         if (!emailValidationRegex.test(email)) {
-            showError("Invalid e-mail address address.");
+            showError("Invalid e-mail address.");
             return;
         } else if (password != confirmedPassword) {
             showError("Passwords don't match.");
