@@ -1,13 +1,13 @@
 <script lang="ts">
     import { HeroSection } from "../layout";
-    import type { MovieCard } from "$data/cards";
+    import type { MovieData } from "$data/movies";
 
     // TODO: Load from database
-    const movieCards: MovieCard[] = enumerateHeadlineMoviesFromDb();
+    const movieData: MovieData[] = enumerateHeadlineMoviesFromDb();
 
-    function enumerateHeadlineMoviesFromDb(): MovieCard[]
+    function enumerateHeadlineMoviesFromDb(): MovieData[]
     {
-        const objects: MovieCard[] = [
+        const objects: MovieData[] = [
             {
                 name: "John Wick",
                 description: "Chapter 3 Parabellum",
@@ -20,7 +20,7 @@
             },
             {
                 name: "Star Wars",
-                description: "Episode IX",
+                description: "Episode IX: The Last Jedi",
                 image: "https://coldfeet-space.nyc3.cdn.digitaloceanspaces.com/wsb/2017/12/star-wars-last-jedi-banner.jpg"
             }
         ];
@@ -29,4 +29,4 @@
     }
 </script>
 
-<HeroSection cards={movieCards}/>
+<HeroSection cards={movieData}/>

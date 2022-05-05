@@ -1,11 +1,12 @@
 <script lang="ts">
-    import { Button } from "fluent-svelte";
-    import type { MovieCard } from "$data/cards";
+    import { Button, Tooltip } from "fluent-svelte";
+    import { MovieCard } from "$lib";
+    import type { MovieData } from "$data/movies";
 
-    export let cards: MovieCard[] = [];
-    export let currentCard: MovieCard = cards[0];
+    export let cards: MovieData[] = [];
+    export let currentCard: MovieData = cards[0];
 
-    function cardClicked(e: MovieCard): void
+    function cardClicked(e: MovieData): void
     {
         currentCard = e;
     }
@@ -24,14 +25,11 @@
     </div>
     <div class="cards">
         {#each cards as card}
-            <button on:click={() => cardClicked(card)} class="card">
-                <img class="small-banner-img" alt={card.name} src={card.image}>
-                <div class="card-name">
-                    <h4>
-                        {card.name}
-                    </h4>
-                </div>
-            </button>
+            <MovieCard
+                on:click={() => cardClicked(card)}
+                selected={currentCard == card}
+                name={card.name}
+                image={card.image} />
         {/each}
     </div>
 </div>
