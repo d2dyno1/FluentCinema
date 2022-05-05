@@ -20,6 +20,20 @@
         } else {
             showError = false;
         }
+
+        if (!isPasswordInvalid) {
+            fetch("/api/register", {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                method: 'POST',
+                body: JSON.stringify({
+                    email: email,
+                    password: password
+                })
+            });
+            // todo handle response
+        }
     }
 </script>
 
@@ -29,7 +43,7 @@
     <TextBox bind:value={email} type="email" placeholder="E-mail"></TextBox>
     <TextBox bind:value={password} type="password" placeholder="Password"></TextBox>
     <TextBox bind:value={confirmedPassword} type="password" placeholder="Confirm password"></TextBox>
-    <InfoBar bind:open={isPasswordInvalid} message="A password must consist of at least eight characters, including a big letter, a digit and a special character." severity="caution" class="full-width" closable={false}/>
+    <InfoBar bind:open={isPasswordInvalid} message="A password must consist of at least eight characters, including an uppercase letter, a digit and a special character." severity="caution" class="full-width" closable={false}/>
     <Button variant="accent" on:click={onRegister}>Register</Button>
     <hr>
     <TextBlock>Already have an account? <a href="/login">Log in</a></TextBlock>

@@ -1,4 +1,5 @@
 import { client } from '$lib/database/db';
+import { emailValidationRegex, passwordValidationRegex } from "$lib/auth";
 
 export async function post({ request }) {
     const data = await request.json();
@@ -11,18 +12,16 @@ export async function post({ request }) {
                 errorMessage: "Missing credentials."
             }
         }
-    } else if (data.email.trim() == "" || data.password.trim() == "") {
+    } else if (!emailValidationRegex.test(data.email) || !passwordValidationRegex.test(data.password)) {
         return {
             status: 400,
             body: {
                 success: false,
-                errorMessage: "Credentials cannot be empty."
+                errorMessage: "Invalid credentials."
             }
         }
     }
 
-    // test query
-    let user = await client.query('SELECT * FROM users WHERE id=$1', [data.id]);
     return {
         status: 403
     };
