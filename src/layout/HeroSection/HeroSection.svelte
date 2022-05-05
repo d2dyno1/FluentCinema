@@ -19,7 +19,7 @@
     <div class="cards">
         {#each cards as { name, description, image }}
             <button class="card">
-                <img class="small-banner-img" alt={name} src={image}>
+                    <img class="small-banner-img" alt={name} src={image}>
                 <h4 class="card-name">
                     {name}
                 </h4>

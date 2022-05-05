@@ -15,14 +15,14 @@
     }
     
     .small-banner-img {
-        min-width: 100%;
-        min-height: 100%;
+        max-height: 110%;
         flex-shrink: 0;
         transform-origin: right;
         transition-duration: 500ms;
+        border-radius: 8px;
 
         &:hover {
-            transform: scale(92%);
+            transform: scale(94%);
             transition-duration: 750ms;
         }
     }
@@ -39,16 +39,15 @@
         width: 216px;
         height: 120px;
         border-radius: 8px;
-        border-color: $accent-color;
-        border-width: 0px;
+        border-width: 4px;
         border-style: solid;
+        background-color: transparent;
+        border-color: transparent;
         transition-duration: 250ms;
-        transition-property: border-width;
         
         &:hover {
-            border-width: 5px;
+            border-color: $accent-color;
             transition-duration: 250ms;
-            transition-property: border-width;
         }
     }
 
