@@ -39,7 +39,7 @@
             });
             promise.then(response => response.json()).then(response => {
                 if (!response.success) {
-                    showError(response.errorMessage);
+                    showError(response.message);
                 }
                 promise = null;
             });
