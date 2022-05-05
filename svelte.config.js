@@ -17,7 +17,12 @@ const config = {
                                 $layout: path.resolve("./src/layout"),
                                 $data: path.resolve("./src/data")
                             }
-                    }
+                    },
+                    server: {
+                            fs: {
+                                allow: ['static'],
+                            },
+                    },
             },
 		adapter: adapter()
 	}

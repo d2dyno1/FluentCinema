@@ -11,17 +11,17 @@
             {
                 name: "John Wick",
                 description: "Chapter 3 Parabellum",
-                image: "https://www.withanaccent.com/wp-content/uploads/2019/01/john-wick-3-banner.jpg"
+                image: "/static/images/John-Wick-3.png"
             },
             {
                 name: "Mission Impossible",
                 description: "Ghost Protocol",
-                image: "https://spotlightreport.net/wp-content/uploads/2011/09/mission-impossible-ghost-protocol-banner.jpg"
+                image: "/static/images/Mission-Impossible.png"
             },
             {
                 name: "Star Wars",
                 description: "Episode IX: The Last Jedi",
-                image: "https://coldfeet-space.nyc3.cdn.digitaloceanspaces.com/wsb/2017/12/star-wars-last-jedi-banner.jpg"
+                image: "/static/images/Star-Wars-The-Last-Jedi.png"
             }
         ];
 
