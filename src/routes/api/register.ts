@@ -1,6 +1,6 @@
 import { client, getUser } from "$lib/database/db";
-import {badRequest, internalServerError} from "../../lib/api";
-import { validateCredentials } from "$lib/auth";
+import {badRequest, internalServerError, ok} from "../../lib/responses";
+import { validateCredentials } from "../../lib/validation";
 import * as argon2 from "$lib/argon2";
 
 export async function post({ request }) {
@@ -20,12 +20,7 @@ export async function post({ request }) {
         let hashedPassword = await argon2.hash(data.password);
         await client.query("INSERT INTO users(email, hashed_password) VALUES ($1, $2)", [data.email, hashedPassword]);
 
-        return {
-            status: 200,
-            body: {
-                success: true
-            }
-        };
+        return ok;
     } catch (e) {
         console.log(e);
         return internalServerError;

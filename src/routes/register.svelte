@@ -1,9 +1,7 @@
 <script lang="ts">
     import { InfoBar, TextBox, TextBlock, Button, ProgressRing } from "fluent-svelte";
-    import { emailValidationRegex } from "$lib/auth";
-
-    let email: String;
-    let password: String;
+    import { emailValidationRegex, passwordValidationRegex } from "../lib/validation";
+    import CenteredForm from "$layout/Form/CenteredForm.svelte";
 
     let isError = false;
     let errorMessage: String;
@@ -13,20 +11,26 @@
         errorMessage = message;
     }
 
+    let email: String;
+    let password: String;
+    let confirmedPassword: String;
+    $: isPasswordInvalid = !passwordValidationRegex.test(password);
+
     let promise: Promise<Response>;
 
-    function onLogin() {
-        let isEmailValid = emailValidationRegex.test(email);
-        if (!isEmailValid) {
-            showError("Invalid e-mail.");
-        } else if (password.length == 0) {
-            showError("Password cannot be empty.");
+    function onRegister() {
+        if (!emailValidationRegex.test(email)) {
+            showError("Invalid e-mail address.");
+            return;
+        } else if (password != confirmedPassword) {
+            showError("Passwords don't match.");
+            return;
         } else {
             isError = false;
         }
 
-        if (!isError) {
-            promise = fetch("/api/login", {
+        if (!isPasswordInvalid) {
+            promise = fetch("/api/register", {
                 headers: {
                     'Content-Type': 'application/json'
                 },
@@ -50,25 +54,26 @@
     }
 </script>
 
-<div class="form">
-    <TextBlock variant="title">Log in</TextBlock>
+<CenteredForm>
+    <TextBlock variant="title">Register</TextBlock>
     <InfoBar bind:open={isError} bind:message={errorMessage} severity="critical" class="full-width"/>
     <TextBox bind:value={email} type="email" placeholder="E-mail"></TextBox>
     <TextBox bind:value={password} type="password" placeholder="Password"></TextBox>
+    <TextBox bind:value={confirmedPassword} type="password" placeholder="Confirm password"></TextBox>
+    <InfoBar bind:open={isPasswordInvalid} message="A password must consist of at least eight characters, including an uppercase letter, a digit and a special character." severity="caution" class="full-width" closable={false}/>
     <div class="horizontal-flex">
         {#if promise == null}
-            <Button variant="accent" on:click={onLogin}>Log in</Button>
+            <Button variant="accent" on:click={onRegister}>Register</Button>
         {:else}
             {#await promise}
                 <ProgressRing/>
             {/await}
         {/if}
     </div>
-    <TextBlock><a href="/resetpassword">Forgot password?</a></TextBlock>
     <hr>
-    <TextBlock>Don't have an account? <a href="/register">Sign up</a></TextBlock>
-</div>
+    <TextBlock>Already have an account? <a href="/login">Log in</a></TextBlock>
+</CenteredForm>
 
 <style lang="scss">
-    @use "src/styles/global";
+    @use "../styles/global";
 </style>
