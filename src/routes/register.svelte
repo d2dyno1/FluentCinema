@@ -9,6 +9,7 @@
     function showError(message: String) {
         isError = true;
         errorMessage = message;
+        showSuccessfullyRegisteredMessage = false;
     }
 
     let email: String;
@@ -17,10 +18,11 @@
     $: isPasswordInvalid = !passwordValidationRegex.test(password);
 
     let promise: Promise<Response>;
+    let showSuccessfullyRegisteredMessage = false;
 
     function onRegister() {
         if (!emailValidationRegex.test(email)) {
-            showError("Invalid e-mail address.");
+            showError("Invalid e-mail address address.");
             return;
         } else if (password != confirmedPassword) {
             showError("Passwords don't match.");
@@ -41,8 +43,10 @@
                 })
             });
             promise.then(response => response.json()).then(response => {
-                if (!response.success) {
-                    showError(response.errorMessage);
+                if (response.success) {
+                    showSuccessfullyRegisteredMessage = true;
+                } else {
+                    showError(response.message);
                 }
                 promise = null;
             });
@@ -56,10 +60,11 @@
 
 <CenteredForm>
     <TextBlock variant="title">Register</TextBlock>
+    <InfoBar bind:open={showSuccessfullyRegisteredMessage} message="Your account has been created successfully. Before logging in, please verify your e-mail by clicking the link that was sent to it." severity="success" closable={false} class="full-width"/>
     <InfoBar bind:open={isError} bind:message={errorMessage} severity="critical" class="full-width"/>
-    <TextBox bind:value={email} type="email" placeholder="E-mail"></TextBox>
-    <TextBox bind:value={password} type="password" placeholder="Password"></TextBox>
-    <TextBox bind:value={confirmedPassword} type="password" placeholder="Confirm password"></TextBox>
+    <TextBox bind:value={email} type="email" placeholder="E-mail"/>
+    <TextBox bind:value={password} type="password" placeholder="Password"/>
+    <TextBox bind:value={confirmedPassword} type="password" placeholder="Confirm password"/>
     <InfoBar bind:open={isPasswordInvalid} message="A password must consist of at least eight characters, including an uppercase letter, a digit and a special character." severity="caution" class="full-width" closable={false}/>
     <div class="horizontal-flex">
         {#if promise == null}
