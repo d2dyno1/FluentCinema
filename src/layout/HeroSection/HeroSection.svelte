@@ -5,7 +5,7 @@
     export let cards: MovieCard[] = [];
 </script>
 
-<div>
+<div class="main-content">
     <div class="hero-section">
         <picture>
             <img class="banner-img" alt="hero image" src="https://www.withanaccent.com/wp-content/uploads/2019/01/john-wick-3-banner.jpg">
@@ -19,10 +19,12 @@
     <div class="cards">
         {#each cards as { name, description, image }}
             <button class="card">
-                    <img class="small-banner-img" alt={name} src={image}>
-                <h4 class="card-name">
-                    {name}
-                </h4>
+                <img class="small-banner-img" alt={name} src={image}>
+                <div class="card-name">
+                    <h4>
+                        {name}
+                    </h4>
+                </div>
             </button>
         {/each}
     </div>

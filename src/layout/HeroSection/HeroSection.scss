@@ -1,6 +1,10 @@
 @use "src/styles/mixins" as *;
 
 :global {
+    .main-content {
+        @include flex($direction: column, $align: center);
+    }
+
     .banner-img {
         @include flex($align: center);
         overflow: hidden;
@@ -9,17 +13,17 @@
         -webkit-user-drag: none;
         -webkit-user-select: none;
     }
-
-    .banner-subtitle {
-        opacity: 0.8;
-    }
     
     .small-banner-img {
+        @include flex($align: center);
+        overflow: hidden;
+        block-size: auto;
         max-height: 110%;
         flex-shrink: 0;
         transform-origin: right;
         transition-duration: 500ms;
         border-radius: 8px;
+        pointer-events: all;
 
         &:hover {
             transform: scale(94%);
@@ -27,8 +31,13 @@
         }
     }
 
+    .banner-subtitle {
+        opacity: 0.8;
+    }
+
     .cards {
-        @include flex($direction: row);
+        @include flex($direction: row, $align: start, $justify: center);
+        flex: 1 1 auto;
     }
 
     .card {
@@ -44,15 +53,13 @@
         background-color: transparent;
         border-color: transparent;
         transition-duration: 250ms;
+        position: relative;
+        overflow: hidden;
         
         &:hover {
             border-color: $accent-color;
             transition-duration: 250ms;
         }
-    }
-
-    .card-name {
-
     }
 
     .details-button {
@@ -64,6 +71,26 @@
         overflow: hidden;
     }
     
+    .card-name {
+        @include flex($direction: column, $align: start, $justify: center);
+        flex: 1 1 auto;
+        top: 50%;
+        transform: translateY(-50%);
+        position: absolute;
+        height: 100%;
+        padding: 16px;
+        color: white;
+        background: linear-gradient(90deg, rgba(0, 0, 0, 0.6) 75%, transparent);
+        opacity: 0;
+        transition-duration: 500ms;
+        transition-property: opacity;
+
+        &:hover {
+            opacity: 1;
+            transition-duration: 750ms;
+        }
+    }
+
     .hero-left {
         @include flex($direction: column, $align: start, $justify: center);
         flex: 1 1 auto;
@@ -72,6 +99,6 @@
         position: absolute;
         height: 100%;
         padding: 16px;
-        background: linear-gradient(90deg, rgba(0, 0, 0, 0.6), transparent );
+        background: linear-gradient(90deg, rgba(0, 0, 0, 0.6) 30%, transparent);
     }
 }

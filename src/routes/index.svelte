@@ -17,6 +17,11 @@
                 name: "Mission Impossible",
                 description: "Ghost Protocol",
                 image: "https://spotlightreport.net/wp-content/uploads/2011/09/mission-impossible-ghost-protocol-banner.jpg"
+            },
+            {
+                name: "Star Wars",
+                description: "Episode IX",
+                image: "https://brantleybanner.com/wp-content/uploads/2018/03/LastJedijw_001-900x506.jpg"
             }
         ];
 
