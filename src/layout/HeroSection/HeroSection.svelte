@@ -11,6 +11,10 @@
     {
         currentCard = e;
     }
+
+    function detailsClicked(e: MovieData): void
+    {
+    }
 </script>
 
 <div class="main-content">
@@ -21,7 +25,7 @@
         <div class="hero-left">
             <h1>{currentCard.name}</h1>
             <p class="banner-subtitle">{currentCard.description}</p>
-            <Button class="details-button">See details</Button>
+            <Button on:click={() => detailsClicked(currentCard)} class="details-button">See details</Button>
         </div>
         <div class="hero-overlay"></div>
     </div>
@@ -29,6 +33,7 @@
         {#each cards as card}
             <MovieCard
                 on:click={() => cardClicked(card)}
+                on:dblclick={() => { cardClicked(card); detailsClicked(card); }}
                 selected={currentCard == card}
                 name={card.name}
                 image={card.image} />
