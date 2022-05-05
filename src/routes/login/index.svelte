@@ -1,27 +1,32 @@
 <script lang="ts">
-    import { InfoBar, TextBox, TextBlock, Button } from "fluent-svelte";
+    import { InfoBar, TextBox, TextBlock, Button, ProgressRing } from "fluent-svelte";
     import { emailValidationRegex } from "$lib/auth";
 
     let email: String;
     let password: String;
 
-    let showError = false;
-    let errorMessage;
+    let isError = false;
+    let errorMessage: String;
+
+    function showError(message: String) {
+        isError = true;
+        errorMessage = message;
+    }
+
+    let promise: Promise<Response>;
 
     function onLogin() {
         let isEmailValid = emailValidationRegex.test(email);
         if (!isEmailValid) {
-            showError = true;
-            errorMessage = "Invalid e-mail.";
+            showError("Invalid e-mail.");
         } else if (password.length == 0) {
-            showError = true;
-            errorMessage = "Password cannot be empty.";
+            showError("Password cannot be empty.");
         } else {
-            showError = false;
+            isError = false;
         }
 
-        if (!showError) {
-            fetch("/api/login", {
+        if (!isError) {
+            promise = fetch("/api/login", {
                 headers: {
                     'Content-Type': 'application/json'
                 },
@@ -31,22 +36,39 @@
                     password: password
                 })
             });
-            // todo handle response
+            promise.then(response => response.json()).then(response => {
+                if (!response.success) {
+                    showError(response.errorMessage);
+                }
+                promise = null;
+            });
+            promise.catch(error => {
+                showError(error.message);
+                promise = null;
+            });
         }
     }
 </script>
 
-<div>
+<div class="form">
     <TextBlock variant="title">Log in</TextBlock>
-    <InfoBar bind:open={showError} bind:message={errorMessage} severity="critical" class="full-width"/>
+    <InfoBar bind:open={isError} bind:message={errorMessage} severity="critical" class="full-width"/>
     <TextBox bind:value={email} type="email" placeholder="E-mail"></TextBox>
     <TextBox bind:value={password} type="password" placeholder="Password"></TextBox>
-    <Button variant="accent" on:click={onLogin}>Log in</Button>
+    <div class="horizontal-flex">
+        {#if promise == null}
+            <Button variant="accent" on:click={onLogin}>Log in</Button>
+        {:else}
+            {#await promise}
+                <ProgressRing/>
+            {/await}
+        {/if}
+    </div>
     <TextBlock><a href="/resetpassword">Forgot password?</a></TextBlock>
     <hr>
     <TextBlock>Don't have an account? <a href="/register">Sign up</a></TextBlock>
 </div>
 
 <style lang="scss">
-    @use "login";
+    @use "src/styles/global";
 </style>

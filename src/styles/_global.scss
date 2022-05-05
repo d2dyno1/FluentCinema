@@ -1,16 +1,35 @@
+@use "src/styles/mixins" as * ;
 @import "fluent-svelte/theme.css";
-
 
 a {
   color: var(--fds-accent-tertiary);
   text-decoration: none;
 }
 
-body {
+:global(body) {
   background-color: var(--fds-solid-background-base);
   color: var(--fds-text-primary);
 }
 
-.full-width {
+:global(.full-width) {
   width: 100%;
 }
+
+.form {
+  @include flex($align: center, $direction: column, $gap: 10px);
+  @include center;
+  background-color: var(--fds-solid-background-secondary);
+  border-radius: 20px;
+  padding: 30px;
+  text-align: center;
+  width: 300px;
+}
+
+:global(.horizontal-flex) {
+  @include flex($align: center, $direction: row);
+}
+
+hr {
+  width: 100%;
+}
+

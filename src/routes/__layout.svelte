@@ -6,6 +6,6 @@
 <slot/>
 <!-- <Footer/> -->
 
-<style>
-    @import "../styles/_global.scss";
+<style lang="scss">
+    @use "src/styles/global";
 </style>

@@ -1,28 +1,33 @@
-import { client } from '$lib/database/db';
-import { emailValidationRegex, passwordValidationRegex } from "$lib/auth";
+import { client, getUser } from "$lib/database/db";
+import {badRequest, internalServerError} from "../../lib/api";
+import { validateCredentials } from "$lib/auth";
+import * as argon2 from "$lib/argon2";
 
 export async function post({ request }) {
-    const data = await request.json();
+    try {
+        const data = await request.json();
+        if (!data.hasOwnProperty("email") || !data.hasOwnProperty("password")) {
+            return badRequest("Missing credentials.");
+        } else if (!validateCredentials(data.email, data.password)) {
+            return badRequest("Invalid credentials.");
+        }
 
-    if (!data.hasOwnProperty("email") || !data.hasOwnProperty("password")) {
-        return {
-            status: 400,
-            body: {
-                success: false,
-                errorMessage: "Missing credentials."
-            }
+        let existingUser = await getUser(data.email);
+        if (existingUser != undefined) {
+            return badRequest("This e-mail address is already in use.");
         }
-    } else if (!emailValidationRegex.test(data.email) || !passwordValidationRegex.test(data.password)) {
+
+        let hashedPassword = await argon2.hash(data.password);
+        await client.query("INSERT INTO users(email, hashed_password) VALUES ($1, $2)", [data.email, hashedPassword]);
+
         return {
-            status: 400,
+            status: 200,
             body: {
-                success: false,
-                errorMessage: "Invalid credentials."
+                success: true
             }
-        }
+        };
+    } catch (e) {
+        console.log(e);
+        return internalServerError;
     }
-
-    return {
-        status: 403
-    };
 }
