@@ -12,7 +12,7 @@
         </picture>
         <div class="hero-left">
             <h1>John Wick</h1>
-            <p>Chapter 3 Parabellum</p>
+            <p class="banner-subtitle">Chapter 3 Parabellum</p>
             <Button class="details-button">See details</Button>
         </div>
     </div>
@@ -20,7 +20,7 @@
         {#each cards as { name, description, image }}
             <button class="card">
                 <img class="small-banner-img" alt={name} src={image}>
-                <h4>
+                <h4 class="card-name">
                     {name}
                 </h4>
             </button>

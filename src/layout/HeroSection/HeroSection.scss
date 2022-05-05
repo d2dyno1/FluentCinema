@@ -10,12 +10,21 @@
         -webkit-user-select: none;
     }
 
+    .banner-subtitle {
+        opacity: 0.8;
+    }
     
     .small-banner-img {
         min-width: 100%;
         min-height: 100%;
-        object-fit:cover;
         flex-shrink: 0;
+        transform-origin: right;
+        transition-duration: 500ms;
+
+        &:hover {
+            transform: scale(92%);
+            transition-duration: 750ms;
+        }
     }
 
     .cards {
@@ -24,20 +33,27 @@
 
     .card {
         @include flex($justify: center, $align: center);
+        flex: 0 0 auto;
+        margin: 0px 12px 0px 0px;
         overflow: hidden;
         width: 216px;
         height: 120px;
         border-radius: 8px;
-        border-color: transparent;
-        border-width: 0;
+        border-color: $accent-color;
+        border-width: 0px;
+        border-style: solid;
         transition-duration: 250ms;
+        transition-property: border-width;
         
         &:hover {
+            border-width: 5px;
             transition-duration: 250ms;
-            border-style: solid;
-            border-width: 4px;
-            border-color: $accent-color;
+            transition-property: border-width;
         }
+    }
+
+    .card-name {
+
     }
 
     .details-button {
