@@ -4,6 +4,9 @@
 
     .small-banner-img {
         @include flex($align: center);
+        user-select: none;
+        -webkit-user-drag: none;
+        -webkit-user-select: none;
         overflow: hidden;
         block-size: auto;
         max-height: 110%;
