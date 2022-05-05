@@ -21,6 +21,8 @@
   },
   "type": "module",
   "dependencies": {
-    "fluent-svelte": "^1.5.1"
+    "argon2": "^0.28.5",
+    "fluent-svelte": "^1.5.1",
+    "pg": "^8.7.3"
   }
 }
