@@ -5,13 +5,39 @@
         @include flex($align: center);
         overflow: hidden;
         block-size: auto;
+        user-select: none;
+        -webkit-user-drag: none;
+        -webkit-user-select: none;
+    }
+
+    
+    .small-banner-img {
+        min-width: 100%;
+        min-height: 100%;
+        object-fit:cover;
+        flex-shrink: 0;
     }
 
     .cards {
-        background: inherit;
+        @include flex($direction: row);
     }
 
     .card {
+        @include flex($justify: center, $align: center);
+        overflow: hidden;
+        width: 216px;
+        height: 120px;
+        border-radius: 8px;
+        border-color: transparent;
+        border-width: 0;
+        transition-duration: 250ms;
+        
+        &:hover {
+            transition-duration: 250ms;
+            border-style: solid;
+            border-width: 4px;
+            border-color: $accent-color;
+        }
     }
 
     .details-button {

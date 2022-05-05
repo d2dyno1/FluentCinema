@@ -19,9 +19,11 @@
     <div class="cards">
         {#each cards as { name, description, image }}
             <button class="card">
-                {name}
+                <img class="small-banner-img" alt={name} src={image}>
+                <h4>
+                    {name}
+                </h4>
             </button>
-            
         {/each}
     </div>
 </div>

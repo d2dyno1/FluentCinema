@@ -11,12 +11,12 @@
             {
                 name: "John Wick",
                 description: "Chapter 3 Parabellum",
-                icon: null
+                image: "https://www.withanaccent.com/wp-content/uploads/2019/01/john-wick-3-banner.jpg"
             },
             {
                 name: "Mission Impossible",
                 description: "Ghost Protocol",
-                icon: null
+                image: "https://spotlightreport.net/wp-content/uploads/2011/09/mission-impossible-ghost-protocol-banner.jpg"
             }
         ];
 
