@@ -3,26 +3,32 @@
     import type { MovieCard } from "$data/cards";
 
     export let cards: MovieCard[] = [];
+    export let currentCard: MovieCard = cards[0];
+
+    function cardClicked(e: MovieCard): void
+    {
+        currentCard = e;
+    }
 </script>
 
 <div class="main-content">
     <div class="hero-section">
         <picture>
-            <img class="banner-img" alt="hero image" src="https://www.withanaccent.com/wp-content/uploads/2019/01/john-wick-3-banner.jpg">
+            <img class="banner-img" alt={currentCard.name} src={currentCard.image}>
         </picture>
         <div class="hero-left">
-            <h1>John Wick</h1>
-            <p class="banner-subtitle">Chapter 3 Parabellum</p>
+            <h1>{currentCard.name}</h1>
+            <p class="banner-subtitle">{currentCard.description}</p>
             <Button class="details-button">See details</Button>
         </div>
     </div>
     <div class="cards">
-        {#each cards as { name, description, image }}
-            <button class="card">
-                <img class="small-banner-img" alt={name} src={image}>
+        {#each cards as card}
+            <button on:click={() => cardClicked(card)} class="card">
+                <img class="small-banner-img" alt={card.name} src={card.image}>
                 <div class="card-name">
                     <h4>
-                        {name}
+                        {card.name}
                     </h4>
                 </div>
             </button>

@@ -21,7 +21,7 @@
             {
                 name: "Star Wars",
                 description: "Episode IX",
-                image: "https://brantleybanner.com/wp-content/uploads/2018/03/LastJedijw_001-900x506.jpg"
+                image: "https://coldfeet-space.nyc3.cdn.digitaloceanspaces.com/wsb/2017/12/star-wars-last-jedi-banner.jpg"
             }
         ];
 
