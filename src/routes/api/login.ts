@@ -6,6 +6,6 @@ export async function post({ request }) {
     // test query
     let user = await client.query('SELECT * FROM users WHERE id=$1', [data.id]);
     return {
-        body: user.rows[0]
+        status: 403
     };
 }
