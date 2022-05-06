@@ -1,7 +1,8 @@
 <script lang="ts">
-    import { Button, PersonPicture, Tooltip } from "fluent-svelte";
-    import type { Account } from "src/data/account";
-    import type { NavbarButton, NavbarItem } from "src/data/navbar";
+    import { Tooltip } from "fluent-svelte";
+    import { AccountMenu } from "$lib";
+    import type { Account } from "$data/account";
+    import type { NavbarButton, NavbarItem } from "$data/navbar";
 
     export let account: Account;
     export let navbarItems: NavbarItem[] = [];
@@ -38,15 +39,7 @@
                 </a>
             </Tooltip>
         {/each}
-        <Button>
-            {#if account}
-                {account.name}
-                <PersonPicture size={32} alt={account.name} src={account.image} />
-            {:else}
-                Login
-                <PersonPicture size={32} alt="?" />
-            {/if}
-        </Button>
+        <AccountMenu account={account}/>
     </div>
 </header>
 

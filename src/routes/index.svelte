@@ -1,7 +1,6 @@
 <script lang="ts">
     import { HeroSection, MoviesSection } from "$layout";
     import type { MovieData } from "$data/movies";
-    import { LoginFlyout } from "$layout";
 
     // TODO: Load from database
     const headlineMovies: MovieData[] = enumerateHeadlineMoviesFromDb();
@@ -57,5 +56,3 @@
 <HeroSection cards={headlineMovies}/>
 
 <MoviesSection positions={allMovies}/>
-
-<LoginFlyout/>
