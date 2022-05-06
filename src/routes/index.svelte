@@ -1,7 +1,7 @@
 <script lang="ts">
-    import { HeroSection } from "../layout";
+    import { HeroSection, MoviesSection } from "$layout";
     import type { MovieData } from "$data/movies";
-    import {LoginFlyout} from "$layout";
+    import { LoginFlyout } from "$layout";
 
     // TODO: Load from database
     const movieData: MovieData[] = enumerateHeadlineMoviesFromDb();
@@ -31,5 +31,7 @@
 </script>
 
 <HeroSection cards={movieData}/>
+
+<MoviesSection/>
 
 <LoginFlyout/>
