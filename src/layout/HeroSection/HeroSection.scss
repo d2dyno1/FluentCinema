@@ -37,7 +37,8 @@
         overflow: hidden;
 
         picture {
-            display: block;
+            display: flex;
+            justify-content: center;
             height: 525px;
         }
     }
