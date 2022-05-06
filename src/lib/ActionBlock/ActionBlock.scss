@@ -1,5 +1,4 @@
 @use "../../styles/mixins" as *;
-@import "fluent-svelte/theme.css";
 
 .action-block {
     @include flex($align: center, $direction: row, $gap: 20px);

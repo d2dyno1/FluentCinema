@@ -1,9 +1,9 @@
 <script lang="ts">
-    import {ActionBlock} from "$lib";
-    import {Button} from "fluent-svelte";
+    import { ActionBlock } from "$lib";
+    import { Button } from "fluent-svelte";
 </script>
 
-<ActionBlock title="Password" description="a" showArrow={false}>
+<ActionBlock title="Password" description="a">
     <Button slot="action">Change</Button>
 </ActionBlock>
 

@@ -1,9 +1,9 @@
 <script lang="ts">
-    import {TextBlock} from "fluent-svelte";
+    import { TextBlock } from "fluent-svelte";
 
     export let title: string;
     export let description: string;
-    export let showArrow = true;
+    export let actionElement: any;
 </script>
 
 <div class="action-block">
@@ -16,8 +16,8 @@
     </div>
     <div class="align-right">
         <slot name="action"/>
-        {#if showArrow}
-            <TextBlock>＞</TextBlock>
+        {#if actionElement}
+            {@html actionElement}
         {/if}
     </div>
 </div>
