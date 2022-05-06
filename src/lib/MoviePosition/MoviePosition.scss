@@ -40,7 +40,7 @@ picture {
 }
 
 .item-inner {
-    @include flex($direction: row, $align: start, $justify: start);
+    @include flex($direction: row, $align: stretch, $justify: start);
     flex: 1 1 auto;
     position: relative;
 }
