@@ -7,7 +7,6 @@
 
     .banner-img {
         @include flex($align: center);
-        overflow: hidden;
         block-size: auto;
         user-select: none;
         -webkit-user-drag: none;
@@ -35,6 +34,7 @@
         position: relative;
         width: 100%;
         color: white;
+        overflow: hidden;
 
         picture {
             display: block;
