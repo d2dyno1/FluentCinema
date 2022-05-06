@@ -6,6 +6,7 @@
     background-color: var(--fds-card-background-secondary);
     border-radius: var(--fds-control-corner-radius);
     padding: 20px;
+    transition-duration: var(--fds-control-faster-duration);
 
     &:hover {
         background-color: var(--fds-subtle-fill-secondary);
