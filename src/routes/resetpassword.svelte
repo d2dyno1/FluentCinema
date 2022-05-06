@@ -1,10 +1,9 @@
 <script lang="ts">
-    import { TextBox, TextBlock, Button, ProgressRing } from "fluent-svelte";
+    import { InfoBar, TextBox, TextBlock, Button, ProgressRing } from "fluent-svelte";
     import { emailValidationRegex } from "$lib/validation";
     import { DialogForm } from "$layout";
 
     let email: String;
-    let password: String;
 
     let formComponent;
 
@@ -15,26 +14,21 @@
         if (!isEmailValid) {
             formComponent.showCriticalMessage("Invalid e-mail address.");
             return;
-        } else if (password.length == 0) {
-            formComponent.showCriticalMessage("Password cannot be empty.");
-            return;
         }
-
         formComponent.hideMessage();
 
-        promise = fetch("/api/login", {
+        promise = fetch("/api/resetpassword", {
             headers: {
                 'Content-Type': 'application/json'
             },
             method: 'POST',
             body: JSON.stringify({
-                email: email,
-                password: password
+                email: email
             })
         });
         promise.then(response => response.json()).then(response => {
             if (response.success) {
-                formComponent.showSuccessMessage("Successfully logged in.");
+                formComponent.showSuccessMessage("A password reset link has been sent to your e-mail.");
             } else {
                 formComponent.showCriticalMessage(response.message);
             }
@@ -47,22 +41,17 @@
     }
 </script>
 
-<DialogForm title="Log in" bind:this={formComponent}>
+<DialogForm title="Reset password" bind:this={formComponent}>
     <TextBox bind:value={email} type="email" placeholder="E-mail"></TextBox>
-    <TextBox bind:value={password} type="password" placeholder="Password"></TextBox>
-    <div slot="footer-left">
-        <TextBlock><a href="/resetpassword">Forgot password?</a></TextBlock>
-    </div>
     <div slot="footer-right">
         {#if promise == null}
-            <Button variant="accent" on:click={onLogin}>Log in</Button>
+            <Button variant="accent" on:click={onLogin}>Reset password</Button>
         {:else}
             {#await promise}
                 <ProgressRing/>
             {/await}
         {/if}
     </div>
-    <TextBlock>Don't have an account? <a href="/register">Sign up</a></TextBlock>
 </DialogForm>
 
 <style lang="scss">
