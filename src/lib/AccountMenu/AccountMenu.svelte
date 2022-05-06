@@ -22,11 +22,11 @@
     <div slot="override">
         {#if isLogin}
             <LoginForm>
-                <TextBlock>Don't have an account? <a href="" on:click={() => isLogin = false}>Sign up</a></TextBlock>
+                <TextBlock>Don't have an account? <a href="#" on:click={() => isLogin = false}>Sign up</a></TextBlock>
             </LoginForm>
         {:else}
             <RegisterForm>
-                <TextBlock>Don't have an account? <a href="" on:click={() => isLogin = true}>Log in</a></TextBlock>
+                <TextBlock>Don't have an account? <a href="#" on:click={() => isLogin = true}>Log in</a></TextBlock>
             </RegisterForm>
         {/if}
     </div>

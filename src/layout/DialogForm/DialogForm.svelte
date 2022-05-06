@@ -28,10 +28,10 @@
 </script>
 
 
-<div style="background-color: gray;">
-    <div class="main">
+<div class="dialog-form">
+    <div class="content">
         <InfoBar bind:open={showInfoBar} bind:message={infoBarMessage} bind:severity={infoBarSeverity} closable={false} class="full-width"/>
-        <slot class="main"/>
+        <slot/>
     </div>
     <div class="footer">
         <div class="align-left">

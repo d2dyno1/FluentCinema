@@ -1,4 +1,5 @@
-@use "src/styles/mixins" as * ;
+@use "src/styles/mixins" as *;
+@import "fluent-svelte/theme.css";
 
 .align-right {
     align-items: center;
@@ -16,10 +17,20 @@
     width: 50%;
 }
 
-.footer {
-    @include flex($align: center);
+.dialog-form {
+    background-color: var(--fds-solid-background-base);
+    border: 1px solid var(--surface-stroke-default);
+    border-radius: var(--fds-overlay-corner-radius);
+    overflow: hidden;
 }
 
-.main {
+.footer {
+    @include flex($align: center);
+    background-color: var(--fds-solid-background-secondary);
+    padding: 15px;
+}
+
+.content {
     @include flex($align: center, $direction: column, $gap: 10px);
+    padding: 20px;
 }
