@@ -1,0 +1,14 @@
+@use "src/styles/mixins" as *;
+
+:global {
+    
+    .navbar {
+        @include flex($align: center);
+        flex: 0 0 auto;
+        position: relative;
+        user-select: none;
+        block-size: 58px;
+        z-index: 10;
+        background-color: var(--fds-solid-background-secondary);
+    }
+}

@@ -2,4 +2,10 @@
     import { Button } from "fluent-svelte";
 </script>
 
-<Button>Navbar</Button>
+<header class="navbar">
+</header>
+
+
+<style lang="scss">
+    @use "Navbar";
+</style>

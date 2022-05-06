@@ -12,6 +12,7 @@
 
   /* Needed for adaptive theme */
   :global(body) {
+    margin: 0px;
     background-color: var(--fds-solid-background-base);
     color: var(--fds-text-primary);
   }
