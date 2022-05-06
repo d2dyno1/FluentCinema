@@ -51,9 +51,6 @@
     <TextBox bind:value={email} type="email" placeholder="E-mail"></TextBox>
     <TextBox bind:value={password} type="password" placeholder="Password"></TextBox>
     <div slot="footer-left">
-        <TextBlock><a href="/resetpassword">Forgot password?</a></TextBlock>
-    </div>
-    <div slot="footer-right">
         {#if promise == null}
             <Button variant="accent" on:click={onLogin}>Log in</Button>
         {:else}
@@ -61,6 +58,9 @@
                 <ProgressRing/>
             {/await}
         {/if}
+    </div>
+    <div slot="footer-right">
+        <TextBlock><a href="/resetpassword">Forgot password?</a></TextBlock>
     </div>
     <slot/>
 </DialogForm>

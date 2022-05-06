@@ -53,7 +53,7 @@
     <TextBox bind:value={password} type="password" placeholder="Password"></TextBox>
     <TextBox bind:value={confirmedPassword} type="password" placeholder="Confirm password"></TextBox>
     <InfoBar bind:open={isPasswordInvalid} message="A password must consist of at least eight characters, including an uppercase letter, a digit and a special character." severity="caution" class="full-width" closable={false}/>
-    <div slot="footer-right">
+    <div slot="footer-left">
         {#if promise == null}
             <Button variant="accent" on:click={onRegister}>Register</Button>
         {:else}
