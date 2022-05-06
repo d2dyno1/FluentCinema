@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { InfoBar } from "fluent-svelte";
+    import { InfoBar, TextBlock } from "fluent-svelte";
 
     export let title;
 
@@ -30,6 +30,7 @@
 
 <div class="dialog-form">
     <div class="content">
+        <TextBlock variant="subtitle">{title}</TextBlock>
         <InfoBar bind:open={showInfoBar} bind:message={infoBarMessage} bind:severity={infoBarSeverity} closable={false} class="full-width"/>
         <slot/>
     </div>
