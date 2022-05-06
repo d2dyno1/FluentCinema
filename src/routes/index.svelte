@@ -1,5 +1,8 @@
 <script lang="ts" context="module">
+    import { HeroSection, MoviesSection } from "$layout";
     import type { MovieData } from "$data/movies";
+    import { LoginFlyout } from "$layout";
+    import { ok } from "../lib/responses";
 
     export let promise;
     export let headlineMovies: MovieData[];
@@ -11,43 +14,12 @@
                 'Content-Type': 'application/json'
             },
             method: 'GET'
+        }).then(response => response.json()).then(movies => {
+            headlineMovies = movies;
+            allMovies = [...movies];
         });
 
-        return {
-            status: 200
-        }
-    }
-</script>
-
-<script lang="ts">
-    import { HeroSection, MoviesSection } from "$layout";
-    import type { MovieData } from "$data/movies";
-    import { LoginFlyout } from "$layout";
-
-    promise = promise.then(response => response.json()).then(movies => {
-        headlineMovies = movies;
-        allMovies = [...movies];
-    });
-
-
-    // TODO: Load from database
-
-    // TODO: Note: All objects from the database must come with all properties filled - no null's left behind
-    function enumerateHeadlineMoviesFromDb()
-    {
-        return null;
-    }
-
-    // TODO: Note: All objects from the database must come with all properties filled - no null's left behind
-    function enumerateMoviesFromDb(): MovieData[]
-    {
-        // TODO: Just for testing
-        const objects: MovieData[] = [
-            ...enumerateHeadlineMoviesFromDb(), // TODO: Just for testing
-            // More movies
-        ]
-
-        return objects;
+        return ok;
     }
 </script>
 
