@@ -1,6 +1,6 @@
 <script lang="ts">
     import { TextBox, TextBlock, Button, ProgressRing } from "fluent-svelte";
-    import { emailValidationRegex } from "$lib/validation";
+    import { emailValidationRegex } from "../lib/validation";
     import { DialogForm } from "$layout";
 
     let email: String;
@@ -62,7 +62,7 @@
             {/await}
         {/if}
     </div>
-    <TextBlock>Don't have an account? <a href="/register">Sign up</a></TextBlock>
+    <slot/>
 </DialogForm>
 
 <style lang="scss">

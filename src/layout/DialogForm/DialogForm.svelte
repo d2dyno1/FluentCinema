@@ -2,6 +2,7 @@
     import { ContentDialog, InfoBar } from "fluent-svelte";
 
     export let title;
+    export let container;
 
     let showInfoBar = false;
     let infoBarSeverity = "";
@@ -28,7 +29,7 @@
 </script>
 
 
-<ContentDialog open={true} title={title}>
+<ContentDialog open={true} title={title} darken={false} trapFocus={false}>
     <div class="main">
         <InfoBar bind:open={showInfoBar} bind:message={infoBarMessage} bind:severity={infoBarSeverity} closable={false} class="full-width"/>
         <slot class="main"/>
