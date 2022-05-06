@@ -1,8 +1,9 @@
 // @ts-ignore
 import {Client, QueryResult} from 'pg';
 import {User} from "./User";
+import db from "../../../db.json"
 
-export const client = new Client();
+export const client = new Client(db);
 
 client.connect().then(() => console.log("Connected to database."));
 
