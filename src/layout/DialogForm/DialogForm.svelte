@@ -2,7 +2,6 @@
     import { ContentDialog, InfoBar } from "fluent-svelte";
 
     export let title;
-    export let container;
 
     let showInfoBar = false;
     let infoBarSeverity = "";
