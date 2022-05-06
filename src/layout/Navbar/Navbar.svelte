@@ -3,6 +3,9 @@
 </script>
 
 <header class="navbar">
+    <a href="/" class="app-title">
+        FluentCinema
+    </a>
 </header>
 
 

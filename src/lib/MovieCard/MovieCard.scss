@@ -33,7 +33,7 @@
         overflow: hidden;
         
         &:hover {
-            border-color: $accent-color;
+            border-color: var(--fds-accent-default);
             transition-duration: 250ms;
 
             .small-banner-img {
@@ -48,7 +48,7 @@
         }
 
         &.selected {
-            border-color: $accent-color;
+            border-color: var(--fds-accent-default);
 
             .card-name {
                 opacity: 1;
