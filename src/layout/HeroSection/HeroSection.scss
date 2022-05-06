@@ -12,6 +12,7 @@
         user-select: none;
         -webkit-user-drag: none;
         -webkit-user-select: none;
+        position: absolute;
     }
 
     .banner-subtitle {
@@ -32,9 +33,13 @@
     
     .hero-section {
         position: relative;
-        overflow: hidden;
         width: 100%;
         color: white;
+
+        picture {
+            display: block;
+            height: 525px;
+        }
     }
 
     .hero-left {
