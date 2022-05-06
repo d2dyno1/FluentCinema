@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { InfoBar, TextBox, TextBlock, Button, ProgressRing } from "fluent-svelte";
+    import { InfoBar, TextBox, Button, ProgressRing } from "fluent-svelte";
     import { emailValidationRegex, passwordValidationRegex } from "../lib/validation";
     import { DialogForm } from "$layout";
 

@@ -1,6 +1,6 @@
 // @ts-ignore
-import {Client, QueryResult} from 'pg';
-import {User} from "./User";
+import { Client, QueryResult } from "pg";
+import { User } from "./User";
 
 export const client = new Client();
 

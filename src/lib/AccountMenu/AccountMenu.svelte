@@ -1,15 +1,15 @@
 <script lang="ts">
     import { PersonPicture, Button, Flyout, TextBlock } from "fluent-svelte";
     import type { Account } from "$data/account";
-    import { default as Login } from "../../layout/../layout/Login.svelte";
-    import { default as Register } from "../../layout/../layout/Register.svelte";
+    import { default as LoginForm } from "../../layout/../layout/LoginForm.svelte";
+    import { default as RegisterForm } from "../../layout/../layout/RegisterForm.svelte";
     
     export let account: Account;
 
     let isLogin = true;
 </script>
 
-<Flyout placement="top" offset={200}>
+<Flyout placement="bottom" alignment="end" offset={8}>
     <Button>
         {#if account}
             {account.name}
@@ -21,13 +21,13 @@
     </Button>
     <div slot="override">
         {#if isLogin}
-            <Login>
+            <LoginForm>
                 <TextBlock>Don't have an account? <a href="" on:click={() => isLogin = false}>Sign up</a></TextBlock>
-            </Login>
+            </LoginForm>
         {:else}
-            <Register>
+            <RegisterForm>
                 <TextBlock>Don't have an account? <a href="" on:click={() => isLogin = true}>Log in</a></TextBlock>
-            </Register>
+            </RegisterForm>
         {/if}
     </div>
 </Flyout>
