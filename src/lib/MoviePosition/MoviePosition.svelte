@@ -5,8 +5,8 @@
     export let rating: number;
 </script>
 
-<div on:click>
-    
+<div class="item" on:click>
+
 </div>
 
 <style lang="scss">

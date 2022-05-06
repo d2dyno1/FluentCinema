@@ -1,6 +1,7 @@
 @use "src/styles/mixins" as *;
 
 :global {
+    
     .main-content {
         @include flex($direction: column, $align: center);
     }
@@ -29,7 +30,7 @@
     .details-button {
         width: 128px;
     }
-    
+
     .hero-section {
         position: relative;
         width: 100%;
