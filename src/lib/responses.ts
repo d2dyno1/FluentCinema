@@ -2,7 +2,7 @@ export const internalServerError = {
     status: 500,
     body: {
         success: false,
-        errorMessage: "Internal server error."
+        message: "Internal server error."
     }
 };
 
@@ -18,7 +18,7 @@ export function badRequest(message: String) {
         status: 400,
         body: {
             success: false,
-            errorMessage: message
+            message: message
         }
     }
 }
@@ -28,7 +28,7 @@ export function forbidden(message: String) {
         status: 403,
         body: {
             success: false,
-            errorMessage: message
+            message: message
         }
     }
 }

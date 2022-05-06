@@ -1,15 +1,9 @@
 <script lang="ts">
     import { InfoBar, TextBox, TextBlock, Button, ProgressRing } from "fluent-svelte";
     import { emailValidationRegex, passwordValidationRegex } from "../lib/validation";
-    import { CenteredForm } from "../layout";
+    import { DialogForm } from "$layout";
 
-    let isError = false;
-    let errorMessage: String;
-
-    function showError(message: String) {
-        isError = true;
-        errorMessage = message;
-    }
+    let formComponent;
 
     let email: String;
     let password: String;
@@ -20,15 +14,13 @@
 
     function onRegister() {
         if (!emailValidationRegex.test(email)) {
-            showError("Invalid e-mail address.");
+            formComponent.showCriticalMessage("Invalid e-mail address.");
             return;
         } else if (password != confirmedPassword) {
-            showError("Passwords don't match.");
+            formComponent.showCriticalMessage("Passwords don't match.");
             return;
-        } else {
-            isError = false;
         }
-
+        formComponent.hideMessage();
         if (!isPasswordInvalid) {
             promise = fetch("/api/register", {
                 headers: {
@@ -41,27 +33,27 @@
                 })
             });
             promise.then(response => response.json()).then(response => {
-                if (!response.success) {
-                    showError(response.errorMessage);
+                if (response.success) {
+                    formComponent.showSuccessMessage("Your account has been created successfully. Before logging in, please verify your e-mail by clicking the link that was sent to it.");
+                } else {
+                    formComponent.showCriticalMessage(response.message);
                 }
                 promise = null;
             });
             promise.catch(error => {
-                showError(error.message);
+                formComponent.showCriticalMessage(error.message);
                 promise = null;
             });
         }
     }
 </script>
 
-<CenteredForm>
-    <TextBlock variant="title">Register</TextBlock>
-    <InfoBar bind:open={isError} bind:message={errorMessage} severity="critical" class="full-width"/>
+<DialogForm title="Register" bind:this={formComponent}>
     <TextBox bind:value={email} type="email" placeholder="E-mail"></TextBox>
     <TextBox bind:value={password} type="password" placeholder="Password"></TextBox>
     <TextBox bind:value={confirmedPassword} type="password" placeholder="Confirm password"></TextBox>
     <InfoBar bind:open={isPasswordInvalid} message="A password must consist of at least eight characters, including an uppercase letter, a digit and a special character." severity="caution" class="full-width" closable={false}/>
-    <div class="horizontal-flex">
+    <div slot="footer-right">
         {#if promise == null}
             <Button variant="accent" on:click={onRegister}>Register</Button>
         {:else}
@@ -70,9 +62,8 @@
             {/await}
         {/if}
     </div>
-    <hr>
-    <TextBlock>Already have an account? <a href="/login">Log in</a></TextBlock>
-</CenteredForm>
+    <slot/>
+</DialogForm>
 
 <style lang="scss">
     @use "../styles/global";
