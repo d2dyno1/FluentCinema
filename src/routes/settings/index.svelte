@@ -1,5 +1,5 @@
 <script lang="ts">
-    import {ActionBlock} from "$layout";
+    import {ActionBlock} from "$lib";
     import {Button} from "fluent-svelte";
 </script>
 
