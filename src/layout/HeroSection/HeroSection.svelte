@@ -6,6 +6,7 @@
 
     export let cards: MovieData[] = [];
     export let currentCard: MovieData = cards[0];
+    $: currentIndex = cards.indexOf(currentCard);
 
     function cardClicked(e: MovieData): void
     {
@@ -20,7 +21,9 @@
 <div class="main-content">
     <div class="hero-section">
         <picture>
-            <img transition:fade src={currentCard.bannerImage} alt={currentCard.name} class="banner-img">
+            {#each [cards[currentIndex]] as src (currentIndex)}
+                <img transition:fade src={currentCard.bannerImage} alt={currentCard.name} class="banner-img">
+            {/each}
         </picture>
         <div class="hero-left">
             <h1>{currentCard.name}</h1>
