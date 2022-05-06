@@ -2,24 +2,18 @@
 @import "fluent-svelte/theme.css";
 
 .align-right {
-    align-items: center;
-    justify-content: flex-end;
-    display: flex;
+    @include flex($align: center, $justify: end);
     margin-left: auto;
-    width: 50%;
 }
 
 .align-left {
-    align-items: center;
-    justify-content: flex-start;
-    display: flex;
+    @include flex($align: center, $justify: start);
     margin-right: auto;
-    width: 50%;
 }
 
 .dialog-form {
     background-color: var(--fds-solid-background-base);
-    border: 1px solid var(--surface-stroke-default);
+    border: 1px solid var(--fds-surface-stroke-default);
     border-radius: var(--fds-overlay-corner-radius);
     overflow: hidden;
 }
