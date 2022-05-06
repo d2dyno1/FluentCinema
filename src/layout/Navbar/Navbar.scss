@@ -1,57 +1,54 @@
 @use "src/styles/mixins" as *;
 
-:global {
-    
-    nav,
-    .navbar,
-    .navbar-item {
-        @include flex($align: center);
-    }
+nav,
+.navbar,
+.navbar-item {
+    @include flex($align: center);
+}
 
-    .navbar {
-        justify-content: space-between;
-        flex: 0 0 auto;
-        position: relative;
-        user-select: none;
-        block-size: 58px;
-        z-index: 10;
-        background-color: var(--fds-solid-background-secondary);
-        padding: 0 24px 0 16px;
-    }
+.navbar {
+    justify-content: space-between;
+    flex: 0 0 auto;
+    position: relative;
+    user-select: none;
+    block-size: 58px;
+    z-index: 10;
+    background-color: var(--fds-solid-background-secondary);
+    padding: 0 24px 0 16px;
+}
 
-    .navbar-buttons {
-        display: flex;
-    }
+.navbar-buttons {
+    display: flex;
+}
 
-    .navbar-button {
-        @include flex($align: center, $justify: center);
-        inline-size: 34px;
-        block-size: 34px;
-        margin-inline-start: 8px;
-        border: none;
-        border-radius: var(--fds-control-corner-radius);
-        background-color: transparent;
-        color: var(--fds-text-secondary);
-        text-decoration: none;
-        cursor: pointer;
-    }
+.navbar-button {
+    @include flex($align: center, $justify: center);
+    inline-size: 34px;
+    block-size: 34px;
+    margin-inline-start: 8px;
+    border: none;
+    border-radius: var(--fds-control-corner-radius);
+    background-color: transparent;
+    color: var(--fds-text-secondary);
+    text-decoration: none;
+    cursor: pointer;
+}
 
-    .navbar-item {
-        justify-content: center;
+.navbar-item {
+    justify-content: center;
 
-        &.selected {
-            background-color: var(--fds-subtle-fill-secondary);
-		    color: var(--fds-accent-text-primary);
-        }
+    &.selected {
+        background-color: var(--fds-subtle-fill-secondary);
+        color: var(--fds-accent-text-primary);
     }
+}
 
-    .divider {
-        block-size: 30px;
-        margin: 0 8px;
-        border-inline-start: 1px solid var(--fds-subtle-fill-secondary);
-    }
+.divider {
+    block-size: 30px;
+    margin: 0 8px;
+    border-inline-start: 1px solid var(--fds-subtle-fill-secondary);
+}
 
-    .app-title {
-        color: unset;
-    }
+.app-title {
+    color: unset;
 }

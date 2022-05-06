@@ -1,6 +1,6 @@
 <script lang="ts">
     import { Tooltip } from "fluent-svelte";
-import type { NavbarButton, NavbarItem } from "src/data/navbar";
+    import type { NavbarButton, NavbarItem } from "src/data/navbar";
 
     export let navbarItems: NavbarItem[] = [];
     export let navbarButtons: NavbarButton[] = [];

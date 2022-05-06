@@ -22,13 +22,13 @@
     <div class="hero-section">
         <picture>
             {#each [cards[currentIndex]] as src (currentIndex)}
-                <img transition:fade src={currentCard.image} alt={currentCard.name} class="banner-img">
+                <img transition:fade src={currentCard.bannerImage} alt={currentCard.name} class="banner-img">
             {/each}
         </picture>
         <div class="hero-left">
             <h1>{currentCard.name}</h1>
             <p class="banner-subtitle">{currentCard.description}</p>
-            <Button on:click={() => detailsClicked(currentCard)} class="details-button">See details</Button>
+            <Button class="details-button" on:click={() => detailsClicked(currentCard)}>See details</Button>
         </div>
         <div class="hero-overlay"></div>
     </div>
@@ -39,7 +39,7 @@
                 on:dblclick={() => { cardClicked(card); detailsClicked(card); }}
                 selected={currentCard == card}
                 name={card.name}
-                image={card.image} />
+                image={card.bannerImage} />
         {/each}
     </div>
 </div>

@@ -1,0 +1,8 @@
+@use "src/styles/mixins" as *;
+
+.movie-positions {
+    @include flex($direction: row, $align: start, $justify: center);
+    flex: 1 1 auto;
+    overflow: auto;
+    white-space: nowrap;
+}
