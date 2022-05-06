@@ -5,6 +5,10 @@
     export let rating: number;
 </script>
 
+<div on:click>
+    
+</div>
+
 <style lang="scss">
     @use "MoviePosition";
 </style>
