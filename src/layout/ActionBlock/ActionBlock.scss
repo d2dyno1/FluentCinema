@@ -1,0 +1,31 @@
+@use "src/styles/mixins" as *;
+@import "fluent-svelte/theme.css";
+
+.category {
+    @include flex($align: center, $direction: row, $gap: 20px);
+    background-color: var(--fds-card-background-secondary);
+    border-radius: var(--control-corner-radius);
+    padding: 20px;
+
+    &:hover {
+        background-color: var(--fds-subtle-fill-secondary);
+    }
+
+    &:active {
+        background-color: var(--fds-subtle-fill-tertiary);
+    }
+}
+
+.icon {
+    max-width: 32px;
+    max-height: 32px;
+}
+
+.column {
+    @include flex($direction: column);
+}
+
+.align-right {
+    @include flex($align: center, $direction: row, $gap: 20px);
+    margin-left: auto;
+}
