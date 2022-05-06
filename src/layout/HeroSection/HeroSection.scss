@@ -1,67 +1,64 @@
 @use "src/styles/mixins" as *;
 
-:global {
-    
-    .main-content {
-        @include flex($direction: column, $align: center);
-    }
+:global(.details-button) {
+    width: 128px;
+}
 
-    .banner-img {
-        @include flex($align: center);
-        block-size: auto;
-        user-select: none;
-        -webkit-user-drag: none;
-        -webkit-user-select: none;
-        position: absolute;
-    }
+.main-content {
+    @include flex($direction: column, $align: center);
+}
 
-    .banner-subtitle {
-        opacity: 0.8;
-    }
+.banner-img {
+    @include flex($align: center);
+    block-size: auto;
+    user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    position: absolute;
+}
 
-    .cards {
-        @include flex($direction: row, $align: start, $justify: center);
-        flex: 1 1 auto;
-        margin-top: -2%;
-        overflow: auto;
-        white-space: nowrap;
-    }
+.banner-subtitle {
+    opacity: 0.8;
+}
 
-    .details-button {
-        width: 128px;
-    }
+.cards {
+    @include flex($direction: row, $align: start, $justify: center);
+    flex: 1 1 auto;
+    margin-top: -2%;
+    overflow: auto;
+    white-space: nowrap;
+}
 
-    .hero-section {
-        position: relative;
-        width: 100%;
-        color: white;
-        overflow: hidden;
+.hero-section {
+    position: relative;
+    width: 100%;
+    color: white;
+    overflow: hidden;
 
-        picture {
-            display: flex;
-            justify-content: center;
-            height: 525px;
-        }
+    picture {
+        display: flex;
+        justify-content: center;
+        height: 525px;
     }
+}
 
-    .hero-left {
-        @include flex($direction: column, $align: start, $justify: center);
-        flex: 1 1 auto;
-        top: 50%;
-        transform: translateY(-50%);
-        position: absolute;
-        height: 100%;
-        padding: 16px;
-        background: linear-gradient(90deg, rgba(0, 0, 0, 0.6) 30%, transparent);
-    }
+.hero-left {
+    @include flex($direction: column, $align: start, $justify: center);
+    flex: 1 1 auto;
+    top: 50%;
+    transform: translateY(-50%);
+    position: absolute;
+    height: 100%;
+    padding: 16px;
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.6) 30%, transparent);
+}
 
-    .hero-overlay {
-        @include flex($direction: column, $align: start, $justify: center);
-        flex: 1 1 auto;
-        top: 80%;
-        position: absolute;
-        height: 20%;
-        width: 100%;
-        background: linear-gradient(0deg, var(--fds-solid-background-base) 0%, rgba(0, 0, 0, 0) 80%);
-    }
+.hero-overlay {
+    @include flex($direction: column, $align: start, $justify: center);
+    flex: 1 1 auto;
+    top: 80%;
+    position: absolute;
+    height: 20%;
+    width: 100%;
+    background: linear-gradient(0deg, var(--fds-solid-background-base) 0%, rgba(0, 0, 0, 0) 80%);
 }

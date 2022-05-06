@@ -1,12 +1,82 @@
 @use "src/styles/mixins" as *;
 
-:global {
-    
-    .item {
-        width: 100px;
-        height: 100px;
-        background-color: red;
+picture {
+    @include flex($justify: center, $align: center);
+    flex: 0 1 auto;
+    height: 152px;
+    width: 90px;
+    margin-right: 16px;
+}
 
-        
+.item {
+    @include flex($align: center, $justify: center);
+    margin: 0px 12px 0px 0px;
+    width: 364px;
+    height: 172px;
+    box-sizing: border-box;
+    padding-block: 8px;
+    padding-inline: 8px;
+    text-decoration: none;
+    border: none;
+    outline: none;
+    border-radius: var(--fds-control-corner-radius);
+    transition: var(--fds-control-faster-duration) ease background;
+    user-select: none;
+    border: 1px solid;
+    border-color: var(--fds-control-border-default);
+    background-color: var(--fds-control-fill-default);
+    color: var(--fds-text-primary);
+    background-clip: padding-box;
+
+    &:hover {
+        background-color: var(--fds-control-fill-secondary);
     }
+
+    &:active {
+        border-color: var(--fds-control-stroke-default);
+        background-color: var(--fds-control-fill-tertiary);
+        color: var(--fds-text-secondary);
+    }
+}
+
+.item-inner {
+    @include flex($direction: row, $align: start, $justify: start);
+    flex: 1 1 auto;
+    position: relative;
+}
+
+.item-poster {
+    user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    max-height: 100%;
+    max-width: 100%;
+    border-radius: 4px;
+}
+
+.title {
+    margin: 0px;
+    font-size: large;
+}
+
+.subtitle {
+    margin: 0px 0px 12px 0px;
+    font-size: small;
+    opacity: 0.8;
+}
+
+.description-text {
+    font-size: small;
+    margin: 0px 0px 4px 0px;
+}
+
+.rating {
+    font-size: small;
+    font-weight:300;
+    opacity: 0.8;
+}
+
+.details {
+    @include flex($direction: column, $align: start, $justify: space-between);
+    flex: 1 1 auto;
 }

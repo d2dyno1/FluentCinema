@@ -1,77 +1,74 @@
 @use "src/styles/mixins" as *;
 
-:global {
+.small-banner-img {
+    @include flex($align: center);
+    user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    overflow: hidden;
+    block-size: auto;
+    max-height: 110%;
+    flex-shrink: 0;
+    transform-origin: right;
+    transition-duration: 500ms;
+    border-radius: 8px;
+}
 
-    .small-banner-img {
-        @include flex($align: center);
-        user-select: none;
-        -webkit-user-drag: none;
-        -webkit-user-select: none;
-        overflow: hidden;
-        block-size: auto;
-        max-height: 110%;
-        flex-shrink: 0;
-        transform-origin: right;
-        transition-duration: 500ms;
-        border-radius: 8px;
-    }
+.card {
+    @include flex($justify: center, $align: center);
+    flex: 0 0 auto;
+    margin: 0px 12px 0px 0px;
+    overflow: hidden;
+    width: 216px;
+    height: 120px;
+    border-radius: 8px;
+    border-width: 4px;
+    border-style: solid;
+    background-color: transparent;
+    border-color: transparent;
+    transition-duration: 250ms;
+    position: relative;
+    overflow: hidden;
 
-    .card {
-        @include flex($justify: center, $align: center);
-        flex: 0 0 auto;
-        margin: 0px 12px 0px 0px;
-        overflow: hidden;
-        width: 216px;
-        height: 120px;
-        border-radius: 8px;
-        border-width: 4px;
-        border-style: solid;
-        background-color: transparent;
-        border-color: transparent;
+    &:hover {
+        border-color: var(--fds-accent-tertiary);
         transition-duration: 250ms;
-        position: relative;
-        overflow: hidden;
-        
-        &:hover {
-            border-color: var(--fds-accent-tertiary);
-            transition-duration: 250ms;
 
-            .small-banner-img {
-                transform: scale(94%);
-                transition-duration: 750ms;
-            }
-
-            .card-name {
-                opacity: 1;
-                transition-duration: 750ms;
-            }
+        .small-banner-img {
+            transform: scale(94%);
+            transition-duration: 750ms;
         }
 
-        &.selected {
-            border-color: var(--fds-accent-default);
-
-            .card-name {
-                opacity: 1;
-            }
+        .card-name {
+            opacity: 1;
+            transition-duration: 750ms;
         }
     }
 
-    .card-name {
-        @include flex($direction: column, $align: start, $justify: center);
-        flex: 1 1 auto;
-        user-select: none;
-        -webkit-user-drag: none;
-        -webkit-user-select: none;
-        top: 50%;
-        transform: translateY(-50%);
-        position: absolute;
-        height: 100%;
-        padding: 16px;
-        left: 0;
-        color: white;
-        background: linear-gradient(90deg, rgba(0, 0, 0, 0.6) 75%, transparent);
-        opacity: 0;
-        transition-duration: 500ms;
-        transition-property: opacity;
+    &.selected {
+        border-color: var(--fds-accent-default);
+
+        .card-name {
+            opacity: 1;
+        }
     }
+}
+
+.card-name {
+    @include flex($direction: column, $align: start, $justify: center);
+    flex: 1 1 auto;
+    user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    top: 50%;
+    transform: translateY(-50%);
+    position: absolute;
+    height: 100%;
+    padding: 16px;
+    left: 0;
+    color: white;
+    background: linear-gradient(90deg, rgba(0, 0, 0, 0.6) 75%, transparent);
+    opacity: 0;
+    transition-duration: 500ms;
+    transition-property: opacity;
 }

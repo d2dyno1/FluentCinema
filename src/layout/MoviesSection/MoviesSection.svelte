@@ -1,11 +1,13 @@
 <script lang="ts">
     import { MoviePosition } from "$lib";
 
-
+    export let positions: MovieData[] = [];
 </script>
 
-<div>
-    <MoviePosition name="abc"/>
+<div class="movie-positions">
+    {#each positions as { name, description, descriptionExtended, rating, posterImage }}
+        <MoviePosition name={name} episode={description} description={descriptionExtended} rating={rating} image={posterImage} />
+    {/each}
 </div>
 
 <style lang="scss">
