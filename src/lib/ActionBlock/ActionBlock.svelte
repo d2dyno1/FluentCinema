@@ -4,7 +4,6 @@
     export let isClickable: boolean;
     export let title: string;
     export let description: string;
-    export let actionElement: any;
 </script>
 
 <div class="action-block" on:click class:isClickable>
@@ -12,14 +11,11 @@
         <slot name="icon"/>
     </div>
     <div class="column">
-        <TextBlock variant="bodyStrong">{title}</TextBlock>
-        <TextBlock>{description}</TextBlock>
+        <TextBlock>{title}</TextBlock>
+        <TextBlock variant="caption" class="description-section">{description}</TextBlock>
     </div>
     <div class="align-right">
         <slot name="action"/>
-        {#if actionElement}
-            {@html actionElement}
-        {/if}
     </div>
 </div>
 
