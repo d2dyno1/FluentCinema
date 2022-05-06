@@ -20,8 +20,6 @@
             return;
         }
 
-        formComponent.hideMessage();
-
         promise = fetch("/api/login", {
             headers: {
                 'Content-Type': 'application/json'
@@ -55,7 +53,7 @@
             <Button variant="accent" on:click={onLogin}>Log in</Button>
         {:else}
             {#await promise}
-                <ProgressRing/>
+                <ProgressRing size={28}/>
             {/await}
         {/if}
     </div>

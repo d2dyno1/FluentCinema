@@ -20,7 +20,7 @@
             formComponent.showCriticalMessage("Passwords don't match.");
             return;
         }
-        formComponent.hideMessage();
+
         if (!isPasswordInvalid) {
             promise = fetch("/api/register", {
                 headers: {
@@ -58,7 +58,7 @@
             <Button variant="accent" on:click={onRegister}>Register</Button>
         {:else}
             {#await promise}
-                <ProgressRing/>
+                <ProgressRing size={28}/>
             {/await}
         {/if}
     </div>
