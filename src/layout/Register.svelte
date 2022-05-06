@@ -62,7 +62,7 @@
             {/await}
         {/if}
     </div>
-    <TextBlock>Already have an account? <a href="/login">Log in</a></TextBlock>
+    <slot/>
 </DialogForm>
 
 <style lang="scss">
