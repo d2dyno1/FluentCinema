@@ -4,7 +4,7 @@
 .action-block {
     @include flex($align: center, $direction: row, $gap: 20px);
     background-color: var(--fds-card-background-secondary);
-    border-radius: var(--control-corner-radius);
+    border-radius: var(--fds-control-corner-radius);
     padding: 20px;
 
     &:hover {
