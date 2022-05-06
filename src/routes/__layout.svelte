@@ -11,9 +11,9 @@
     ];
     const navbarButtons: NavbarButton[] = [
         {
-            name: "test",
+            name: "View GitHub repository",
             path: "/",
-            icon: "ABCD"
+            icon: "GitHub"
         }
     ]
 </script>

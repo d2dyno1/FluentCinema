@@ -3,24 +3,24 @@
 :global {
     
     nav,
-    .navbar
+    .navbar,
     .navbar-item {
         @include flex($align: center);
     }
 
     .navbar {
-        @include flex($align: center);
+        justify-content: space-between;
         flex: 0 0 auto;
         position: relative;
         user-select: none;
         block-size: 58px;
         z-index: 10;
         background-color: var(--fds-solid-background-secondary);
-        padding: 0 10px 0 10px;
+        padding: 0 24px 0 16px;
     }
 
     .navbar-buttons {
-
+        display: flex;
     }
 
     .navbar-button {
