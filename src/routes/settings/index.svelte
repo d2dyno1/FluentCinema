@@ -3,7 +3,7 @@
     import { Button } from "fluent-svelte";
 </script>
 
-<ActionBlock isClickable={true} title="Password" description="a">
+<ActionBlock title="Password" description="a">
     <Button slot="action">Change</Button>
 </ActionBlock>
 

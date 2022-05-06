@@ -7,7 +7,7 @@
     export let actionElement: any;
 </script>
 
-<div class="action-block" on:click class:isClickable={isClickable}>
+<div class="action-block" on:click class:isClickable>
     <div class="icon">
         <slot name="icon"/>
     </div>
