@@ -1,12 +1,13 @@
 <script lang="ts">
     import { TextBlock } from "fluent-svelte";
 
+    export let isClickable: boolean;
     export let title: string;
     export let description: string;
     export let actionElement: any;
 </script>
 
-<div class="action-block">
+<div class="action-block" on:click class:isClickable={isClickable}>
     <div class="icon">
         <slot name="icon"/>
     </div>

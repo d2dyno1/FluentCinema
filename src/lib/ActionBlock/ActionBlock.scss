@@ -7,12 +7,14 @@
     padding: 20px;
     transition-duration: var(--fds-control-faster-duration);
 
-    &:hover {
-        background-color: var(--fds-subtle-fill-secondary);
-    }
-
-    &:active {
-        background-color: var(--fds-subtle-fill-tertiary);
+    &.isClickable {
+        &:hover {
+            background-color: var(--fds-subtle-fill-secondary);
+        }
+        
+        &:active {
+            background-color: var(--fds-subtle-fill-tertiary);
+        }
     }
 }
 
