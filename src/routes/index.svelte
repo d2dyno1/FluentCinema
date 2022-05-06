@@ -12,17 +12,17 @@
             {
                 name: "John Wick",
                 description: "Chapter 3 Parabellum",
-                image: "/static/images/John-Wick-3.png"
+                bannerImage: "/static/images/John-Wick-3.png"
             },
             {
                 name: "Mission Impossible",
                 description: "Ghost Protocol",
-                image: "/static/images/Mission-Impossible.png"
+                bannerImage: "/static/images/Mission-Impossible.png"
             },
             {
                 name: "Star Wars",
                 description: "Episode IX: The Last Jedi",
-                image: "/static/images/Star-Wars-The-Last-Jedi.png"
+                bannerImage: "/static/images/Star-Wars-The-Last-Jedi.png"
             }
         ];
 

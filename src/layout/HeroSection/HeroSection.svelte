@@ -20,7 +20,7 @@
 <div class="main-content">
     <div class="hero-section">
         <picture>
-            <img transition:fade src={currentCard.image} alt={currentCard.name} class="banner-img">
+            <img transition:fade src={currentCard.bannerImage} alt={currentCard.name} class="banner-img">
         </picture>
         <div class="hero-left">
             <h1>{currentCard.name}</h1>
@@ -36,7 +36,7 @@
                 on:dblclick={() => { cardClicked(card); detailsClicked(card); }}
                 selected={currentCard == card}
                 name={card.name}
-                image={card.image} />
+                image={card.bannerImage} />
         {/each}
     </div>
 </div>

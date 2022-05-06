@@ -1,5 +1,7 @@
 export type MovieData = {
     name: string;
     description: string;
-    image: any;
+    rating: number;
+    bannerImage?: any;
+    posterImage?: any;
 };
