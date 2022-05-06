@@ -5,3 +5,8 @@ export type MovieData = {
     bannerImage?: any;
     posterImage?: any;
 };
+
+export type MovieDataExtended = {
+    internal: MovieData;
+    // TODO: Add extended data (comments, reviews, annotations, etc.)
+}
