@@ -3,10 +3,8 @@
     import { emailValidationRegex } from "$lib/validation";
     import { DialogForm } from "$layout";
 
-    let email: String;
-
-    let formComponent;
-
+    let email: string;
+    let formComponent: any;
     let promise: Promise<Response>;
 
     function onLogin() {
