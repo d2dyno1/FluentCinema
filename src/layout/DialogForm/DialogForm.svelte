@@ -35,10 +35,10 @@
         <slot/>
     </div>
     <div class="footer">
-        <div class="align-left">
+        <div>
             <slot name="footer-left"/>
         </div>
-        <div class="align-right">
+        <div class="footer-right">
             <slot name="footer-right"/>
         </div>
     </div>

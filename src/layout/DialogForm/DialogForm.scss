@@ -1,14 +1,8 @@
 @use "src/styles/mixins" as *;
 @import "fluent-svelte/theme.css";
 
-.align-right {
-    @include flex($align: center, $justify: end);
+.footer-right {
     margin-left: auto;
-}
-
-.align-left {
-    @include flex($align: center, $justify: start);
-    margin-right: auto;
 }
 
 .dialog-form {
@@ -21,7 +15,7 @@
 .footer {
     @include flex($align: center);
     background-color: var(--fds-solid-background-secondary);
-    padding: 15px;
+    padding: 20px;
 }
 
 .content {
