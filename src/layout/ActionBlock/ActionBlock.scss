@@ -1,7 +1,7 @@
 @use "src/styles/mixins" as *;
 @import "fluent-svelte/theme.css";
 
-.category {
+.action-block {
     @include flex($align: center, $direction: row, $gap: 20px);
     background-color: var(--fds-card-background-secondary);
     border-radius: var(--control-corner-radius);

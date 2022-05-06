@@ -6,7 +6,7 @@
     export let showArrow = true;
 </script>
 
-<div class="category">
+<div class="action-block">
     <div class="icon">
         <slot name="icon"/>
     </div>
