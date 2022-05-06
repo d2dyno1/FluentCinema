@@ -26,7 +26,7 @@
 
     promise = promise.then(response => response.json()).then(movies => {
         headlineMovies = movies;
-        allMovies = movies;
+        allMovies = [...movies];
     });
 
 
