@@ -1,7 +1,9 @@
 <script lang="ts">
-    import { Tooltip } from "fluent-svelte";
+    import { Button, PersonPicture, Tooltip } from "fluent-svelte";
+    import type { Account } from "src/data/account";
     import type { NavbarButton, NavbarItem } from "src/data/navbar";
 
+    export let account: Account;
     export let navbarItems: NavbarItem[] = [];
     export let navbarButtons: NavbarButton[] = [];
 </script>
@@ -30,12 +32,21 @@
     </nav>
     <div class="navbar-buttons">
         {#each navbarButtons as { name, path, icon }}
-            <Tooltip placement="bottom" text={name}>
-                <a class="navbar-button" href={path}>
+            <Tooltip class="navbar-button" placement="bottom" text={name}>
+                <a href={path}>
                     {@html icon}
                 </a>
             </Tooltip>
         {/each}
+        <Button>
+            {#if account}
+                {account.name}
+                <PersonPicture size={32} alt={account.name} src={account.image} />
+            {:else}
+                Login
+                <PersonPicture size={32} alt="?" />
+            {/if}
+        </Button>
     </div>
 </header>
 
