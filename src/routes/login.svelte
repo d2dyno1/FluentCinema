@@ -1,62 +1,59 @@
 <script lang="ts">
-    import { InfoBar, TextBox, TextBlock, Button, ProgressRing } from "fluent-svelte";
+    import { TextBox, TextBlock, Button, ProgressRing } from "fluent-svelte";
     import { emailValidationRegex } from "$lib/validation";
-    import { CenteredForm } from "../layout";
+    import { DialogForm } from "$layout";
 
     let email: String;
     let password: String;
 
-    let isError = false;
-    let errorMessage: String;
-
-    function showError(message: String) {
-        isError = true;
-        errorMessage = message;
-    }
+    let formComponent;
 
     let promise: Promise<Response>;
 
     function onLogin() {
         let isEmailValid = emailValidationRegex.test(email);
         if (!isEmailValid) {
-            showError("Invalid e-mail address.");
+            formComponent.showCriticalMessage("Invalid e-mail address.");
+            return;
         } else if (password.length == 0) {
-            showError("Password cannot be empty.");
-        } else {
-            isError = false;
+            formComponent.showCriticalMessage("Password cannot be empty.");
+            return;
         }
 
-        if (!isError) {
-            promise = fetch("/api/login", {
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                method: 'POST',
-                body: JSON.stringify({
-                    email: email,
-                    password: password
-                })
-            });
-            promise.then(response => response.json()).then(response => {
-                if (!response.success) {
-                    showError(response.message);
-                }
-                promise = null;
-            });
-            promise.catch(error => {
-                showError(error.message);
-                promise = null;
-            });
-        }
+        formComponent.hideMessage();
+
+        promise = fetch("/api/login", {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({
+                email: email,
+                password: password
+            })
+        });
+        promise.then(response => response.json()).then(response => {
+            if (response.success) {
+                formComponent.showSuccessMessage("Successfully logged in.");
+            } else {
+                formComponent.showCriticalMessage(response.message);
+            }
+            promise = null;
+        });
+        promise.catch(error => {
+            formComponent.showCriticalMessage(error.message);
+            promise = null;
+        });
     }
 </script>
 
-<CenteredForm>
-    <TextBlock variant="title">Log in</TextBlock>
-    <InfoBar bind:open={isError} bind:message={errorMessage} severity="critical" class="full-width"/>
+<DialogForm title="Log in" bind:this={formComponent}>
     <TextBox bind:value={email} type="email" placeholder="E-mail"></TextBox>
     <TextBox bind:value={password} type="password" placeholder="Password"></TextBox>
-    <div class="horizontal-flex">
+    <div slot="footer-left">
+        <TextBlock><a href="/resetpassword">Forgot password?</a></TextBlock>
+    </div>
+    <div slot="footer-right">
         {#if promise == null}
             <Button variant="accent" on:click={onLogin}>Log in</Button>
         {:else}
@@ -65,10 +62,8 @@
             {/await}
         {/if}
     </div>
-    <TextBlock><a href="/resetpassword">Forgot password?</a></TextBlock>
-    <hr>
     <TextBlock>Don't have an account? <a href="/register">Sign up</a></TextBlock>
-</CenteredForm>
+</DialogForm>
 
 <style lang="scss">
     @use "../styles/global";

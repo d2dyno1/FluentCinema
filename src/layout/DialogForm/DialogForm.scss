@@ -1,0 +1,25 @@
+@use "src/styles/mixins" as * ;
+
+.align-right {
+    align-items: center;
+    justify-content: flex-end;
+    display: flex;
+    margin-left: auto;
+    width: 50%;
+}
+
+.align-left {
+    align-items: center;
+    justify-content: flex-start;
+    display: flex;
+    margin-right: auto;
+    width: 50%;
+}
+
+.footer {
+    @include flex($align: center);
+}
+
+.main {
+    @include flex($align: center, $direction: column, $gap: 10px);
+}
