@@ -1,0 +1,20 @@
+@use "src/styles/mixins" as *;
+
+:global(.flyout-anchor) {
+    padding-left: 200px;
+    margin-left: 200px;
+}
+
+:global(.account-picture) {
+    color: white;
+}
+
+.inner-login-button {
+    @include flex($direction: row, $align: center, $justify: center);
+    flex: 1 1 auto;
+    gap: 12px
+}
+
+.inner {
+    width: 300px;
+}

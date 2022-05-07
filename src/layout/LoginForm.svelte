@@ -1,26 +1,24 @@
 <script lang="ts">
-    import { TextBox, TextBlock, Button, ProgressRing } from "fluent-svelte";
-    import { emailValidationRegex } from "../lib/validation";
+    import { TextBox, TextBlock } from "fluent-svelte";
+    import { emailValidationRegex } from "$lib/validation";
     import { DialogForm } from "$layout";
+    import { PromiseButton } from "$lib";
 
-    let email: String;
-    let password: String;
+    let email: string;
+    let password: string;
 
     let formComponent;
 
     let promise: Promise<Response>;
 
     function onLogin() {
-        let isEmailValid = emailValidationRegex.test(email);
-        if (!isEmailValid) {
+        if (!emailValidationRegex.test(email)) {
             formComponent.showCriticalMessage("Invalid e-mail address.");
             return;
         } else if (password.length == 0) {
             formComponent.showCriticalMessage("Password cannot be empty.");
             return;
         }
-
-        formComponent.hideMessage();
 
         promise = fetch("/api/login", {
             headers: {
@@ -38,30 +36,16 @@
             } else {
                 formComponent.showCriticalMessage(response.message);
             }
-            promise = null;
         });
-        promise.catch(error => {
-            formComponent.showCriticalMessage(error.message);
-            promise = null;
-        });
+        promise.catch(err => formComponent.showCriticalMessage(err.message));
     }
 </script>
 
 <DialogForm title="Log in" bind:this={formComponent}>
-    <TextBox bind:value={email} type="email" placeholder="E-mail"></TextBox>
-    <TextBox bind:value={password} type="password" placeholder="Password"></TextBox>
-    <div slot="footer-left">
-        <TextBlock><a href="/resetpassword">Forgot password?</a></TextBlock>
-    </div>
-    <div slot="footer-right">
-        {#if promise == null}
-            <Button variant="accent" on:click={onLogin}>Log in</Button>
-        {:else}
-            {#await promise}
-                <ProgressRing/>
-            {/await}
-        {/if}
-    </div>
+    <TextBox bind:value={email} type="email" placeholder="E-mail"/>
+    <TextBox bind:value={password} type="password" placeholder="Password"/>
+    <PromiseButton slot="footer-left" bind:promise={promise} on:click={onLogin}>Log in</PromiseButton>
+    <TextBlock slot="footer-right"><a href="/resetpassword">Forgot password?</a></TextBlock>
     <slot/>
 </DialogForm>
 

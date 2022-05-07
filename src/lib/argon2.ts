@@ -5,9 +5,9 @@ const argon2Options = {
 };
 
 export async function hash(password: string) {
-    return await argon2.hash(password, argon2Options)
+    return await argon2.hash(password, argon2Options);
 }
 
 export async function verify(hash: string, password: string) {
-    return await argon2.verify(hash, password, argon2Options)
+    return await argon2.verify(hash, password, argon2Options);
 }

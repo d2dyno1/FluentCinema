@@ -1,4 +1,4 @@
-import { client, getUser } from "$lib/database/db";
+import { client, getUser } from "$lib/db";
 import {badRequest, internalServerError, ok} from "$lib/responses";
 import { validateCredentials } from "$lib/validation";
 import * as argon2 from "$lib/argon2";
@@ -12,12 +12,12 @@ export async function post({ request }) {
             return badRequest("Invalid credentials.");
         }
 
-        let existingUser = await getUser(data.email);
+        const existingUser = await getUser(data.email);
         if (existingUser != undefined) {
             return badRequest("This e-mail address is already in use.");
         }
 
-        let hashedPassword = await argon2.hash(data.password);
+        const hashedPassword = await argon2.hash(data.password);
         await client.query("INSERT INTO users(email, hashed_password) VALUES ($1, $2)", [data.email, hashedPassword]);
 
         return ok;

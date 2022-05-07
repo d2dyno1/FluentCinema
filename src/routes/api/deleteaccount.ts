@@ -1,11 +1,10 @@
-import {client, getUser} from '$lib/database/db';
-import {badRequest, forbidden, internalServerError, ok} from "../../lib/responses";
+import {client, getUser} from '$lib/db';
+import {badRequest, forbidden, internalServerError, ok} from "$lib/responses";
 import { verify } from "$lib/argon2";
 
 export async function del({ request }) {
     try {
         const data = await request.json();
-
         if (!data.hasOwnProperty("email") || !data.hasOwnProperty("password")) {
             return badRequest("Missing credentials.");
         }

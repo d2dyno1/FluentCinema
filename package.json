@@ -13,6 +13,7 @@
   "devDependencies": {
     "@sveltejs/adapter-auto": "next",
     "@sveltejs/kit": "next",
+    "@types/pg": "^8.6.5",
     "svelte": "^3.44.0",
     "svelte-check": "^2.2.6",
     "svelte-preprocess": "^4.10.1",
@@ -21,6 +22,7 @@
   },
   "type": "module",
   "dependencies": {
+    "@fluentui/svg-icons": "^1.1.169",
     "argon2": "^0.28.5",
     "fluent-svelte": "^1.5.1",
     "pg": "^8.7.3"
