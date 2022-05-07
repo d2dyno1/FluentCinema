@@ -13,6 +13,7 @@
         }).then(response => response.json());
         return ok;
     }
+
 </script>
 
 {#await promise then movies}

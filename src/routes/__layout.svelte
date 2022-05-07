@@ -1,6 +1,7 @@
-<script lang="ts">
+<script lang="ts" context="module">
     import { Navbar } from "$layout";
     import type { NavbarButton, NavbarItem } from "src/data/navbar";
+    import { ok } from "$lib/responses";
 
     import Code from "@fluentui/svg-icons/icons/code_24_regular.svg?raw";
 
@@ -18,6 +19,12 @@
             icon: Code
         }
     ]
+
+    export async function load({ session }) {
+        console.log(session);
+
+        return ok;
+    }
 </script>
 
 <Navbar navbarItems={navbarItems} navbarButtons={navbarButtons}/>
