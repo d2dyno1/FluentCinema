@@ -20,7 +20,7 @@
             {:else}
                 Login
                 <PersonPicture class="account-picture" size={32} alt="?">
-                    {@html ProfileIcon}
+                    <img src="/api/userPicture">
                 </PersonPicture>
             {/if}
         </div>

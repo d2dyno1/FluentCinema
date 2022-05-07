@@ -4,6 +4,7 @@
     import { ok } from "$lib/responses";
 
     import Code from "@fluentui/svg-icons/icons/code_24_regular.svg?raw";
+    import {promise} from "./index.svelte";
 
     const navbarItems: NavbarItem[] = [
         {
@@ -18,11 +19,13 @@
             path: "https://github.com/d2dyno1/FluentCinema",
             icon: Code
         }
-    ]
+    ];
 
     export async function load({ session }) {
-        console.log(session);
-
+        if (Object.keys(session).length != 0) {
+            // user is logged in
+            console.log(session);
+        };
         return ok;
     }
 </script>

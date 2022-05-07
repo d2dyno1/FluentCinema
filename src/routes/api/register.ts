@@ -1,6 +1,6 @@
 import { client, getUser } from "$lib/db";
-import {badRequestWithMessage, forbidden, internalServerError, ok} from "$lib/responses";
-import { validateCredentials } from "$lib/validation";
+import { badRequest, badRequestWithMessage, forbidden, internalServerError, ok} from "$lib/responses";
+import {usernameValidationRegex, validateCredentials} from "$lib/validation";
 import * as argon2 from "../../lib/auth/argon2";
 import {generateSessionCookie, getSessionFromRequest, isSessionValid} from "../../lib/auth/sessions";
 
@@ -11,10 +11,10 @@ export async function post({ request }) {
         }
 
         const data = await request.json();
-        if (!data.hasOwnProperty("email") || !data.hasOwnProperty("password")) {
-            return badRequestWithMessage("Missing credentials.");
-        } else if (!validateCredentials(data.email, data.password)) {
-            return badRequestWithMessage("Invalid credentials.");
+        if (!data.hasOwnProperty("username") || !data.hasOwnProperty("email") || !data.hasOwnProperty("password")) {
+            return badRequest;
+        } else if (!usernameValidationRegex.test(data.username) || !validateCredentials(data.email, data.password)) {
+            return badRequest;
         }
 
         const existingUser = await getUser(data.email);
@@ -23,7 +23,7 @@ export async function post({ request }) {
         }
 
         const hashedPassword = await argon2.hash(data.password);
-        await client.query("INSERT INTO users(email, hashed_password) VALUES ($1, $2)", [data.email, hashedPassword]);
+        await client.query("INSERT INTO users(email, hashed_password, username) VALUES ($1, $2, $3)", [data.email, hashedPassword, data.username]);
 
         return {
             status: 302,

@@ -12,6 +12,7 @@ const requestCount = new Map<string, number>();
 const resetInterval = 600000;
 const maxRequests = 10;
 
+// TODO move rate limiting and sessions into separate files if possible
 export async function handle({ event, resolve }) {
     // Rate limiting
     if (!dev && rateLimitedEndpoints.indexOf(event.routeId) != -1) {
@@ -28,13 +29,14 @@ export async function handle({ event, resolve }) {
         }
     }
 
+    // Session
     const cookies = parse(event.request.headers.get("cookie") || '');
     if (cookies.session) {
         const user = await getUserFromSession(cookies.session);
         if (user != undefined) {
             event.locals.user = {
                 email: user.email,
-                sessionId: cookies.session
+                username: user.username
             }
             return await resolve(event);
         }
@@ -50,7 +52,7 @@ export function getSession(event) {
         ? {
             user: {
                 email: event.locals.user.email,
-                sessionId: event.locals.user.sessionId
+                username: event.locals.user.username
             }
         }
         : {};

@@ -3,10 +3,17 @@
     import { AccountMenu } from "$lib";
     import type { Account } from "$data/account";
     import type { NavbarButton, NavbarItem } from "$data/navbar";
+    import {ok} from "../../lib/responses";
 
     export let account: Account;
     export let navbarItems: NavbarItem[] = [];
     export let navbarButtons: NavbarButton[] = [];
+
+    export async function load({ session }) {
+        console.log(session);
+
+        return ok;
+    }
 </script>
 
 <header class="navbar">
