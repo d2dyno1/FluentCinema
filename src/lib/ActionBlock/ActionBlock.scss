@@ -1,0 +1,37 @@
+@use "src/styles/mixins" as *;
+
+.action-block {
+    @include flex($align: center, $direction: row, $gap: 20px);
+    background-color: var(--fds-card-background-secondary);
+    border-radius: var(--fds-control-corner-radius);
+    padding: 20px;
+    transition-duration: var(--fds-control-faster-duration);
+
+    &.isClickableEffect {
+        &:hover {
+            background-color: var(--fds-subtle-fill-secondary);
+        }
+
+        &:active {
+            background-color: var(--fds-subtle-fill-tertiary);
+        }
+    }
+}
+
+.description-section {
+    opacity: 0.8;
+}
+
+.icon {
+    max-width: 32px;
+    max-height: 32px;
+}
+
+.column {
+    @include flex($direction: column);
+}
+
+.align-right {
+    @include flex($align: center, $direction: row, $gap: 20px);
+    margin-left: auto;
+}
