@@ -51,7 +51,10 @@ export async function generateSessionCookie(user: User): Promise<string> {
     let session = await generateSession(user);
     return serialize("session", session.session, {
         expires: session.expires_at,
-        path: "/"
+        path: "/",
+        secure: true,
+        httpOnly: true,
+        sameSite: "strict"
     });
 }
 
@@ -63,6 +66,9 @@ export function generateEmptySessionCookie(): string {
     return serialize("session", "", {
         maxAge: 0,
         expires: new Date(),
-        path: "/"
+        path: "/",
+        secure: true,
+        httpOnly: true,
+        sameSite: "strict"
     })
 }
