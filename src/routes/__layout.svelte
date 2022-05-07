@@ -2,6 +2,8 @@
     import { Navbar } from "$layout";
     import type { NavbarButton, NavbarItem } from "src/data/navbar";
 
+    import Code from "@fluentui/svg-icons/icons/code_24_regular.svg?raw";
+
     const navbarItems: NavbarItem[] = [
         {
             name: "Home",
@@ -12,8 +14,8 @@
     const navbarButtons: NavbarButton[] = [
         {
             name: "View GitHub repository",
-            path: "/",
-            icon: "GitHub"
+            path: "https://github.com/d2dyno1/FluentCinema",
+            icon: Code
         }
     ]
 </script>

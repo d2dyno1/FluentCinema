@@ -18,7 +18,9 @@ nav,
 }
 
 .navbar-buttons {
-    display: flex;
+    @include flex($align: center);
+    flex: 0 1 auto;
+    gap: 12px;
 }
 
 .navbar-button {
