@@ -1,16 +1,16 @@
 import { getUser } from "$lib/db";
-import {badRequest, internalServerError, ok} from "$lib/responses";
+import {badRequestWithMessage, internalServerError, ok} from "$lib/responses";
 
 export async function post({ request }) {
     try {
         const data = await request.json();
         if (!data.hasOwnProperty("email")) {
-            return badRequest("Missing credentials.");
+            return badRequestWithMessage("Missing credentials.");
         }
 
         let existingUser = await getUser(data.email);
         if (existingUser == undefined) {
-            return badRequest("This e-mail address is not associated with any account.");
+            return badRequestWithMessage("This e-mail address is not associated with any account.");
         }
 
         return ok;

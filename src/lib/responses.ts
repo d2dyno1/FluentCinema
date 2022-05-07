@@ -13,7 +13,14 @@ export const ok = {
     }
 }
 
-export function badRequest(message: String) {
+export const badRequest = {
+    status: 400,
+    body: {
+        success: false
+    }
+}
+
+export function badRequestWithMessage(message: String) {
     return {
         status: 400,
         body: {
@@ -23,7 +30,14 @@ export function badRequest(message: String) {
     }
 }
 
-export function forbidden(message: String) {
+export const forbidden = {
+    status: 403,
+    body: {
+        success: false
+    }
+}
+
+export function forbiddenWithMessage(message: String) {
     return {
         status: 403,
         body: {

@@ -32,7 +32,7 @@
         });
         promise.then(response => response.json()).then(response => {
             if (response.success) {
-                formComponent.showSuccessMessage("Successfully logged in.");
+                window.location.reload();
             } else {
                 formComponent.showCriticalMessage(response.message);
             }

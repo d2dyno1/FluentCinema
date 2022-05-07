@@ -1,10 +1,11 @@
 <script lang="ts">
     import { Tooltip } from "fluent-svelte";
     import { AccountMenu } from "$lib";
-    import type { Account } from "$data/account";
+    import type { User } from "$data/User";
     import type { NavbarButton, NavbarItem } from "$data/navbar";
+    import {ok} from "../../lib/responses";
 
-    export let account: Account;
+    export let user: User;
     export let navbarItems: NavbarItem[] = [];
     export let navbarButtons: NavbarButton[] = [];
 </script>
@@ -39,7 +40,7 @@
                 </a>
             </Tooltip>
         {/each}
-        <AccountMenu account={account}/>
+        <AccountMenu user={user}/>
     </div>
 </header>
 

@@ -1,20 +1,25 @@
 <script lang="ts">
     import { InfoBar, TextBox } from "fluent-svelte";
-    import { emailValidationRegex, passwordValidationRegex } from "$lib/validation";
+    import {emailValidationRegex, passwordValidationRegex, usernameValidationRegex} from "$lib/validation";
     import { DialogForm } from "$layout";
     import { PromiseButton } from "$lib";
 
     let formComponent;
 
+    let username: string;
     let email: string;
     let password: string;
     let confirmedPassword: string;
+    $: isUsernameValid = usernameValidationRegex.test(username);
     $: isPasswordInvalid = !passwordValidationRegex.test(password);
 
     let promise: Promise<Response>;
 
     function onRegister() {
-        if (!emailValidationRegex.test(email)) {
+        if (!isUsernameValid) {
+            formComponent.showCriticalMessage("A username must be between 2 and 16 characters long and can only consist of letters, digits and underscores.");
+            return;
+        } else if (!emailValidationRegex.test(email)) {
             formComponent.showCriticalMessage("Invalid e-mail address.");
             return;
         } else if (password != confirmedPassword) {
@@ -29,14 +34,13 @@
                 },
                 method: 'POST',
                 body: JSON.stringify({
+                    username: username,
                     email: email,
                     password: password
                 })
             });
             promise.then(response => response.json()).then(response => {
-                if (response.success) {
-                    formComponent.showSuccessMessage("Your account has been created successfully. Before logging in, please verify your e-mail by clicking the link that was sent to it.");
-                } else {
+                if (!response.success) {
                     formComponent.showCriticalMessage(response.message);
                 }
             });
@@ -46,6 +50,7 @@
 </script>
 
 <DialogForm title="Register" bind:this={formComponent}>
+    <TextBox bind:value={username} placeholder="Username"/>
     <TextBox bind:value={email} type="email" placeholder="E-mail"/>
     <TextBox bind:value={password} type="password" placeholder="Password"/>
     <TextBox bind:value={confirmedPassword} type="password" placeholder="Confirm password"/>

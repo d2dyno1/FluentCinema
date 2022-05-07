@@ -1,26 +1,38 @@
-import { client, getUser } from "$lib/db";
-import {badRequest, internalServerError, ok} from "$lib/responses";
-import { validateCredentials } from "$lib/validation";
-import * as argon2 from "$lib/argon2";
+import {client, getUser, isUsernameTaken} from "$lib/db";
+import { badRequest, badRequestWithMessage, forbidden, internalServerError, ok} from "$lib/responses";
+import {usernameValidationRegex, validateCredentials} from "$lib/validation";
+import * as argon2 from "../../lib/auth/argon2";
+import {generateSessionCookie, getSessionFromRequest, isSessionValid} from "../../lib/auth/sessions";
 
 export async function post({ request }) {
     try {
-        const data = await request.json();
-        if (!data.hasOwnProperty("email") || !data.hasOwnProperty("password")) {
-            return badRequest("Missing credentials.");
-        } else if (!validateCredentials(data.email, data.password)) {
-            return badRequest("Invalid credentials.");
+        if (await isSessionValid(getSessionFromRequest(request))) {
+            return forbidden;
         }
 
-        const existingUser = await getUser(data.email);
-        if (existingUser != undefined) {
-            return badRequest("This e-mail address is already in use.");
+        const data = await request.json();
+        if (!data.hasOwnProperty("username") || !data.hasOwnProperty("email") || !data.hasOwnProperty("password")) {
+            return badRequest;
+        } else if (!usernameValidationRegex.test(data.username) || !validateCredentials(data.email, data.password)) {
+            return badRequest;
+        }
+
+        if (await getUser(data.email) != undefined) {
+            return badRequestWithMessage("This e-mail address is already in use.");
+        } else if (await isUsernameTaken(data.username)) {
+            return badRequestWithMessage("This username is already taken.");
         }
 
         const hashedPassword = await argon2.hash(data.password);
-        await client.query("INSERT INTO users(email, hashed_password) VALUES ($1, $2)", [data.email, hashedPassword]);
+        await client.query("INSERT INTO users(email, hashed_password, username) VALUES ($1, $2, $3)", [data.email, hashedPassword, data.username]);
 
-        return ok;
+        return {
+            status: 302,
+            headers: {
+                "Set-Cookie": await generateSessionCookie(await getUser(data.email)),
+                "Location": "/settings"
+            }
+        };
     } catch (e) {
         console.log(e);
         return internalServerError;
