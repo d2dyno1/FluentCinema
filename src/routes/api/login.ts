@@ -1,5 +1,5 @@
 import { getUser, createSessionId } from '$lib/db';
-import { badRequest, forbidden, internalServerError, ok } from "$lib/responses";
+import { badRequestWithMessage, forbiddenWithMessage, internalServerError, ok } from "$lib/responses";
 import { verify } from "$lib/argon2";
 var exports = {}; // dirty hack to make cookie work
 import { serialize } from "cookie";
@@ -8,16 +8,16 @@ export async function post({ request }) {
     try {
         const data = await request.json();
         if (!data.hasOwnProperty("email") || !data.hasOwnProperty("password")) {
-            return badRequest("Missing credentials.");
+            return badRequestWithMessage("Missing credentials.");
         }
 
         let user = await getUser(data.email);
         if (user == undefined) {
-            return badRequest("Account does not exist.");
+            return badRequestWithMessage("Account does not exist.");
         }
 
         if (!await verify(user.hashed_password, data.password)) {
-            return forbidden("Incorrect password.");
+            return forbiddenWithMessage("Incorrect password.");
         }
 
         const sessionId = await createSessionId(user);

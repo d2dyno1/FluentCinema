@@ -33,3 +33,7 @@ export async function createSessionId(user: User): Promise<string> {
     await client.query("INSERT INTO sessions(user_id, session, expires_at) VALUES ($1, $2, CURRENT_TIMESTAMP + (7 * interval '1 day'))", [user.id, session]);
     return session;
 }
+
+export async function invalidateSessionId(session: string): Promise<void> {
+    await client.query("DELETE FROM sessions WHERE session=$1", [session]);
+}

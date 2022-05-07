@@ -33,7 +33,8 @@ export async function handle({ event, resolve }) {
         const user = await getUserFromSession(cookies.session);
         if (user != undefined) {
             event.locals.user = {
-                email: user.email
+                email: user.email,
+                sessionId: cookies.session
             }
             return await resolve(event);
         }
@@ -48,7 +49,8 @@ export function getSession(event) {
     return event.locals.user
         ? {
             user: {
-                email: event.locals.user.email
+                email: event.locals.user.email,
+                sessionId: event.locals.user.sessionId
             }
         }
         : {};
