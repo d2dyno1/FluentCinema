@@ -37,6 +37,8 @@
 			justify-content: flex-start;
 		} @else if $justify == end {
 			justify-content: flex-end;
+		} @else if $justify == stretch {
+			justify-self: stretch;
 		} @else if $justify == space-between {
 			justify-content: space-between;
 		} @else if $justify == around {

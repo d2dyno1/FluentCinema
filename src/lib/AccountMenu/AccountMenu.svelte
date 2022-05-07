@@ -4,6 +4,8 @@
     import { default as LoginForm } from "../../layout/../layout/LoginForm.svelte";
     import { default as RegisterForm } from "../../layout/../layout/RegisterForm.svelte";
     
+    import ProfileIcon from "@fluentui/svg-icons/icons/person_32_filled.svg?raw"
+
     export let account: Account;
 
     let isLogin = true;
@@ -11,15 +13,19 @@
 
 <Flyout placement="bottom" alignment="end" offset={8}>
     <Button>
-        {#if account}
-            {account.name}
-            <PersonPicture size={32} alt={account.name} src={account.image} />
-        {:else}
-            Login
-            <PersonPicture size={32} alt="?" />
-        {/if}
+        <div class="inner-login-button">
+            {#if account}
+                {account.name}
+                <PersonPicture size={32} alt={account.name} src={account.image} />
+            {:else}
+                Login
+                <PersonPicture class="account-picture" size={32} alt="?">
+                    {@html ProfileIcon}
+                </PersonPicture>
+            {/if}
+        </div>
     </Button>
-    <div slot="override">
+    <div class="inner" slot="override">
         {#if isLogin}
             <LoginForm>
                 <TextBlock>Don't have an account? <a href="#" on:click={() => isLogin = false}>Sign up</a></TextBlock>
