@@ -1,16 +1,18 @@
 <script lang="ts">
     import { TextBox, TextBlock, Button, ProgressRing } from "fluent-svelte";
-    import { emailValidationRegex } from "../lib/validation";
+    import { emailValidationRegex } from "$lib/validation";
     import { DialogForm } from "$layout";
+    import { PromiseButton } from "$lib";
 
-    let email: String;
-    let password: String;
+    let email: string;
+    let password: string;
 
     let formComponent;
 
     let promise: Promise<Response>;
 
     function onLogin() {
+        console.log("on click");
         let isEmailValid = emailValidationRegex.test(email);
         if (!isEmailValid) {
             formComponent.showCriticalMessage("Invalid e-mail address.");
@@ -49,13 +51,7 @@
     <TextBox bind:value={email} type="email" placeholder="E-mail"></TextBox>
     <TextBox bind:value={password} type="password" placeholder="Password"></TextBox>
     <div slot="footer-left">
-        {#if promise == null}
-            <Button variant="accent" on:click={onLogin}>Log in</Button>
-        {:else}
-            {#await promise}
-                <ProgressRing size={28}/>
-            {/await}
-        {/if}
+        <PromiseButton variant="accent" bind:promise={promise} on:click={onLogin}>Log in</PromiseButton>
     </div>
     <div slot="footer-right">
         <TextBlock><a href="/resetpassword">Forgot password?</a></TextBlock>

@@ -1,6 +1,6 @@
 <script lang="ts" context="module">
     import { HeroSection, MoviesSection } from "$layout";
-    import { ok } from "../lib/responses";
+    import { ok } from "$lib/responses";
 
     export let promise;
 
@@ -10,8 +10,7 @@
                 'Content-Type': 'application/json'
             },
             method: 'GET'
-        }).then(response => response.json())
-
+        }).then(response => response.json());
         return ok;
     }
 </script>
