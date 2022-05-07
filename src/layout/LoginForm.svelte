@@ -12,7 +12,6 @@
     let promise: Promise<Response>;
 
     function onLogin() {
-        console.log("on click");
         let isEmailValid = emailValidationRegex.test(email);
         if (!isEmailValid) {
             formComponent.showCriticalMessage("Invalid e-mail address.");
