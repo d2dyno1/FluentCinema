@@ -9,6 +9,10 @@
     export let user: User;
 
     let isLoginPage = true;
+
+    function logOut() {
+        fetch("/api/logout", { method: "POST" }).then(() => window.location.replace(""));
+    }
 </script>
 
 {#if user}
@@ -30,7 +34,7 @@
             View reservation
         </MenuFlyoutItem>
         <MenuFlyoutDivider/>
-        <MenuFlyoutItem on:click>
+        <MenuFlyoutItem on:click={logOut}>
             Log out
         </MenuFlyoutItem>
     </div>

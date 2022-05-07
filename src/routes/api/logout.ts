@@ -4,7 +4,7 @@ import { forbidden, internalServerError } from "$lib/responses";
 import { serialize, parse } from "cookie";
 import {generateEmptySessionCookie} from "../../lib/auth/sessions";
 
-export async function get({ request }) {
+export async function post({ request }) {
     try {
         let session = getSessionFromRequest(request);
         if (!await isSessionValid(session)) {
