@@ -4,10 +4,13 @@ import type { User } from "../../data/User";
 import type { Session } from "../../data/Session";
 import {parse, serialize} from "cookie";
 import moment from "moment";
+import { promisify } from "util";
+
+const randomBytesAsync = promisify(crypto.randomBytes);
 
 export async function generateSession(user: User): Promise<Session> {
-    // TODO use a secure method for id generation
-    const session = crypto.randomUUID();
+    let bytes = await randomBytesAsync(64);
+    let session = bytes.toString("base64");
 
     const existingUser = await getUserBySession(session);
     if (existingUser != undefined) {
