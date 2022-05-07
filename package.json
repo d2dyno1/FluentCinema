@@ -23,6 +23,7 @@
   "dependencies": {
     "argon2": "^0.28.5",
     "fluent-svelte": "^1.5.1",
-    "pg": "^8.7.3"
+    "pg": "^8.7.3",
+    "svelte-i18n": "^3.4.0"
   }
 }
