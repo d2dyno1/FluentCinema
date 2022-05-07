@@ -1,6 +1,6 @@
 import { dev } from "$app/env";
 import { parse } from "cookie";
-import {getUserFromSession} from "../lib/db";
+import {getUserBySession} from "../lib/db";
 
 const rateLimitedEndpoints = [
     "api/login",
@@ -32,7 +32,7 @@ export async function handle({ event, resolve }) {
     // Session
     const cookies = parse(event.request.headers.get("cookie") || '');
     if (cookies.session) {
-        const user = await getUserFromSession(cookies.session);
+        const user = await getUserBySession(cookies.session);
         if (user != undefined) {
             event.locals.user = {
                 email: user.email,

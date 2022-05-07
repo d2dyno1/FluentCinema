@@ -1,4 +1,4 @@
-import { getUserFromSession } from '$lib/db';
+import { getUserBySession } from '$lib/db';
 import {getSessionFromRequest, invalidateSession, isSessionValid} from "../../lib/auth/sessions";
 import { forbidden, internalServerError } from "$lib/responses";
 import { serialize, parse } from "cookie";
@@ -11,7 +11,7 @@ export async function get({ request }) {
             return forbidden;
         }
 
-        let user = await getUserFromSession(session);
+        let user = await getUserBySession(session);
         if (user == undefined) {
             return forbidden;
         }

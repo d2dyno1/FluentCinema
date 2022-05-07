@@ -1,4 +1,4 @@
-import { client, getUser } from "$lib/db";
+import {client, getUser, isUsernameTaken} from "$lib/db";
 import { badRequest, badRequestWithMessage, forbidden, internalServerError, ok} from "$lib/responses";
 import {usernameValidationRegex, validateCredentials} from "$lib/validation";
 import * as argon2 from "../../lib/auth/argon2";
@@ -17,9 +17,10 @@ export async function post({ request }) {
             return badRequest;
         }
 
-        const existingUser = await getUser(data.email);
-        if (existingUser != undefined) {
+        if (await getUser(data.email) != undefined) {
             return badRequestWithMessage("This e-mail address is already in use.");
+        } else if (await isUsernameTaken(data.username)) {
+            return badRequestWithMessage("This username is already taken.");
         }
 
         const hashedPassword = await argon2.hash(data.password);

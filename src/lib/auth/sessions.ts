@@ -1,5 +1,5 @@
 import crypto from "crypto";
-import {client, getUserFromSession} from "../db";
+import {client, getUserBySession} from "../db";
 import type { User } from "../../data/User";
 import type { Session } from "../../data/Session";
 import {parse, serialize} from "cookie";
@@ -9,7 +9,7 @@ export async function generateSession(user: User): Promise<Session> {
     // TODO use a secure method for id generation
     const session = crypto.randomUUID();
 
-    const existingUser = await getUserFromSession(session);
+    const existingUser = await getUserBySession(session);
     if (existingUser != undefined) {
         return generateSession(user);
     }
