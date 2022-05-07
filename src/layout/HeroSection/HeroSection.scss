@@ -39,6 +39,9 @@
         display: flex;
         justify-content: center;
         height: 525px;
+        user-select: none;
+        -webkit-user-drag: none;
+        -webkit-user-select: none;
     }
 }
 

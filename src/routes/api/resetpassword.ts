@@ -1,4 +1,4 @@
-import { getUser } from "$lib/database/db";
+import { getUser } from "$lib/db";
 import {badRequest, internalServerError, ok} from "$lib/responses";
 
 export async function post({ request }) {
