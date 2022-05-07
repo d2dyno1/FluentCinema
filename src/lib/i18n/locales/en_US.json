@@ -1,3 +1,37 @@
 {
-
+    "general": {
+        "email": "E-mail",
+        "password": "Password",
+        "confirmPassword": "Confirm password",
+        "error": {
+            "apiMissingData": "Request body is missing data.",
+            "email": {
+                "invalid": "Invalid e-mail address.",
+                "inUse": "This e-mail address is already in use.",
+                "notAssociated": "This e-mail address is not associated with any account."
+            },
+            "password": {
+                "different": "Passwords are not the same.",
+                "empty": "Password cannot be empty.",
+                "incorrect": "Incorrect password."
+            }
+        }
+    },
+    "form": {
+        "login": {
+            "actionButton": "Log in",
+            "createAccount": "Create account",
+            "noAccount": "Don't have an account?",
+            "title": "Log in",
+            "passwordReset": "Forgot password?",
+            "successMessage": "You have logged in successfully. You will be redirected soon."
+        },
+        "register": {
+            "actionButton": "Register",
+            "haveAccount": "Already have an account?",
+            "title": "Register",
+            "passwordRequirementsWarning": "A password must consist of at least eight characters, including an uppercase letter, a digit and a special character.",
+            "successMessage": "Your account has been created successfully. Before logging in, please verify your e-mail by clicking the link that was sent to it."
+        }
+    }
 }

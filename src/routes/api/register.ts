@@ -6,15 +6,13 @@ import * as argon2 from "$lib/argon2";
 export async function post({ request }) {
     try {
         const data = await request.json();
-        if (!data.hasOwnProperty("email") || !data.hasOwnProperty("password")) {
-            return badRequest("Missing credentials.");
-        } else if (!validateCredentials(data.email, data.password)) {
-            return badRequest("Invalid credentials.");
+        if (!data.hasOwnProperty("email") || !data.hasOwnProperty("password") || !validateCredentials(data.email, data.password)) {
+            return badRequest("");
         }
 
         const existingUser = await getUser(data.email);
         if (existingUser != undefined) {
-            return badRequest("This e-mail address is already in use.");
+            return badRequest("general.error.email.inUse");
         }
 
         const hashedPassword = await argon2.hash(data.password);
