@@ -1,10 +1,13 @@
 <script lang="ts" context="module">
     import { Navbar } from "$layout";
-    import type { NavbarButton, NavbarItem } from "src/data/navbar";
+    import type { NavbarButton, NavbarItem } from "$data/navbar";
+    import type { User } from "$data/User";
     import { ok } from "$lib/responses";
 
     import Code from "@fluentui/svg-icons/icons/code_24_regular.svg?raw";
     import {promise} from "./index.svelte";
+
+    let user: User;
 
     const navbarItems: NavbarItem[] = [
         {
@@ -25,12 +28,13 @@
         if (Object.keys(session).length != 0) {
             // user is logged in
             console.log(session);
+            user = session.user;
         };
         return ok;
     }
 </script>
 
-<Navbar navbarItems={navbarItems} navbarButtons={navbarButtons}/>
+<Navbar user={user} navbarItems={navbarItems} navbarButtons={navbarButtons}/>
 <slot/>
 <!-- <Footer/> -->
 
