@@ -1,30 +1,48 @@
 <script lang="ts">
-    import { PersonPicture, Button, Flyout, TextBlock } from "fluent-svelte";
+    import { PersonPicture, Button, Flyout, TextBlock, MenuFlyout, MenuFlyoutItem, MenuFlyoutDivider } from "fluent-svelte";
     import type { User } from "$data/User";
     import { default as LoginForm } from "../../layout/../layout/LoginForm.svelte";
     import { default as RegisterForm } from "../../layout/../layout/RegisterForm.svelte";
     
-    import ProfileIcon from "@fluentui/svg-icons/icons/person_32_filled.svg";
+    import ProfileIcon from "@fluentui/svg-icons/icons/person_32_filled.svg?raw";
 
     export let user: User;
 
     let isLoginPage = true;
 </script>
 
-<Flyout placement="bottom" alignment="end" offset={8}>
+{#if user}
+<MenuFlyout placement="bottom" alignment="end">
     <Button>
         <div class="inner-login-button">
-            {#if user}
-                {user.username}
-                <PersonPicture size={32} alt={user.username}>
-                    <img class="user-picture" src="/api/userPicture">
-                </PersonPicture>
-            {:else}
-                Login
-                <PersonPicture class="account-picture" size={32} alt="?">
-                    <img class="user-picture" src={ProfileIcon}>
-                </PersonPicture>
-            {/if}
+            {user.username}
+            <PersonPicture size={32} alt={user.username}>
+                <img class="user-picture" alt={user.username} src="/api/userPicture">
+            </PersonPicture>
+        </div>
+    </Button>
+    <div slot="flyout">
+        <MenuFlyoutItem on:click>
+            {@html ProfileIcon}
+            FluentCinema Accout
+        </MenuFlyoutItem>
+        <MenuFlyoutItem on:click>
+            View reservation
+        </MenuFlyoutItem>
+        <MenuFlyoutDivider/>
+        <MenuFlyoutItem on:click>
+            Log out
+        </MenuFlyoutItem>
+    </div>
+</MenuFlyout>
+{:else}
+<Flyout placement="bottom" alignment="end">
+    <Button>
+        <div class="inner-login-button">
+            Login
+            <PersonPicture class="account-picture" size={32} alt="?">
+                {@html ProfileIcon}
+            </PersonPicture>
         </div>
     </Button>
     <div class="inner" slot="override">
@@ -39,6 +57,7 @@
         {/if}
     </div>
 </Flyout>
+{/if}
 
 <style lang="scss">
     @use "AccountMenu";
