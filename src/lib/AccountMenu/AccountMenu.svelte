@@ -11,7 +11,7 @@
     let isLoginPage = true;
 
     function logOut() {
-        fetch("/api/logout", { method: "POST" }).then(() => window.location.replace(""));
+        fetch("/api/logout", { method: "POST" }).then(() => window.location.replace("/"));
     }
 </script>
 
