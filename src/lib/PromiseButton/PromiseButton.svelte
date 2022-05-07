@@ -2,7 +2,7 @@
     import { Button, ProgressRing } from "fluent-svelte";
     import { createEventDispatcher } from "svelte";
 
-    export let variant: string;
+    export let variant = "accent";
     export let promise: Promise<any>;
 
     const dispatch = createEventDispatcher();
@@ -10,11 +10,11 @@
 </script>
 
 <div>
-    {#if promise == null}
-        <Button variant={variant} on:click={click}><slot/></Button>
-    {:else}
-        {#await promise}
-            <ProgressRing size={28}/>
-        {/await}
-    {/if}
+    {#await promise}
+        <ProgressRing size={28}/>
+    {:then value}
+        <Button {variant} on:click={click}><slot/></Button>
+    {:catch err}
+        <Button {variant} on:click={click}><slot/></Button>
+    {/await}
 </div>

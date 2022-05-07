@@ -1,5 +1,4 @@
-// @ts-ignore
-import { Client, QueryResult } from 'pg';
+import { Client } from 'pg';
 import type { User } from "$data/User";
 import db from "../../db.json"
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { InfoBar, TextBox, Button, ProgressRing } from "fluent-svelte";
+    import { InfoBar, TextBox } from "fluent-svelte";
     import { emailValidationRegex, passwordValidationRegex } from "$lib/validation";
     import { DialogForm } from "$layout";
     import { PromiseButton } from "$lib";
@@ -39,24 +39,18 @@
                 } else {
                     formComponent.showCriticalMessage(response.message);
                 }
-                promise = null;
             });
-            promise.catch(error => {
-                formComponent.showCriticalMessage(error.message);
-                promise = null;
-            });
+            promise.catch(err => formComponent.showCriticalMessage(err.message));
         }
     }
 </script>
 
 <DialogForm title="Register" bind:this={formComponent}>
-    <TextBox bind:value={email} type="email" placeholder="E-mail"></TextBox>
-    <TextBox bind:value={password} type="password" placeholder="Password"></TextBox>
-    <TextBox bind:value={confirmedPassword} type="password" placeholder="Confirm password"></TextBox>
+    <TextBox bind:value={email} type="email" placeholder="E-mail"/>
+    <TextBox bind:value={password} type="password" placeholder="Password"/>
+    <TextBox bind:value={confirmedPassword} type="password" placeholder="Confirm password"/>
     <InfoBar bind:open={isPasswordInvalid} message="A password must consist of at least eight characters, including an uppercase letter, a digit and a special character." severity="caution" class="full-width" closable={false}/>
-    <div slot="footer-left">
-        <PromiseButton variant="accent" bind:promise={promise} on:click={onRegister}>Register</PromiseButton>
-    </div>
+    <PromiseButton slot="footer-left" bind:promise={promise} on:click={onRegister}>Register</PromiseButton>
     <slot/>
 </DialogForm>
 
