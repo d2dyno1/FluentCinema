@@ -1,26 +1,32 @@
 <script lang="ts">
-    import { InfoBar, TextBox, TextBlock, Button, ProgressRing } from "fluent-svelte";
-    import { emailValidationRegex, passwordValidationRegex } from "../lib/validation";
+    import { InfoBar, TextBox } from "fluent-svelte";
+    import {emailValidationRegex, passwordValidationRegex, usernameValidationRegex} from "$lib/validation";
     import { DialogForm } from "$layout";
+    import { PromiseButton } from "$lib";
 
     let formComponent;
 
-    let email: String;
-    let password: String;
-    let confirmedPassword: String;
+    let username: string;
+    let email: string;
+    let password: string;
+    let confirmedPassword: string;
+    $: isUsernameValid = usernameValidationRegex.test(username);
     $: isPasswordInvalid = !passwordValidationRegex.test(password);
 
     let promise: Promise<Response>;
 
     function onRegister() {
-        if (!emailValidationRegex.test(email)) {
+        if (!isUsernameValid) {
+            formComponent.showCriticalMessage("A username must be between 2 and 16 characters long and can only consist of letters, digits and underscores.");
+            return;
+        } else if (!emailValidationRegex.test(email)) {
             formComponent.showCriticalMessage("Invalid e-mail address.");
             return;
         } else if (password != confirmedPassword) {
             formComponent.showCriticalMessage("Passwords don't match.");
             return;
         }
-        formComponent.hideMessage();
+
         if (!isPasswordInvalid) {
             promise = fetch("/api/register", {
                 headers: {
@@ -28,40 +34,28 @@
                 },
                 method: 'POST',
                 body: JSON.stringify({
+                    username: username,
                     email: email,
                     password: password
                 })
             });
             promise.then(response => response.json()).then(response => {
-                if (response.success) {
-                    formComponent.showSuccessMessage("Your account has been created successfully. Before logging in, please verify your e-mail by clicking the link that was sent to it.");
-                } else {
+                if (!response.success) {
                     formComponent.showCriticalMessage(response.message);
                 }
-                promise = null;
             });
-            promise.catch(error => {
-                formComponent.showCriticalMessage(error.message);
-                promise = null;
-            });
+            promise.catch(err => formComponent.showCriticalMessage(err.message));
         }
     }
 </script>
 
 <DialogForm title="Register" bind:this={formComponent}>
-    <TextBox bind:value={email} type="email" placeholder="E-mail"></TextBox>
-    <TextBox bind:value={password} type="password" placeholder="Password"></TextBox>
-    <TextBox bind:value={confirmedPassword} type="password" placeholder="Confirm password"></TextBox>
+    <TextBox bind:value={username} placeholder="Username"/>
+    <TextBox bind:value={email} type="email" placeholder="E-mail"/>
+    <TextBox bind:value={password} type="password" placeholder="Password"/>
+    <TextBox bind:value={confirmedPassword} type="password" placeholder="Confirm password"/>
     <InfoBar bind:open={isPasswordInvalid} message="A password must consist of at least eight characters, including an uppercase letter, a digit and a special character." severity="caution" class="full-width" closable={false}/>
-    <div slot="footer-right">
-        {#if promise == null}
-            <Button variant="accent" on:click={onRegister}>Register</Button>
-        {:else}
-            {#await promise}
-                <ProgressRing/>
-            {/await}
-        {/if}
-    </div>
+    <PromiseButton slot="footer-left" bind:promise={promise} on:click={onRegister}>Register</PromiseButton>
     <slot/>
 </DialogForm>
 

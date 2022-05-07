@@ -1,5 +1,5 @@
-<script>
-    import { ContentDialog, InfoBar } from "fluent-svelte";
+<script lang="ts">
+    import { InfoBar, TextBlock } from "fluent-svelte";
 
     export let title;
 
@@ -28,20 +28,19 @@
 </script>
 
 
-<ContentDialog open={true} title={title} darken={false} trapFocus={false}>
-    <div class="main">
+<div class="dialog-form">
+    <div class="content">
+        <TextBlock variant="subtitle">{title}</TextBlock>
         <InfoBar bind:open={showInfoBar} bind:message={infoBarMessage} bind:severity={infoBarSeverity} closable={false} class="full-width"/>
-        <slot class="main"/>
+        <slot/>
     </div>
-    <div slot="footer" class="footer">
-        <div class="align-left">
-            <slot name="footer-left"/>
-        </div>
-        <div class="align-right">
+    <div class="footer">
+        <slot name="footer-left"/>
+        <div class="footer-right">
             <slot name="footer-right"/>
         </div>
     </div>
-</ContentDialog>
+</div>
 
 <style lang="scss">
     @use "DialogForm";

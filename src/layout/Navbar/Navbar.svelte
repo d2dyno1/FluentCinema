@@ -1,7 +1,11 @@
 <script lang="ts">
     import { Tooltip } from "fluent-svelte";
-    import type { NavbarButton, NavbarItem } from "src/data/navbar";
+    import { AccountMenu } from "$lib";
+    import type { User } from "$data/User";
+    import type { NavbarButton, NavbarItem } from "$data/navbar";
+    import {ok} from "../../lib/responses";
 
+    export let user: User;
     export let navbarItems: NavbarItem[] = [];
     export let navbarButtons: NavbarButton[] = [];
 </script>
@@ -30,12 +34,13 @@
     </nav>
     <div class="navbar-buttons">
         {#each navbarButtons as { name, path, icon }}
-            <Tooltip placement="bottom" text={name}>
-                <a class="navbar-button" href={path}>
+            <Tooltip class="navbar-button" placement="bottom" text={name}>
+                <a href={path}>
                     {@html icon}
                 </a>
             </Tooltip>
         {/each}
+        <AccountMenu user={user}/>
     </div>
 </header>
 
