@@ -1,11 +1,16 @@
-import { getUser, createSessionId } from '$lib/db';
-import { badRequestWithMessage, forbiddenWithMessage, internalServerError, ok } from "$lib/responses";
-import { verify } from "$lib/argon2";
+import { getUser } from '$lib/db';
+import {badRequestWithMessage, forbidden, forbiddenWithMessage, internalServerError, ok} from "$lib/responses";
+import { verify } from "../../lib/auth/argon2";
 var exports = {}; // dirty hack to make cookie work
-import { serialize } from "cookie";
+import {parse, serialize} from "cookie";
+import {generateSessionCookie, getSessionFromRequest, isSessionValid} from "../../lib/auth/sessions";
 
 export async function post({ request }) {
     try {
+        if (await isSessionValid(getSessionFromRequest(request))) {
+            return forbidden;
+        }
+
         const data = await request.json();
         if (!data.hasOwnProperty("email") || !data.hasOwnProperty("password")) {
             return badRequestWithMessage("Missing credentials.");
@@ -20,21 +25,13 @@ export async function post({ request }) {
             return forbiddenWithMessage("Incorrect password.");
         }
 
-        const sessionId = await createSessionId(user);
-
-        const expiryDate = new Date();
-        expiryDate.setDate(expiryDate.getDate() + 7);
         return {
             status: 200,
             body: {
-                success: true,
-                test: sessionId
+                success: true
             },
             headers: {
-                'Set-Cookie': serialize("session", sessionId, {
-                    expires: expiryDate,
-                    path: "/"
-                })
+                'Set-Cookie': await generateSessionCookie(user)
             }
         };
     } catch (e) {

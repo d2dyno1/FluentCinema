@@ -34,9 +34,7 @@
                 })
             });
             promise.then(response => response.json()).then(response => {
-                if (response.success) {
-                    formComponent.showSuccessMessage("Your account has been created successfully. Before logging in, please verify your e-mail by clicking the link that was sent to it.");
-                } else {
+                if (!response.success) {
                     formComponent.showCriticalMessage(response.message);
                 }
             });

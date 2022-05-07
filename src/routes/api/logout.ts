@@ -1,11 +1,13 @@
-import { getUserFromSession, invalidateSessionId } from '$lib/db';
-import { forbidden, badRequest, internalServerError } from "$lib/responses";
+import { getUserFromSession } from '$lib/db';
+import {getSessionFromRequest, invalidateSession, isSessionValid} from "../../lib/auth/sessions";
+import { forbidden, internalServerError } from "$lib/responses";
 import { serialize, parse } from "cookie";
+import {generateEmptySessionCookie} from "../../lib/auth/sessions";
 
 export async function get({ request }) {
     try {
-        let session = parse(request.headers.get("cookie") || "").session;
-        if (session == undefined) {
+        let session = getSessionFromRequest(request);
+        if (!await isSessionValid(session)) {
             return forbidden;
         }
 
@@ -14,19 +16,14 @@ export async function get({ request }) {
             return forbidden;
         }
 
-        await invalidateSessionId(session);
-
+        await invalidateSession(session);
         return {
             status: 200,
             body: {
                 success: true
             },
             headers: {
-                'Set-Cookie': serialize("session", "", {
-                    maxAge: 0,
-                    expires: new Date(),
-                    path: "/"
-                })
+                "Set-Cookie": generateEmptySessionCookie()
             }
         };
     } catch (e) {

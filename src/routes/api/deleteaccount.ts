@@ -1,6 +1,6 @@
 import {client, getUser} from '$lib/db';
 import {badRequestWithMessage, forbiddenWithMessage, internalServerError, ok} from "$lib/responses";
-import { verify } from "$lib/argon2";
+import { verify } from "../../lib/auth/argon2";
 
 export async function del({ request }) {
     try {
