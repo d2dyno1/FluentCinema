@@ -15,7 +15,7 @@
         }
         formComponent.hideMessage();
 
-        promise = fetch("/api/resetpassword", {
+        promise = fetch("/api/account/password/reset", {
             headers: {
                 'Content-Type': 'application/json'
             },

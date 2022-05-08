@@ -20,7 +20,7 @@
             return;
         }
 
-        promise = fetch("/api/login", {
+        promise = fetch("/api/account/login", {
             headers: {
                 'Content-Type': 'application/json'
             },

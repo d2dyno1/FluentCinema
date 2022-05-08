@@ -1,8 +1,8 @@
-import {client, getUser, getUserBySession} from '$lib/db';
-import {badRequestWithMessage, forbidden, forbiddenWithMessage, internalServerError, ok} from "$lib/responses";
-import { verify } from "../../lib/auth/argon2";
+import {client, getUser, getUserBySession} from '../../../lib/db';
+import {badRequestWithMessage, forbidden, forbiddenWithMessage, internalServerError, ok} from "../../../lib/responses";
+import { verify } from "../../../lib/auth/argon2";
 import type {RequestHandler} from "@sveltejs/kit";
-import {getSessionFromRequest, isSessionValid} from "../../lib/auth/sessions";
+import {getSessionFromRequest, isSessionValid} from "../../../lib/auth/sessions";
 
 export const del: RequestHandler = async ({ request }) => {
     try {
