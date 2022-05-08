@@ -11,7 +11,7 @@ var exports = {}; // dirty hack to make cookie work
 import {parse, serialize} from "cookie";
 import {generateSessionCookie, getSessionFromRequest, isSessionValid} from "../../../lib/auth/sessions";
 import type { RequestHandler } from "@sveltejs/kit";
-import type { LoginParameters } from "../../../data/params/LoginParameters";
+import type { LoginParams } from "../../../data/params/LoginParams";
 
 export const post: RequestHandler = async ({ request }) => {
     try {
@@ -19,7 +19,7 @@ export const post: RequestHandler = async ({ request }) => {
             return forbidden;
         }
 
-        let params: LoginParameters = await request.json();
+        let params: LoginParams = await request.json();
         if (params.email == null || params.password == null) {
             return missingParameters;
         }

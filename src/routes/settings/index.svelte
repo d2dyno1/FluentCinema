@@ -8,12 +8,12 @@
         fetch("/api/account/picture/upload", {
             method: "PUT",
             body: files.files[0]
-        });
+        }).then(() => window.location.reload());
     }
 </script>
 
 <div>
-    <input bind:this={files} type="file" accept=".jpg, .jpeg, .png">
+    <input bind:this={files} type="file" accept=".jpg, .jpeg, .png, .svg">
     <Button on:click={uploadPicture}>upload</Button>
 </div>
 

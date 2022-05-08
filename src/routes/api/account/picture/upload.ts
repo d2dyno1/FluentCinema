@@ -19,7 +19,7 @@ export const put: RequestHandler = async ({ request }) => {
             return badRequest;
         }
         let processedImageBuffer = await sharp(buffer)
-            .resize(32)
+            .resize(512)
             .png()
             .toBuffer();
 
