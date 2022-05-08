@@ -1,5 +1,20 @@
 @use "src/styles/mixins" as *;
 
+.wrapper {
+    @include flex($direction: column);
+    flex: 1 1 auto;
+    padding: 0px 2% 0px 2%;
+    background-color: var(--fds-solid-background-base);
+    border-block-start: 1px solid var(--fds-divider-stroke-default);
+}
+
+.header {
+    @include flex($direction: row, $align: center);
+    justify-content: space-between;
+    flex: 1 1 auto;
+    gap: 16px
+}
+
 .movie-positions {
     @include flex($direction: row, $align: center, $justify: start);
     flex: 1 1 auto;
