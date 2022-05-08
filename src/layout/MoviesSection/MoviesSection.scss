@@ -4,7 +4,7 @@
     @include flex($direction: column);
     flex: 1 1 auto;
     padding: 0px 2% 0px 2%;
-    background-color: var(--fds-solid-background-base);
+    background-color: var(--fds-solid-background-secondary);
     border-block-start: 1px solid var(--fds-divider-stroke-default);
 }
 
