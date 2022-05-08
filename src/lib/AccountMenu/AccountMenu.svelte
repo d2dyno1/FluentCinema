@@ -4,6 +4,9 @@
     import { default as RegisterForm } from "../../layout/../layout/RegisterForm.svelte";
     
     import ProfileIcon from "@fluentui/svg-icons/icons/person_32_filled.svg?raw";
+    import EyeIcon from "@fluentui/svg-icons/icons/eye_24_filled.svg?raw";
+    import DoorArrowLeftIcon from "@fluentui/svg-icons/icons/door_arrow_left_24_filled.svg?raw";
+
     import type {Session} from "../../data/Session";
 
     export let session: Session;
@@ -26,15 +29,17 @@
         </div>
     </Button>
     <div slot="flyout">
-        <MenuFlyoutItem on:click>
+        <MenuFlyoutItem on:click={() => window.location.replace("/settings")}>
             {@html ProfileIcon}
-            FluentCinema Accout
+            FluentCinema Account
         </MenuFlyoutItem>
         <MenuFlyoutItem on:click>
-            View reservation
+            {@html EyeIcon}
+            View reservations
         </MenuFlyoutItem>
         <MenuFlyoutDivider/>
         <MenuFlyoutItem on:click={logOut}>
+            {@html DoorArrowLeftIcon}
             Log out
         </MenuFlyoutItem>
     </div>

@@ -1,4 +1,5 @@
-@use "src/styles/mixins" as *;
+//@use "src/styles/mixins" as *;
+@use "fluent-svelte/mixins" as *;
 
 nav,
 .navbar,
@@ -53,4 +54,9 @@ nav,
 
 .app-title {
     color: unset;
+}
+
+:global(svg) {
+    @include icon($size: 20px);
+    fill: var(--fds-text-primary);
 }

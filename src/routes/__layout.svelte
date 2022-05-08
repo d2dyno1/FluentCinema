@@ -4,7 +4,9 @@
     import type { User } from "$data/User";
     import { ok } from "$lib/responses";
 
-    import Code from "@fluentui/svg-icons/icons/code_24_regular.svg?raw";
+    import CodeIcon from "@fluentui/svg-icons/icons/code_24_filled.svg?raw";
+    import HomeIcon from "@fluentui/svg-icons/icons/home_24_filled.svg?raw";
+
     import type {Session} from "../data/Session";
 
     let session_: Session; // "session" doesn't work for some reason...
@@ -13,14 +15,14 @@
         {
             name: "Home",
             path: "/",
-            icon: null // TODO: Home icon (fluentui icons)
+            icon: HomeIcon
         }
     ];
     const navbarButtons: NavbarButton[] = [
         {
             name: "View GitHub repository",
             path: "https://github.com/d2dyno1/FluentCinema",
-            icon: Code
+            icon: CodeIcon
         }
     ];
 
