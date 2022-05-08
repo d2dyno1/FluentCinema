@@ -1,6 +1,6 @@
 import crypto from "crypto";
 import { promisify } from "util";
-import type { User } from "../../data/User";
+import type { User } from "../../data/db/User";
 import {client} from "../db";
 import moment from "moment";
 import type { EmailVerificationToken } from "../../data/db/EmailVerificationToken";

@@ -2,7 +2,7 @@ import * as fs from "fs";
 import type {RequestHandler} from "@sveltejs/kit";
 import {client, getUserBySession} from "../../../../lib/db";
 import {getSessionFromRequest, isSessionValid} from "../../../../lib/auth/sessions";
-import type {User} from "../../../../data/User";
+import type {User} from "../../../../data/db/User";
 import sharp from "sharp";
 const fsPromises = fs.promises;
 

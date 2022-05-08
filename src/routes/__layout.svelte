@@ -5,9 +5,9 @@
     import { ok } from "$lib/responses";
 
     import Code from "@fluentui/svg-icons/icons/code_24_regular.svg?raw";
-    import {promise} from "./index.svelte";
+    import type {Session} from "../data/Session";
 
-    let user: User;
+    let session_: Session; // "session" doesn't work for some reason...
 
     const navbarItems: NavbarItem[] = [
         {
@@ -25,16 +25,12 @@
     ];
 
     export async function load({ session }) {
-        if (Object.keys(session).length != 0) {
-            // user is logged in
-            console.log(session);
-            user = session.user;
-        };
+        session_ = session;
         return ok;
     }
 </script>
 
-<Navbar user={user} navbarItems={navbarItems} navbarButtons={navbarButtons}/>
+<Navbar session={session_} navbarItems={navbarItems} navbarButtons={navbarButtons}/>
 <slot/>
 <!-- <Footer/> -->
 

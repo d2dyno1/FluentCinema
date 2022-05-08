@@ -1,6 +1,7 @@
-<script lang="ts">
+<script lang="ts" context="module">
     import { ActionBlock } from "$lib";
     import { Button } from "fluent-svelte";
+    import {ok} from "../../lib/responses";
 
 
     let files: HTMLInputElement;
@@ -10,6 +11,16 @@
             body: files.files[0]
         }).then(() => window.location.reload());
     }
+
+    export async function load({ session }) {
+        if (!session.isLoggedIn) {
+            return {
+                status: 302,
+                redirect: "/"
+            }
+        }
+        return ok;
+    };
 </script>
 
 <div>

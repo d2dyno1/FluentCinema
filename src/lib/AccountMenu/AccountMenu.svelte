@@ -1,12 +1,12 @@
 <script lang="ts">
     import { PersonPicture, Button, Flyout, TextBlock, MenuFlyout, MenuFlyoutItem, MenuFlyoutDivider } from "fluent-svelte";
-    import type { User } from "$data/User";
     import { default as LoginForm } from "../../layout/../layout/LoginForm.svelte";
     import { default as RegisterForm } from "../../layout/../layout/RegisterForm.svelte";
     
     import ProfileIcon from "@fluentui/svg-icons/icons/person_32_filled.svg?raw";
+    import type {Session} from "../../data/Session";
 
-    export let user: User;
+    export let session: Session;
 
     let isLoginPage = true;
 
@@ -15,13 +15,13 @@
     }
 </script>
 
-{#if user}
+{#if session.isLoggedIn}
 <MenuFlyout placement="bottom" alignment="end">
     <Button>
         <div class="inner-login-button">
-            {user.username}
-            <PersonPicture size={32} alt={user.username}>
-                <img class="user-picture" alt={user.username} src="/api/account/picture/current">
+            {session.user.username}
+            <PersonPicture size={32} alt={session.user.username}>
+                <img class="user-picture" alt={session.user.username} src="/api/account/picture/current">
             </PersonPicture>
         </div>
     </Button>

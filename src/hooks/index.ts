@@ -1,6 +1,9 @@
 import { dev } from "$app/env";
 import { parse } from "cookie";
 import {getUserBySession} from "../lib/db";
+import type {Session} from "../data/Session";
+import type {User} from "../data/db/User";
+// import type {GetSession} from "@sveltejs/kit";
 
 const rateLimitedEndpoints = [
     "api/login",
@@ -32,30 +35,28 @@ export async function handle({ event, resolve }) {
     // Session
     const cookies = parse(event.request.headers.get("cookie") || '');
     if (cookies.session) {
-        const user = await getUserBySession(cookies.session);
-        if (user != undefined) {
-            event.locals.user = {
-                email: user.email,
-                username: user.username
+        const user: User = await getUserBySession(cookies.session);
+        if (user != null) {
+            let session: Session = {
+                isLoggedIn: true,
+                user: {
+                    email: user.email,
+                    username: user.username
+                }
             }
+            event.locals.session = session;
             return await resolve(event);
         }
     }
 
-    event.locals.user = null;
+    event.locals.session = null;
 
     return await resolve(event);
 }
 
-export function getSession(event) {
-    return event.locals.user
-        ? {
-            user: {
-                email: event.locals.user.email,
-                username: event.locals.user.username
-            }
-        }
-        : {};
+export const getSession: GetSession = (event) => {
+    // @ts-ignore
+    return event.locals.session ? event.locals.session : { isLoggedIn: false};
 }
 
 setInterval(() => {
