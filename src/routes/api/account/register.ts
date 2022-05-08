@@ -1,12 +1,12 @@
-import {client, getUser, isUsernameTaken} from "$lib/db";
-import {badRequest, badRequestWithMessage, forbidden, internalServerError, missingParameters, ok} from "$lib/responses";
-import {usernameValidationRegex, validateCredentials} from "$lib/validation";
-import * as argon2 from "../../lib/auth/argon2";
-import {generateSessionCookie, getSessionFromRequest, isSessionValid} from "../../lib/auth/sessions";
-import {sendMail} from "../../lib/mail";
-import {generateVerificationLink} from "../../lib/auth/emailverification";
+import {client, getUser, isUsernameTaken} from "../../../lib/db";
+import {badRequest, badRequestWithMessage, forbidden, internalServerError, missingParameters, ok} from "../../../lib/responses";
+import {usernameValidationRegex, validateCredentials} from "../../../lib/validation";
+import * as argon2 from "../../../lib/auth/argon2";
+import {generateSessionCookie, getSessionFromRequest, isSessionValid} from "../../../lib/auth/sessions";
+import {sendMail} from "../../../lib/mail";
+import {generateVerificationLink} from "../../../lib/auth/emailverification";
 import type {RequestHandler} from "@sveltejs/kit";
-import type {RegisterParams} from "../../data/params/RegisterParams"
+import type {RegisterParams} from "../../../data/params/RegisterParams"
 
 export const post: RequestHandler = async ({ request }) => {
     try {

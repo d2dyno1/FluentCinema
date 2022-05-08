@@ -28,7 +28,7 @@
         }
 
         if (!isPasswordInvalid) {
-            promise = fetch("/api/register", {
+            promise = fetch("/api/account/register", {
                 headers: {
                     'Content-Type': 'application/json'
                 },

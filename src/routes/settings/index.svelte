@@ -1,7 +1,21 @@
 <script lang="ts">
     import { ActionBlock } from "$lib";
     import { Button } from "fluent-svelte";
+
+
+    let files: HTMLInputElement;
+    function uploadPicture() {
+        fetch("/api/account/picture/upload", {
+            method: "PUT",
+            body: files.files[0]
+        });
+    }
 </script>
+
+<div>
+    <input bind:this={files} type="file" accept=".jpg, .jpeg, .png">
+    <Button on:click={uploadPicture}>upload</Button>
+</div>
 
 <ActionBlock title="Password" description="a">
     <Button slot="action">Change</Button>

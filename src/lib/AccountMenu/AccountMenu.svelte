@@ -11,7 +11,7 @@
     let isLoginPage = true;
 
     function logOut() {
-        fetch("/api/logout", { method: "POST" }).then(() => window.location.replace("/"));
+        fetch("/api/account/logout", { method: "POST" }).then(() => window.location.replace("/"));
     }
 </script>
 
@@ -21,7 +21,7 @@
         <div class="inner-login-button">
             {user.username}
             <PersonPicture size={32} alt={user.username}>
-                <img class="user-picture" alt={user.username} src="/api/userPicture">
+                <img class="user-picture" alt={user.username} src="/api/account/picture/current">
             </PersonPicture>
         </div>
     </Button>

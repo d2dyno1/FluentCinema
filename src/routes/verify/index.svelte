@@ -15,7 +15,7 @@
     let promise: Promise<string>
 
     onMount(() => {
-        promise = fetch("/api/verifyEmail", {
+        promise = fetch("/api/account/email/verify", {
             headers: {
                 'Content-Type': "application/json"
             },

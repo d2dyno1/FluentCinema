@@ -1,17 +1,17 @@
-import { getUser } from '$lib/db';
+import { getUser } from '../../../lib/db';
 import {
     badRequestWithMessage,
     forbidden,
     forbiddenWithMessage,
     internalServerError,
     missingParameters
-} from "$lib/responses";
-import { verify } from "../../lib/auth/argon2";
+} from "../../../lib/responses";
+import { verify } from "../../../lib/auth/argon2";
 var exports = {}; // dirty hack to make cookie work
 import {parse, serialize} from "cookie";
-import {generateSessionCookie, getSessionFromRequest, isSessionValid} from "../../lib/auth/sessions";
+import {generateSessionCookie, getSessionFromRequest, isSessionValid} from "../../../lib/auth/sessions";
 import type { RequestHandler } from "@sveltejs/kit";
-import type { LoginParameters } from "../../data/params/LoginParameters";
+import type { LoginParameters } from "../../../data/params/LoginParameters";
 
 export const post: RequestHandler = async ({ request }) => {
     try {
