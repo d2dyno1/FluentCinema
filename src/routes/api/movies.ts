@@ -1,12 +1,16 @@
 import { client } from '$lib/db';
 import { internalServerError } from "$lib/responses";
+import type {RequestHandler} from "@sveltejs/kit";
+import type {MovieData} from "../../data/movies";
 
-export async function get({ request }) {
+export const get: RequestHandler = async () => {
     try {
-        const movies = await client.query("SELECT * FROM movies");
+        let query = await client.query("SELECT * FROM movies");
+        let rows: MovieData[] = query.rows;
+
         return {
             status: 200,
-            body: movies.rows
+            body: rows
         }
     } catch (e) {
         console.log(e);

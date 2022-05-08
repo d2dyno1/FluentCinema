@@ -20,6 +20,14 @@ export const badRequest = {
     }
 }
 
+export const missingParameters = {
+    status: 400,
+    body: {
+        success: false,
+        message: "Missing parameters."
+    }
+}
+
 export function badRequestWithMessage(message: String) {
     return {
         status: 400,

@@ -3,16 +3,16 @@ import {getSessionFromRequest, invalidateSession, isSessionValid} from "../../li
 import { forbidden, internalServerError } from "$lib/responses";
 import { serialize, parse } from "cookie";
 import {generateEmptySessionCookie} from "../../lib/auth/sessions";
+import type {RequestHandler} from "@sveltejs/kit";
 
-export async function post({ request }) {
+export const post: RequestHandler = async ({ request }) => {
     try {
         let session = getSessionFromRequest(request);
         if (!await isSessionValid(session)) {
             return forbidden;
         }
 
-        let user = await getUserBySession(session);
-        if (user == undefined) {
+        if (await getUserBySession(session) == undefined) {
             return forbidden;
         }
 

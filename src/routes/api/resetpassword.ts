@@ -1,8 +1,10 @@
 import { getUser } from "$lib/db";
 import {badRequestWithMessage, internalServerError, ok} from "$lib/responses";
+import type {RequestHandler} from "@sveltejs/kit";
 
-export async function post({ request }) {
+export const post: RequestHandler = async ({ request }) => {
     try {
+        // TODO
         const data = await request.json();
         if (!data.hasOwnProperty("email")) {
             return badRequestWithMessage("Missing credentials.");

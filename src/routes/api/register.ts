@@ -1,33 +1,35 @@
 import {client, getUser, isUsernameTaken} from "$lib/db";
-import { badRequest, badRequestWithMessage, forbidden, internalServerError, ok} from "$lib/responses";
+import {badRequest, badRequestWithMessage, forbidden, internalServerError, missingParameters, ok} from "$lib/responses";
 import {usernameValidationRegex, validateCredentials} from "$lib/validation";
 import * as argon2 from "../../lib/auth/argon2";
 import {generateSessionCookie, getSessionFromRequest, isSessionValid} from "../../lib/auth/sessions";
 import {sendMail} from "../../lib/mail";
 import {generateVerificationLink} from "../../lib/auth/emailverification";
+import type {RequestHandler} from "@sveltejs/kit";
+import type {RegisterParams} from "../../data/params/RegisterParams"
 
-export async function post({ request }) {
+export const post: RequestHandler = async ({ request }) => {
     try {
         if (await isSessionValid(getSessionFromRequest(request))) {
             return forbidden;
         }
 
-        const data = await request.json();
-        if (!data.hasOwnProperty("username") || !data.hasOwnProperty("email") || !data.hasOwnProperty("password")) {
-            return badRequest;
-        } else if (!usernameValidationRegex.test(data.username) || !validateCredentials(data.email, data.password)) {
+        let params: RegisterParams = await request.json();
+        if (params.username == null || params.email == null || params.password == null) {
+            return missingParameters;
+        } else if (!usernameValidationRegex.test(params.username) || !validateCredentials(params.email, params.password)) {
             return badRequest;
         }
 
-        if (await getUser(data.email) != undefined) {
+        if (await getUser(params.email) != undefined) {
             return badRequestWithMessage("This e-mail address is already in use.");
-        } else if (await isUsernameTaken(data.username)) {
+        } else if (await isUsernameTaken(params.username)) {
             return badRequestWithMessage("This username is already taken.");
         }
 
-        const hashedPassword = await argon2.hash(data.password);
-        await client.query("INSERT INTO users(email, hashed_password, username) VALUES ($1, $2, $3)", [data.email, hashedPassword, data.username]);
-        let user = await getUser(data.email);
+        const hashedPassword = await argon2.hash(params.password);
+        await client.query("INSERT INTO users(email, hashed_password, username) VALUES ($1, $2, $3)", [params.email, hashedPassword, params.username]);
+        let user = await getUser(params.email);
 
         await sendMail(user, "test", await generateVerificationLink(user));
 
@@ -37,7 +39,7 @@ export async function post({ request }) {
                 success: true
             },
             headers: {
-                "Set-Cookie": await generateSessionCookie(await getUser(data.email)),
+                "Set-Cookie": await generateSessionCookie(await getUser(params.email)),
             }
         };
     } catch (e) {

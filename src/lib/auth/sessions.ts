@@ -58,7 +58,7 @@ export async function generateSessionCookie(user: User): Promise<string> {
     });
 }
 
-export function getSessionFromRequest(request: any) {
+export function getSessionFromRequest(request: Request) {
     return parse(request.headers.get("cookie") || "").session;
 }
 

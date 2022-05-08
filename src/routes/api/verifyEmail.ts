@@ -1,20 +1,21 @@
-import {badRequest, internalServerError, ok} from "../../lib/responses";
+import {badRequest, internalServerError, missingParameters, ok} from "../../lib/responses";
 import {isTokenValid, verifyEmail} from "../../lib/auth/emailverification";
+import type { RequestHandler } from "@sveltejs/kit";
+import type {VerifyEmailParams} from "../../data/params/VerifyEmailParams";
 
 
-export async function post({ request }) {
+export const post: RequestHandler = async ({ request }) => {
     try {
-        const data = await request.json();
-        if (!data.hasOwnProperty("token")) {
-            return badRequest;
+        let params: VerifyEmailParams = await request.json();
+        if (params.token == null) {
+            return missingParameters;
         }
 
-        let token = data.token;
+        let token = params.token;
         if (!await isTokenValid(token)) {
             return badRequest;
         }
         await verifyEmail(token);
-
 
         return ok;
     } catch (e) {
