@@ -20,3 +20,4 @@
     <HeroSection cards={movies}/>
     <MoviesSection positions={movies}/>
 {/await}
+
