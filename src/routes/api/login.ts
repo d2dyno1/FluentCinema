@@ -1,27 +1,35 @@
 import { getUser } from '$lib/db';
-import {badRequestWithMessage, forbidden, forbiddenWithMessage, internalServerError, ok} from "$lib/responses";
+import {
+    badRequestWithMessage,
+    forbidden,
+    forbiddenWithMessage,
+    internalServerError,
+    missingParameters
+} from "$lib/responses";
 import { verify } from "../../lib/auth/argon2";
 var exports = {}; // dirty hack to make cookie work
 import {parse, serialize} from "cookie";
 import {generateSessionCookie, getSessionFromRequest, isSessionValid} from "../../lib/auth/sessions";
+import type { RequestHandler } from "@sveltejs/kit";
+import type { LoginParameters } from "../../data/params/LoginParameters";
 
-export async function post({ request }) {
+export const post: RequestHandler = async ({ request }) => {
     try {
         if (await isSessionValid(getSessionFromRequest(request))) {
             return forbidden;
         }
 
-        const data = await request.json();
-        if (!data.hasOwnProperty("email") || !data.hasOwnProperty("password")) {
-            return badRequestWithMessage("Missing credentials.");
+        let params: LoginParameters = await request.json();
+        if (params.email == null || params.password == null) {
+            return missingParameters;
         }
 
-        let user = await getUser(data.email);
-        if (user == undefined) {
+        let user = await getUser(params.email);
+        if (user == null) {
             return badRequestWithMessage("Account does not exist.");
         }
 
-        if (!await verify(user.hashed_password, data.password)) {
+        if (!await verify(user.hashed_password, params.password)) {
             return forbiddenWithMessage("Incorrect password.");
         }
 
