@@ -1,8 +1,8 @@
 import { Client } from 'pg';
 import type { User } from "$data/User";
-import db from "../../db.json"
+import credentials from "../../credentials.json"
 
-export const client = new Client(db);
+export const client = new Client(credentials.db);
 client.connect().then(() => console.log("Connected to database."));
 
 export async function getUser(email: string): Promise<User | undefined> {

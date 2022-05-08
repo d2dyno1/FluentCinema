@@ -3,6 +3,7 @@ import { badRequest, badRequestWithMessage, forbidden, internalServerError, ok} 
 import {usernameValidationRegex, validateCredentials} from "$lib/validation";
 import * as argon2 from "../../lib/auth/argon2";
 import {generateSessionCookie, getSessionFromRequest, isSessionValid} from "../../lib/auth/sessions";
+import {sendMail} from "../../lib/mail";
 
 export async function post({ request }) {
     try {
@@ -25,6 +26,9 @@ export async function post({ request }) {
 
         const hashedPassword = await argon2.hash(data.password);
         await client.query("INSERT INTO users(email, hashed_password, username) VALUES ($1, $2, $3)", [data.email, hashedPassword, data.username]);
+        let user = await getUser(data.email);
+
+        await sendMail(user, "test", "Your account has been registered successfully.");
 
         return {
             status: 302,
