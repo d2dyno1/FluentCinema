@@ -32,10 +32,12 @@ export async function post({ request }) {
         await sendMail(user, "test", await generateVerificationLink(user));
 
         return {
-            status: 302,
+            status: 200,
+            body: {
+                success: true
+            },
             headers: {
                 "Set-Cookie": await generateSessionCookie(await getUser(data.email)),
-                "Location": "/settings"
             }
         };
     } catch (e) {

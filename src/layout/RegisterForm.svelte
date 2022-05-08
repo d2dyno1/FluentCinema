@@ -40,7 +40,9 @@
                 })
             });
             promise.then(response => response.json()).then(response => {
-                if (!response.success) {
+                if (response.success) {
+                    window.location.replace("/settings");
+                } else {
                     formComponent.showCriticalMessage(response.message);
                 }
             });
