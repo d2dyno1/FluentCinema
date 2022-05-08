@@ -4,8 +4,9 @@
     import type { User } from "$data/User";
     import type { NavbarButton, NavbarItem } from "$data/navbar";
     import {ok} from "../../lib/responses";
+    import type {Session} from "../../data/Session";
 
-    export let user: User;
+    export let session: Session;
     export let navbarItems: NavbarItem[] = [];
     export let navbarButtons: NavbarButton[] = [];
 </script>
@@ -40,7 +41,7 @@
                 </a>
             </Tooltip>
         {/each}
-        <AccountMenu user={user}/>
+        <AccountMenu session={session}/>
     </div>
 </header>
 

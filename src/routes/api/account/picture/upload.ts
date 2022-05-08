@@ -2,7 +2,7 @@ import type {RequestHandler} from "@sveltejs/kit";
 import {badRequest, forbidden, internalServerError} from "../../../../lib/responses";
 import {client, getUserBySession} from "../../../../lib/db";
 import {getSessionFromRequest, isSessionValid} from "../../../../lib/auth/sessions";
-import type {User} from "../../../../data/User";
+import type {User} from "../../../../data/db/User";
 import sharp from "sharp";
 
 const maxPictureSize = 200000;
@@ -19,7 +19,7 @@ export const put: RequestHandler = async ({ request }) => {
             return badRequest;
         }
         let processedImageBuffer = await sharp(buffer)
-            .resize(32)
+            .resize(512)
             .png()
             .toBuffer();
 

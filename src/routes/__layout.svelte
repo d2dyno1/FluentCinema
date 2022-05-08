@@ -4,37 +4,35 @@
     import type { User } from "$data/User";
     import { ok } from "$lib/responses";
 
-    import Code from "@fluentui/svg-icons/icons/code_24_regular.svg?raw";
-    import {promise} from "./index.svelte";
+    import CodeIcon from "@fluentui/svg-icons/icons/code_24_filled.svg?raw";
+    import HomeIcon from "@fluentui/svg-icons/icons/home_24_filled.svg?raw";
 
-    let user: User;
+    import type {Session} from "../data/Session";
+
+    let session_: Session; // "session" doesn't work for some reason...
 
     const navbarItems: NavbarItem[] = [
         {
             name: "Home",
             path: "/",
-            icon: null // TODO: Home icon (fluentui icons)
+            icon: HomeIcon
         }
     ];
     const navbarButtons: NavbarButton[] = [
         {
             name: "View GitHub repository",
             path: "https://github.com/d2dyno1/FluentCinema",
-            icon: Code
+            icon: CodeIcon
         }
     ];
 
     export async function load({ session }) {
-        if (Object.keys(session).length != 0) {
-            // user is logged in
-            console.log(session);
-            user = session.user;
-        };
+        session_ = session;
         return ok;
     }
 </script>
 
-<Navbar user={user} navbarItems={navbarItems} navbarButtons={navbarButtons}/>
+<Navbar session={session_} navbarItems={navbarItems} navbarButtons={navbarButtons}/>
 <slot/>
 <!-- <Footer/> -->
 

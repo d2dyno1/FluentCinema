@@ -1,7 +1,7 @@
 import crypto from "crypto";
 import {client, getUserBySession} from "../db";
-import type { User } from "../../data/User";
-import type { Session } from "../../data/Session";
+import type { User } from "../../data/db/User";
+import type { Session } from "../../data/db/Session";
 import {parse, serialize} from "cookie";
 import moment from "moment";
 import { promisify } from "util";

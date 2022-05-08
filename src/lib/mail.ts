@@ -1,6 +1,6 @@
 import credentials from "../../credentials.json";
 import nodemailer from "nodemailer";
-import type { User } from "../data/User";
+import type { User } from "../data/db/User";
 
 const transporter = nodemailer.createTransport(credentials.mail);
 

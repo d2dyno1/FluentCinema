@@ -1,6 +1,7 @@
-<script lang="ts">
+<script lang="ts" context="module">
     import { ActionBlock } from "$lib";
     import { Button } from "fluent-svelte";
+    import {ok} from "../../lib/responses";
 
 
     let files: HTMLInputElement;
@@ -8,12 +9,22 @@
         fetch("/api/account/picture/upload", {
             method: "PUT",
             body: files.files[0]
-        });
+        }).then(() => window.location.reload());
     }
+
+    export async function load({ session }) {
+        if (!session.isLoggedIn) {
+            return {
+                status: 302,
+                redirect: "/"
+            }
+        }
+        return ok;
+    };
 </script>
 
 <div>
-    <input bind:this={files} type="file" accept=".jpg, .jpeg, .png">
+    <input bind:this={files} type="file" accept=".jpg, .jpeg, .png, .svg">
     <Button on:click={uploadPicture}>upload</Button>
 </div>
 
