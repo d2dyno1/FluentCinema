@@ -26,12 +26,14 @@
   "type": "module",
   "dependencies": {
     "@fluentui/svg-icons": "^1.1.169",
+    "@sveltejs/adapter-node": "^1.0.0-next.73",
     "argon2": "^0.28.5",
     "cookie": "^0.5.0",
     "fluent-svelte": "^1.5.1",
     "moment": "^2.29.3",
     "nodemailer": "^6.7.5",
     "pg": "^8.7.3",
-    "sharp": "^0.30.4"
+    "sharp": "^0.30.4",
+    "yup": "^0.32.11"
   }
 }
