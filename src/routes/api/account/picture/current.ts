@@ -1,13 +1,9 @@
-import * as fs from "fs";
 import type {RequestHandler} from "@sveltejs/kit";
-import {client, getUserBySession} from "../../../../lib/db";
-import {getSessionFromRequest, isSessionValid} from "../../../../lib/auth/sessions";
-import type {User} from "../../../../data/db/User";
 import sharp from "sharp";
 import {number, object} from "yup";
 import type {InferType} from "yup";
-import {badRequest} from "../../../../lib/responses";
-const fsPromises = fs.promises;
+import {badRequest, ok} from "../../../../lib/responses";
+import {Session} from "../../../../lib/db/Session";
 
 const defaultSize = 32;
 
@@ -25,12 +21,11 @@ export const get: RequestHandler = async ({ url, request }) => {
         return badRequest;
     }
 
-    let session = getSessionFromRequest(request);
+    let session = await Session.getFromRequest(request);
     let imageBuffer = null;
-    if (await isSessionValid(session)) {
-        let user: User = await getUserBySession(session);
-        let query = await client.query("SELECT picture FROM users WHERE id=$1;", [user.id]);
-        imageBuffer = query.rows[0].picture;
+    if (session != null) {
+        let user = await session.getUser();
+        imageBuffer = await user.getPicture();
     }
 
     if (imageBuffer != null) {
@@ -46,13 +41,6 @@ export const get: RequestHandler = async ({ url, request }) => {
                 "Content-Type": "image/png"
             }
         }
-    } else {
-        return {
-            status: 200,
-            body: await fsPromises.readFile("./node_modules/@fluentui/svg-icons/icons/person_32_filled.svg"),
-            headers: {
-                "Content-Type": "image/svg+xml"
-            }
-        }
     }
+    return ok;
 }

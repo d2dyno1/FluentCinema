@@ -1,20 +1,10 @@
-import { getUser } from '../../../lib/db';
-import {
-    badRequest,
-    badRequestWithMessage,
-    forbidden,
-    forbiddenWithMessage,
-    internalServerError,
-    missingParameters
-} from "../../../lib/responses";
-import { verify } from "../../../lib/auth/argon2";
-var exports = {}; // dirty hack to make cookie work
-import {parse, serialize} from "cookie";
-import {generateSessionCookie, getSessionFromRequest, isSessionValid} from "../../../lib/auth/sessions";
+import {badRequest, badRequestWithMessage, forbidden, forbiddenWithMessage} from "../../../lib/responses";
 import type { RequestHandler } from "@sveltejs/kit";
 import {object, string} from "yup";
 import type {InferType} from "yup";
-import {emailValidationRegex, passwordValidationRegex,} from "../../../lib/validation";
+import {emailValidationRegex, passwordValidationRegex} from "../../../lib/validation";
+import {User} from "../../../lib/db/User";
+import {Session} from "../../../lib/db/Session";
 
 const loginSchema = object({
     email: string().required().matches(emailValidationRegex),
@@ -23,7 +13,7 @@ const loginSchema = object({
 interface LoginSchema extends InferType<typeof loginSchema> {}
 
 export const post: RequestHandler = async ({ request }) => {
-    if (await isSessionValid(getSessionFromRequest(request))) {
+    if (await Session.getFromRequest(request) != null) {
         return forbidden;
     }
 
@@ -32,10 +22,10 @@ export const post: RequestHandler = async ({ request }) => {
         return badRequest;
     }
 
-    let user = await getUser(params.email);
+    let user = await User.getFromEmail(params.email);
     if (user == null) {
         return badRequestWithMessage("Account does not exist.");
-    } else if (!await verify(user.hashed_password, params.password)) {
+    } else if (!await user.verifyPassword(params.password)) {
         return forbiddenWithMessage("Incorrect password.");
     }
 
@@ -45,7 +35,7 @@ export const post: RequestHandler = async ({ request }) => {
             success: true
         },
         headers: {
-            'Set-Cookie': await generateSessionCookie(user)
+            'Set-Cookie': (await Session.create(user)).getCookie()
         }
     };
 }
