@@ -40,9 +40,11 @@ export async function handle({ event, resolve }) {
                 isLoggedIn: true,
                 user: {
                     email: user.email,
-                    username: user.username
+                    username: user.username,
+                    hasCustomProfilePicture: await user.picture != null
                 }
             }
+            console.log(session);
             event.locals.session = session;
             return await resolve(event);
         }

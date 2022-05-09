@@ -18,11 +18,7 @@ export class User {
     public readonly email!: string;
     private readonly hashed_password!: string;
     public readonly username!: string;
-    private readonly picture!: Uint8Array | null;
-
-    public async getPicture(): Promise<Uint8Array> {
-        return this.picture != null ? this.picture : await fs.promises.readFile("./node_modules/@fluentui/svg-icons/icons/person_32_filled.svg")
-    }
+    public readonly picture!: Uint8Array | null;
 
     public async changePicture(imageBuffer: Uint8Array | null) {
         if (imageBuffer != null) {

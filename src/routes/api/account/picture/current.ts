@@ -2,7 +2,7 @@ import type {RequestHandler} from "@sveltejs/kit";
 import sharp from "sharp";
 import {number, object} from "yup";
 import type {InferType} from "yup";
-import {badRequest, ok} from "../../../../lib/responses";
+import {badRequest, forbidden, ok} from "../../../../lib/responses";
 import {Session} from "../../../../lib/db/Session";
 
 const defaultSize = 32;
@@ -13,6 +13,11 @@ const currentPictureSchema = object({
 interface CurrentPictureSchema extends InferType<typeof currentPictureSchema> {}
 
 export const get: RequestHandler = async ({ url, request }) => {
+    let session = await Session.getFromRequest(request);
+    if (session == null) {
+        return forbidden;
+    }
+
     // @ts-ignore
     let size: number = url.searchParams.has("size") ? parseInt(url.searchParams.get("size")) : defaultSize;
 
@@ -21,12 +26,7 @@ export const get: RequestHandler = async ({ url, request }) => {
         return badRequest;
     }
 
-    let session = await Session.getFromRequest(request);
-    let imageBuffer = null;
-    if (session != null) {
-        let user = await session.getUser();
-        imageBuffer = await user.getPicture();
-    }
+    let imageBuffer = (await session.getUser()).picture;
 
     if (imageBuffer != null) {
         let processedImageBuffer = await sharp(imageBuffer)
@@ -42,5 +42,5 @@ export const get: RequestHandler = async ({ url, request }) => {
             }
         }
     }
-    return ok;
+    return badRequest;
 }
