@@ -1,4 +1,5 @@
-import { Client } from 'pg';
+import pkg from 'pg'; // Required due to pg being a CommonJS module, otherwise production won't build.
+const { Client } = pkg;
 import type { User } from "$data/User";
 import credentials from "../../credentials.json"
 
