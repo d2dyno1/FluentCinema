@@ -9,7 +9,7 @@ const randomBytesAsync = promisify(crypto.randomBytes);
 const baseVerificationUrl = "https://fluentcinema.zsti.eu/verify?token=";
 
 export class EmailVerification {
-    private readonly user_id!: number;
+    private readonly user_id!: string;
     private readonly token!: string;
     private readonly expires_at!: Date;
 

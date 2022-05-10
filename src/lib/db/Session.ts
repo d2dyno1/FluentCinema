@@ -9,7 +9,7 @@ const randomBytesAsync = promisify(crypto.randomBytes);
 
 // TODO automatically remove expired sessions
 export class Session {
-    private readonly user_id!: number;
+    private readonly user_id!: string;
     private readonly session!: string; // TODO rename to token
     private readonly created_at!: Date;
     private readonly expires_at!: Date;
