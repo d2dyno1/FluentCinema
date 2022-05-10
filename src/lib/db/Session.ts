@@ -22,8 +22,8 @@ export class Session {
         return serialize("session", this.session, {
             expires: this.expires_at,
             path: "/",
-            secure: true,
-            httpOnly: true,
+            // secure: true,
+            // httpOnly: true,
             sameSite: "strict"
         });
     }
@@ -33,8 +33,8 @@ export class Session {
             maxAge: 0,
             expires: new Date(),
             path: "/",
-            secure: true,
-            httpOnly: true,
+            // secure: true,
+            // httpOnly: true,
             sameSite: "strict"
         })
     }
