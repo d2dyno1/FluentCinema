@@ -1,22 +1,26 @@
 <script lang="ts">
     import { TextBox, TextBlock } from "fluent-svelte";
-    import { emailValidationRegex } from "$lib/validation";
     import { DialogForm } from "$layout";
     import { PromiseButton } from "$lib";
+    import {loginSchema} from "../data/schema/LoginSchema";
+    import type {LoginSchema} from "../data/schema/LoginSchema";
 
     let email: string;
     let password: string;
+    $: params = {
+        email: email,
+        password: password
+    } as LoginSchema;
 
     let formComponent;
 
     let promise: Promise<Response>;
 
-    function onLogin() {
-        if (!emailValidationRegex.test(email)) {
-            formComponent.showCriticalMessage("Invalid e-mail address.");
-            return;
-        } else if (password.length == 0) {
-            formComponent.showCriticalMessage("Password cannot be empty.");
+    async function onLogin() {
+        try {
+            await loginSchema.validate(params);
+        } catch (e) {
+            formComponent.showCriticalMessage(e.message);
             return;
         }
 
@@ -25,10 +29,7 @@
                 'Content-Type': 'application/json'
             },
             method: 'POST',
-            body: JSON.stringify({
-                email: email,
-                password: password
-            })
+            body: JSON.stringify(params)
         });
         promise.then(response => response.json()).then(response => {
             if (response.success) {

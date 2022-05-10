@@ -1,16 +1,14 @@
 import type {RequestHandler} from "@sveltejs/kit";
 import {badRequest, forbidden, internalServerError} from "../../../../lib/responses";
-import {client, getUserBySession} from "../../../../lib/db";
-import {getSessionFromRequest, isSessionValid} from "../../../../lib/auth/sessions";
-import type {User} from "../../../../data/db/User";
 import sharp from "sharp";
+import {Session} from "../../../../lib/db/Session";
 
 const maxPictureSize = 200000;
 
 export const put: RequestHandler = async ({ request }) => {
     try {
-        let session = getSessionFromRequest(request);
-        if (!await isSessionValid(session)) {
+        let session = await Session.getFromRequest(request);
+        if (session == null) {
             return forbidden;
         }
 
@@ -23,8 +21,8 @@ export const put: RequestHandler = async ({ request }) => {
             .png()
             .toBuffer();
 
-        let user: User = await getUserBySession(session);
-        await client.query("UPDATE users SET picture=$1 WHERE id=$2;", [processedImageBuffer, user.id]);
+        let user = await session.getUser();
+        await user.changePicture(processedImageBuffer);
 
         return {
             status: 200
