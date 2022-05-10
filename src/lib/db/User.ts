@@ -32,6 +32,8 @@ export class User {
 
     public async delete() {
         await client.query("DELETE FROM users WHERE id=$1", [this.id]);
+        await client.query("DELETE FROM sessions WHERE user_id=$1", [this.id]);
+        await client.query("DELETE FROM email_verification_tokens WHERE user_id=$1", [this.id]);
     }
 
     public async verifyPassword(password: string) {

@@ -7,7 +7,8 @@ import {User} from "./User";
 
 const randomBytesAsync = promisify(crypto.randomBytes);
 
-// TODO automatically remove expired sessions
+const sessionTimespan = 7; // in days
+
 export class Session {
     private readonly user_id!: string;
     private readonly session!: string; // TODO rename to token
@@ -43,13 +44,13 @@ export class Session {
         return await User.getFromSession(this.session) as User;
     }
 
-    public static async isTokenValid(token: string): Promise<boolean> {
-        let session = await Session.getFromToken(token);
-        return session == null ? false : await session.isExpired();
+    public isExpired() {
+        return moment().isAfter(moment(this.expires_at));
     }
 
-    public async isExpired() {
-        return new Date() > this.expires_at;
+    public static async isTokenValid(token: string): Promise<boolean> {
+        let session = await Session.getFromToken(token);
+        return session == null ? false : session.isExpired();
     }
 
     public static async getFromRequest(request: Request) {
@@ -57,13 +58,12 @@ export class Session {
     }
 
     public static async getFromToken(token: string): Promise<Session | null> {
-        // TODO extend session here to prevent unwanted log outs
         let query = await client.query("SELECT * FROM sessions WHERE session=$1", [token]);
         if (query.rowCount == 0) {
             return null;
         }
         let session: Session = Object.assign(new Session(), query.rows[0]);
-        if (await session.isExpired()) {
+        if (session.isExpired()) {
             await session.invalidate();
             return null;
         }
@@ -80,8 +80,18 @@ export class Session {
         }
 
         let createdAt = moment().toDate();
-        let expiresAt = moment().add(7, "days").toDate();
-        let query = await client.query("INSERT INTO sessions(user_id, session, created_at, expires_at) VALUES ($1, $2, $3, $4)", [user.id, token, createdAt, expiresAt]);
+        let expiresAt = moment().add(sessionTimespan, "days").toDate();
+        await client.query("INSERT INTO sessions(user_id, session, created_at, expires_at) VALUES ($1, $2, $3, $4)", [user.id, token, createdAt, expiresAt]);
         return Object.assign(new Session(), await Session.getFromToken(token));
     }
 }
+
+setInterval(async () => {
+    let query = await client.query("SELECT * FROM sessions;");
+    let sessions: Session[] = query.rows.map(row => Object.assign(new Session(), row));
+    for (let session of sessions) {
+        if (session.isExpired()) {
+            await session.invalidate();
+        }
+    }
+}, 60000);

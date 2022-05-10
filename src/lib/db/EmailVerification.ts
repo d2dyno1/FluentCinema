@@ -7,6 +7,7 @@ import type {User} from "./User";
 const randomBytesAsync = promisify(crypto.randomBytes);
 
 const baseVerificationUrl = "https://fluentcinema.zsti.eu/verify?token=";
+const tokenTimespan = 15; // in minutes
 
 export class EmailVerification {
     private readonly user_id!: string;
@@ -14,7 +15,7 @@ export class EmailVerification {
     private readonly expires_at!: Date;
 
     public isExpired() {
-        return new Date() > this.expires_at;
+        return moment().isAfter(moment(this.expires_at));
     }
 
     public static async tryVerifyEmail(user: User, token: string): Promise<boolean> {
@@ -43,8 +44,18 @@ export class EmailVerification {
     public static async generateVerificationLink(user: User) {
         let bytes = await randomBytesAsync(128);
         let token = bytes.toString("base64");
-        let expiresAt = moment().add(15, "minutes").toDate();
+        let expiresAt = moment().add(tokenTimespan, "minutes").toDate();
         await client.query("INSERT INTO email_verification_tokens(user_id, token, expires_at) VALUES ($1, $2, $3);", [user.id, token, expiresAt]);
         return baseVerificationUrl + encodeURIComponent(token);
     }
 }
+
+setInterval(async () => {
+    let query = await client.query("SELECT * FROM email_verification_tokens;");
+    let tokens: EmailVerification[] = query.rows.map(row => Object.assign(new EmailVerification(), row));
+    for (let token of tokens) {
+        if (token.isExpired()) {
+            await token.invalidate();
+        }
+    }
+}, 60000);
