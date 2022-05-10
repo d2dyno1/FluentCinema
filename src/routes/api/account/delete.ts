@@ -1,24 +1,13 @@
-import {client, getUser, getUserBySession} from '../../../lib/db';
-import {badRequestWithMessage, forbidden, forbiddenWithMessage, internalServerError, ok} from "../../../lib/responses";
-import { verify } from "../../../lib/auth/argon2";
+import {forbidden, ok} from "../../../lib/responses";
 import type {RequestHandler} from "@sveltejs/kit";
-import {getSessionFromRequest, isSessionValid} from "../../../lib/auth/sessions";
+import {Session} from "../../../lib/db/Session";
 
 export const del: RequestHandler = async ({ request }) => {
-    try {
-        let session = getSessionFromRequest(request);
-        if (!await isSessionValid(session)) {
-            return forbidden;
-        }
-        let user = await getUserBySession(session);
-        if (user == null) {
-            return forbidden;
-        }
-
-        await client.query("DELETE FROM users WHERE id=$1", [user.id]);
-        return ok;
-    } catch (e) {
-        console.log(e);
-        return internalServerError;
+    let session = await Session.getFromRequest(request);
+    if (session == null) {
+        return forbidden;
     }
+    let user = await session.getUser();
+    await user.delete();
+    return ok;
 }

@@ -1,9 +1,8 @@
 import { dev } from "$app/env";
 import { parse } from "cookie";
-import {getUserBySession} from "../lib/db";
 import type {Session} from "../data/Session";
-import type {User} from "../data/db/User";
-// import type {GetSession} from "@sveltejs/kit";
+import {User} from "../lib/db/User";
+import type {GetSession} from "@sveltejs/kit";
 
 const rateLimitedEndpoints = [
     "api/login",
@@ -35,15 +34,17 @@ export async function handle({ event, resolve }) {
     // Session
     const cookies = parse(event.request.headers.get("cookie") || '');
     if (cookies.session) {
-        const user: User = await getUserBySession(cookies.session);
+        let user = await User.getFromSession(cookies.session);
         if (user != null) {
             let session: Session = {
                 isLoggedIn: true,
                 user: {
                     email: user.email,
-                    username: user.username
+                    username: user.username,
+                    hasCustomProfilePicture: await user.picture != null
                 }
             }
+            console.log(session);
             event.locals.session = session;
             return await resolve(event);
         }

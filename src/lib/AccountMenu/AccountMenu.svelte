@@ -24,7 +24,11 @@
         <div class="inner-login-button">
             {session.user.username}
             <PersonPicture size={32} alt={session.user.username}>
-                <img class="user-picture" alt={session.user.username} src="/api/account/picture/current">
+                {#if session.user.hasCustomProfilePicture}
+                    <img class="user-picture" alt={session.user.username} src="/api/account/picture/current">
+                {:else}
+                    {@html ProfileIcon}
+                {/if}
             </PersonPicture>
         </div>
     </Button>

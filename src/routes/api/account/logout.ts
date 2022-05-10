@@ -1,24 +1,21 @@
-import { getUserBySession } from '../../../lib/db';
-import {getSessionFromRequest, invalidateSession, isSessionValid} from "../../../lib/auth/sessions";
-import { forbidden, internalServerError } from "../../../lib/responses";
-import { serialize, parse } from "cookie";
-import {generateEmptySessionCookie} from "../../../lib/auth/sessions";
+import { forbidden } from "../../../lib/responses";
 import type {RequestHandler} from "@sveltejs/kit";
+import {Session} from "../../../lib/db/Session";
 
 export const post: RequestHandler = async ({ request }) => {
-    let session = getSessionFromRequest(request);
-    if (!await isSessionValid(session) || await getUserBySession(session) == null) {
+    let session = await Session.getFromRequest(request);
+    if (session == null) {
         return forbidden;
     }
 
-    await invalidateSession(session);
+    await session.invalidate();
     return {
         status: 200,
         body: {
             success: true
         },
         headers: {
-            "Set-Cookie": generateEmptySessionCookie()
+            "Set-Cookie": Session.generateEmptyCookie()
         }
     };
 }
