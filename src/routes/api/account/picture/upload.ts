@@ -1,6 +1,5 @@
 import type {RequestHandler} from "@sveltejs/kit";
 import {badRequest, forbidden, internalServerError} from "../../../../lib/responses";
-import type {User} from "../../../../data/db/User";
 import sharp from "sharp";
 import {Session} from "../../../../lib/db/Session";
 

@@ -1,16 +1,9 @@
 import {badRequest, badRequestWithMessage, forbidden, forbiddenWithMessage} from "../../../lib/responses";
 import type { RequestHandler } from "@sveltejs/kit";
-import {object, string} from "yup";
-import type {InferType} from "yup";
-import {emailValidationRegex, passwordValidationRegex} from "../../../lib/validation";
 import {User} from "../../../lib/db/User";
 import {Session} from "../../../lib/db/Session";
-
-const loginSchema = object({
-    email: string().required().matches(emailValidationRegex),
-    password: string().required().matches(passwordValidationRegex)
-});
-interface LoginSchema extends InferType<typeof loginSchema> {}
+import {loginSchema} from "../../../data/schema/LoginSchema";
+import type {LoginSchema} from "../../../data/schema/LoginSchema";
 
 export const post: RequestHandler = async ({ request }) => {
     if (await Session.getFromRequest(request) != null) {

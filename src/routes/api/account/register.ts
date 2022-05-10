@@ -1,22 +1,10 @@
 import {badRequest, badRequestWithMessage, forbidden} from "../../../lib/responses";
-import {
-    emailValidationRegex,
-    passwordValidationRegex,
-    usernameValidationRegex,
-} from "../../../lib/validation";
 import type {RequestHandler} from "@sveltejs/kit";
-import { object, string } from "yup";
-import type { InferType} from "yup";
 import {Session} from "../../../lib/db/Session";
 import {User} from "../../../lib/db/User";
 import {EmailVerification} from "../../../lib/db/EmailVerification";
-
-const registerSchema = object({
-    username: string().required().matches(usernameValidationRegex),
-    email: string().required().matches(emailValidationRegex),
-    password: string().required().matches(passwordValidationRegex)
-});
-interface RegisterSchema extends InferType<typeof registerSchema> {}
+import {registerSchema} from "../../../data/schema/RegisterSchema";
+import type {RegisterSchema} from "../../../data/schema/RegisterSchema";
 
 export const post: RequestHandler = async ({ request }) => {
     if (await Session.getFromRequest(request) != null) {
