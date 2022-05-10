@@ -56,7 +56,7 @@
     <TextBox bind:value={email} type="email" placeholder="E-mail"/>
     <TextBox bind:value={password} type="password" placeholder="Password"/>
     <TextBox bind:value={confirmedPassword} type="password" placeholder="Confirm password"/>
-    <InfoBar bind:open={isPasswordInvalid} message="A password must consist of at least eight characters, including an uppercase letter, a digit and a special character." severity="caution" class="full-width" closable={false}/>
+    <InfoBar bind:open={isPasswordInvalid} message="A password must consist of between 8 and 128 characters, including an uppercase letter, a digit and a special character." severity="caution" class="full-width" closable={false}/>
     <PromiseButton slot="footer-left" bind:promise={promise} on:click={onRegister}>Register</PromiseButton>
     <slot/>
 </DialogForm>
