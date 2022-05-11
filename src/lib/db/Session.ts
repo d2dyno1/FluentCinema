@@ -4,16 +4,14 @@ import moment from "moment";
 import {promisify} from "util";
 import {client} from "../db";
 import {User} from "./User";
+import {Expirable, initializeExpiredEntryDeleter} from "./Expirable";
 
 const randomBytesAsync = promisify(crypto.randomBytes);
 
 const sessionTimespan = 7; // in days
 
-export class Session {
-    private readonly user_id!: string;
+export class Session extends Expirable {
     private readonly session!: string; // TODO rename to token
-    private readonly created_at!: Date;
-    private readonly expires_at!: Date;
 
     public async invalidate() {
         await client.query("DELETE FROM sessions WHERE session=$1;", [this.session]);
@@ -42,15 +40,6 @@ export class Session {
 
     public async getUser(): Promise<User> {
         return await User.getFromSession(this.session) as User;
-    }
-
-    public isExpired() {
-        return moment().isAfter(moment(this.expires_at));
-    }
-
-    public static async isTokenValid(token: string): Promise<boolean> {
-        let session = await Session.getFromToken(token);
-        return session == null ? false : session.isExpired();
     }
 
     public static async getFromRequest(request: Request) {
@@ -86,12 +75,4 @@ export class Session {
     }
 }
 
-setInterval(async () => {
-    let query = await client.query("SELECT * FROM sessions;");
-    let sessions: Session[] = query.rows.map(row => Object.assign(new Session(), row));
-    for (let session of sessions) {
-        if (session.isExpired()) {
-            await session.invalidate();
-        }
-    }
-}, 60000);
+initializeExpiredEntryDeleter(() => new Session(), "sessions");
