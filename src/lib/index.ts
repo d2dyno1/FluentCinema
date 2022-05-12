@@ -1,3 +1,4 @@
+export { default as NavigationList } from "./NavigationList/NavigationList.svelte";
 export { default as ActionBlock } from "./ActionBlock/ActionBlock.svelte";
 export { default as AccountMenu } from "./AccountMenu/AccountMenu.svelte";
 export { default as AccountCard } from "./AccountCard/AccountCard.svelte";
