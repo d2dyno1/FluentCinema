@@ -22,6 +22,11 @@
         infoBarSeverity = "critical";
     }
 
+    export function showAttentionMessage(message) {
+        showMessage(message);
+        infoBarSeverity = "attention";
+    }
+
     export function hideMessage() {
         showInfoBar = false;
     }

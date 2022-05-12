@@ -2,12 +2,13 @@ import type {User} from "./User";
 import {client} from "../db";
 import type {SettingsSchema} from "../../data/schema/SettingsSchema";
 
-export class Settings {
+export class Settings implements SettingsSchema{
     private readonly user_id!: string;
     public readonly language!: string;
+    public readonly twoFactorAuthentication!: boolean;
 
     public async update(settings: SettingsSchema) {
-        await client.query("UPDATE settings SET language=$1;", [settings.language]);
+        await client.query("UPDATE settings SET language=$1, \"twoFactorAuthentication\"=$2;", [settings.language, settings.twoFactorAuthentication]);
     }
 
     public static async create(user: User) {

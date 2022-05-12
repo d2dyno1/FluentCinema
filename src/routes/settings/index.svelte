@@ -1,6 +1,6 @@
 <script lang="ts" context="module">
     import { ActionBlock } from "$lib";
-    import { Button, ComboBox } from "fluent-svelte";
+    import { Button, ComboBox, Checkbox } from "fluent-svelte";
     import {ok} from "../../lib/responses";
     import type {Session} from "../../data/Session";
 
@@ -52,6 +52,9 @@
 
 <ActionBlock title="Language" description="placeholder" icon={LanguageIcon}>
     <ComboBox slot="action" items={languages} bind:value={_session.user.settings.language}></ComboBox>
+</ActionBlock>
+<ActionBlock title="Two-factor authentication" description="placeholder">
+    <Checkbox slot="action" bind:checked={_session.user.settings.twoFactorAuthentication}></Checkbox>
 </ActionBlock>
 <Button on:click={uploadSettings}>Save settings</Button>
 
