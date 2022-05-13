@@ -1,1 +1,7 @@
 @use "src/styles/mixins" as *;
+
+.wrapper {
+    @include flex($direction: row, $justify: center, $align: start);
+    flex: 1 1 auto;
+    padding: 2%;
+}
