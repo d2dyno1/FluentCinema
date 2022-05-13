@@ -7,6 +7,12 @@
     gap: 16px;
 }
 
+.card {
+    top: 3%;
+    height: fit-content;
+    position: sticky;
+}
+
 .content {
     @include flex($direction: column);
     flex: 1 1 auto;
@@ -14,4 +20,5 @@
     border-radius: 8px;
     padding: 24px;
     width: 100vw;
+    height: 100vh;
 }

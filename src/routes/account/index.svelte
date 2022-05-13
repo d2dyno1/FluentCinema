@@ -31,7 +31,9 @@
 </script>
 
 <div class="wrapper">
-    <AccountCard bind:selectedItem={selectedItem} session={session_} navItems={navItems}/>
+    <div class="card">
+        <AccountCard bind:selectedItem={selectedItem} session={session_} navItems={navItems}/>
+    </div>
     <div class="content">
         <svelte:component this={selectedItem.component}/>
     </div>
