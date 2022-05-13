@@ -8,6 +8,7 @@
     function setSelectedItem(e: NavigationItem): void
     {
         selectedItem = e;
+        window.location.replace(e.path);
     }
 </script>
 

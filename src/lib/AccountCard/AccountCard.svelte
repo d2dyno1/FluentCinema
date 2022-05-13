@@ -9,9 +9,11 @@
     const navItems: NavigationItem[] = [
         {
             name: "Account preferences",
+            path: "/account"
         },
         {
-            name: "Your reservations"
+            name: "Your reservations",
+            path: "account/reservations"
         }
     ];
 
