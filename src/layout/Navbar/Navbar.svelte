@@ -4,7 +4,7 @@
     import type { User } from "$data/User";
     import type { NavbarButton, NavbarItem } from "$data/navbar";
     import { ok } from "$lib/responses";
-    import type {Session} from "$data/Session";
+    import type { Session } from "$data/session";
 
     export let session: Session;
     export let navbarItems: NavbarItem[] = [];

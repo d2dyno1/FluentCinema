@@ -2,7 +2,7 @@
 
 .wrapper {
     @include flex($direction: column, $align: start, $justify: center);
-    flex: 1 1 auto;
+    flex: 0 1 auto;
     gap: 12px;
 }
 
@@ -50,5 +50,5 @@
 
 .account-img {
     border-radius: 50%;
-    margin-bottom: 12px;
+    margin-bottom: 16px;
 }

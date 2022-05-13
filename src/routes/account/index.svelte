@@ -2,7 +2,7 @@
     import type { NavigationItem } from "$data/navigation";
     import { AccountCard } from "$lib";
     import { ok } from "$lib/responses";
-    import type { Session } from "$data/Session";
+    import type { Session } from "$data/session";
 
     let session_: Session;
 
@@ -26,12 +26,15 @@
             component: Reservations
         }
     ];
+
     let selectedItem = navItems[0];
 </script>
 
 <div class="wrapper">
     <AccountCard bind:selectedItem={selectedItem} session={session_} navItems={navItems}/>
-    <svelte:component this={selectedItem.component}/>
+    <div class="content">
+        <svelte:component this={selectedItem.component}/>
+    </div>
 </div>
 
 <style lang="scss">

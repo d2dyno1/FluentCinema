@@ -1,8 +1,8 @@
 <script lang="ts">
-    import type { Session } from "$data/Session";
+    import type { Session } from "$data/session";
     import type { NavigationItem } from "$data/navigation";
-    import { PersonPicture } from "fluent-svelte";
     import { NavigationList } from "$lib";
+    import { PersonPicture } from "fluent-svelte";
 
     import ProfileIcon from "@fluentui/svg-icons/icons/person_32_filled.svg?raw";
 
