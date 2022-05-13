@@ -8,6 +8,10 @@
 }
 
 .content {
+    @include flex($direction: column);
+    flex: 1 1 auto;
     background-color: var(--fds-layer-background-default);
-    border-radius: 8px 0px 0px 0px;
+    border-radius: 8px;
+    padding: 24px;
+    width: 100vw;
 }
