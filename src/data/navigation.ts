@@ -1,4 +1,4 @@
 export type NavigationItem = {
     name: string;
-    path: string;
+    component: any;
 };

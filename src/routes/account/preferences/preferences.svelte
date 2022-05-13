@@ -2,8 +2,8 @@
 
 </script>
 
-<div>RESERVATIONS</div>
+<div>PREFERENCES</div>
 
 <style lang="scss">
-    @use "reservations";
+    @use "preferences";
 </style>

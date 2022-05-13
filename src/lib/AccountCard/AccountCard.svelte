@@ -6,18 +6,9 @@
 
     import ProfileIcon from "@fluentui/svg-icons/icons/person_32_filled.svg?raw";
 
-    const navItems: NavigationItem[] = [
-        {
-            name: "Account preferences",
-            path: "/account"
-        },
-        {
-            name: "Your reservations",
-            path: "account/reservations"
-        }
-    ];
-
+    export let navItems: NavigationItem[] = [];
     export let session: Session;
+    export let selectedItem: NavigationItem;
 
 </script>
 
@@ -40,7 +31,7 @@
     </div>
 
     <div class="navigation">
-        <NavigationList selectedItem={navItems[0]} items={navItems}/>
+        <NavigationList bind:selectedItem={selectedItem} items={navItems}/>
     </div>
 </div>
 
