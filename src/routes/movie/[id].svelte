@@ -1,11 +1,10 @@
 <script lang="ts" context="module">
     import type {Load} from "@sveltejs/kit";
-    import type {MovieData} from "../../data/movies";
+    import type {Movie} from "$db/movie/Movie";
 
     export const load: Load = async ({ params, fetch }) => {
         let response = await fetch(`/api/cinema/movie/${params.id}`);
-        let movie: MovieData = await response.json();
-        movie.release = new Date(movie.release);
+        let movie: Movie = await response.json();
 
         return {
             status: 200,
