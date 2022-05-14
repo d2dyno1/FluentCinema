@@ -11,7 +11,7 @@ export class Movie {
     readonly bannerImage!: string; // Movie banner
     readonly posterImage!: string; // Movie poster,
     readonly length!: number;
-    readonly release!: Date;
+    readonly release!: string;
 
     public async addReview(user: User, rating: number, content: string) {
         await Review.create(user, this, rating, content);

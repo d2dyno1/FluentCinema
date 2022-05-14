@@ -24,7 +24,7 @@
                 {@html TimerIcon} {movie.length}min
             </div>
             <div>
-                {@html CalendarIcon} {movie.release.toLocaleDateString()}
+                {@html CalendarIcon} {new Date(movie.release).toLocaleDateString()}
             </div>
         </div>
         <div class="movie-description">
