@@ -1,14 +1,12 @@
 <script lang="ts">
     import { PersonPicture, Button, Flyout, TextBlock, MenuFlyout, MenuFlyoutItem, MenuFlyoutDivider } from "fluent-svelte";
-    import { default as LoginForm } from "../../layout/../layout/LoginForm.svelte";
-    import { default as RegisterForm } from "../../layout/../layout/RegisterForm.svelte";
-    import type { Session } from "$data/session";
-    
+    import { default as LoginForm } from "$layout/LoginForm.svelte";
+    import { default as RegisterForm } from "$layout/RegisterForm.svelte";
+    import { accountSession } from "$/stores";
+
     import ProfileIcon from "@fluentui/svg-icons/icons/person_32_filled.svg?raw";
     import EyeIcon from "@fluentui/svg-icons/icons/eye_24_filled.svg?raw";
     import DoorArrowLeftIcon from "@fluentui/svg-icons/icons/door_arrow_left_24_filled.svg?raw";
-
-    export let session: Session;
 
     let isLoginPage = true;
 
@@ -17,14 +15,14 @@
     }
 </script>
 
-{#if session.isLoggedIn}
+{#if $accountSession.isLoggedIn}
 <MenuFlyout placement="bottom" alignment="end">
     <Button>
         <div class="inner-login-button">
-            {session.user.username}
-            <PersonPicture size={32} alt={session.user.username}>
-                {#if session.user.hasCustomProfilePicture}
-                    <img class="user-picture" alt={session.user.username} src="/api/account/picture/current">
+            {$accountSession.user.username}
+            <PersonPicture size={32} alt={$accountSession.user.username}>
+                {#if $accountSession.user.hasCustomProfilePicture}
+                    <img class="user-picture" alt={$accountSession.user.username} src="/api/account/picture/current">
                 {:else}
                     {@html ProfileIcon}
                 {/if}

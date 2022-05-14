@@ -1,10 +1,12 @@
 <script lang="ts" context="module">
     import { ActionBlock } from "$lib";
     import { Button, ComboBox } from "fluent-svelte";
-    import { ok } from "../../lib/responses";
-    import type { Session } from "$data/session";
+    import { ok } from "$api/responses";
 
     import LanguageIcon from "@fluentui/svg-icons/icons/local_language_24_filled.svg?raw";
+    import type {Load} from "@sveltejs/kit";
+    import {accountSession} from "$/stores";
+    import {get} from "svelte/store";
 
     const languages = [
         {
@@ -17,7 +19,6 @@
         }
     ];
 
-    let _session: Session;
     let files: HTMLInputElement;
     function uploadPicture() {
         fetch("/api/account/picture/upload", {
@@ -29,12 +30,11 @@
     function uploadSettings() {
         fetch("/api/account/settings/update", {
             method: "PUT",
-            body: JSON.stringify(_session.user.settings)
+            body: JSON.stringify(get(accountSession).user.settings)
         });
     }
 
-    export async function load({ session }) {
-        _session = session;
+    export const load: Load = async ({ session }) => {
         if (!session.isLoggedIn) {
             return {
                 status: 302,
@@ -51,7 +51,7 @@
 </div>
 
 <ActionBlock title="Language" description="placeholder" icon={LanguageIcon}>
-    <ComboBox slot="action" items={languages} bind:value={_session.user.settings.language}></ComboBox>
+    <ComboBox slot="action" items={languages} bind:value={$accountSession.user.settings.language}></ComboBox>
 </ActionBlock>
 <Button on:click={uploadSettings}>Save settings</Button>
 

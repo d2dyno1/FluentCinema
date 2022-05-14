@@ -1,5 +1,5 @@
 import moment from "moment";
-import {client} from "../db";
+import {client} from ".";
 
 export abstract class Expirable {
     public readonly expires_at?: Date;

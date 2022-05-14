@@ -1,9 +1,10 @@
 <script lang="ts" context="module">
-    import {ok} from "../../lib/responses";
+    import {ok} from "$api/responses";
+    import type {Load} from "@sveltejs/kit";
 
     export let token;
 
-    export async function load({ url }) {
+    export const load: Load = async ({ url }) => {
         token = decodeURIComponent(url.searchParams.get("token"));
         return ok;
     }

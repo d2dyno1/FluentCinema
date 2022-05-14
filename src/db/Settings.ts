@@ -1,13 +1,13 @@
 import type {User} from "./User";
-import {client} from "../db";
-import type {SettingsSchema} from "../../data/schema/SettingsSchema";
+import {client} from ".";
+import type {SettingsSchema} from "../data/schema/SettingsSchema";
 
 export class Settings {
     private readonly user_id!: string;
     public readonly language!: string;
 
     public async update(settings: SettingsSchema) {
-        await client.query("UPDATE settings SET language=$1;", [settings.language]);
+        await client.query("UPDATE settings SET language=$1 WHERE user_id=$2;", [settings.language, this.user_id]);
     }
 
     public static async create(user: User) {

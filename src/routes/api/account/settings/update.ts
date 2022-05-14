@@ -1,8 +1,8 @@
-import {badRequest, ok, forbidden} from "../../../../lib/responses";
+import {badRequest, ok, forbidden} from "$api/responses";
 import type { RequestHandler } from "@sveltejs/kit";
-import {Session} from "../../../../lib/db/Session";
-import {settingsSchema} from "../../../../data/schema/SettingsSchema";
-import type {SettingsSchema} from "../../../../data/schema/SettingsSchema";
+import {Session} from "$db/Session";
+import {settingsSchema} from "$data/schema/SettingsSchema";
+import type {SettingsSchema} from "$data/schema/SettingsSchema";
 
 export const put: RequestHandler = async ({ request }) => {
     let session = await Session.getFromRequest(request);

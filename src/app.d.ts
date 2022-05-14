@@ -1,10 +1,15 @@
-/// <reference types="@sveltejs/kit" />
+import type {Session as AccountSession} from "$data/Session";
 
-// See https://kit.svelte.dev/docs/types#app
-// for information about these interfaces
-declare namespace App {
-	// interface Locals {}
-	// interface Platform {}
-	// interface Session {}
-	// interface Stuff {}
+declare global {
+    declare namespace App {
+        interface Locals {
+            session: Session | null
+        };
+
+        interface Session extends AccountSession {}
+
+        // interface Platform {}
+        // interface Session {}
+        // interface Stuff {}
+    }
 }

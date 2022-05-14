@@ -2,8 +2,8 @@ import type {RequestHandler} from "@sveltejs/kit";
 import sharp from "sharp";
 import {number, object} from "yup";
 import type {InferType} from "yup";
-import {badRequest, forbidden, ok} from "../../../../lib/responses";
-import {Session} from "../../../../lib/db/Session";
+import {badRequest, forbidden} from "$api/responses";
+import {Session} from "$db/Session";
 
 const defaultSize = 32;
 

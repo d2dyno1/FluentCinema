@@ -1,4 +1,4 @@
-import type {Settings} from "../lib/db/Settings";
+import type {Settings} from "$db/Settings";
 
 export type Session = {
     isLoggedIn: boolean,

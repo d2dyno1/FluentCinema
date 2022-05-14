@@ -1,15 +1,9 @@
-import {badRequest, forbidden, ok} from "../../../../lib/responses";
+import {badRequest, forbidden, ok} from "$api/responses";
 import type { RequestHandler } from "@sveltejs/kit";
-import {object, string} from "yup";
-import type {InferType} from "yup";
-import {Session} from "../../../../lib/db/Session";
-import {User} from "../../../../lib/db/User";
-import {EmailVerification} from "../../../../lib/db/EmailVerification";
-
-const verifyEmailSchema = object({
-    token: string().required()
-});
-interface VerifyEmailSchema extends InferType<typeof verifyEmailSchema> {}
+import {Session} from "$db/Session";
+import {EmailVerification} from "$db/EmailVerification";
+import {verifyEmailSchema} from "$data/schema/VerifyEmailSchema";
+import type {VerifyEmailSchema} from "$data/schema/VerifyEmailSchema";
 
 export const post: RequestHandler = async ({ request }) => {
     let session = await Session.getFromRequest(request);

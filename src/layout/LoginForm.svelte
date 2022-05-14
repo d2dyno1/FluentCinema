@@ -2,8 +2,8 @@
     import { TextBox, TextBlock } from "fluent-svelte";
     import { DialogForm } from "$layout";
     import { PromiseButton } from "$lib";
-    import {loginSchema} from "../data/schema/LoginSchema";
-    import type {LoginSchema} from "../data/schema/LoginSchema";
+    import {loginSchema} from "$data/schema/LoginSchema";
+    import type {LoginSchema} from "$data/schema/LoginSchema";
 
     let email: string;
     let password: string;

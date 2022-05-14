@@ -2,7 +2,7 @@ import crypto from "crypto";
 import {parse, serialize} from "cookie";
 import moment from "moment";
 import {promisify} from "util";
-import {client} from "../db";
+import {client} from ".";
 import {User} from "./User";
 import {Expirable, initializeExpiredEntryDeleter} from "./Expirable";
 

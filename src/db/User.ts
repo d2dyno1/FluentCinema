@@ -1,8 +1,8 @@
-import {client} from "../db";
+import {client} from ".";
 import sharp from "sharp";
 import * as crypto from "crypto";
 import * as argon2 from "argon2";
-import credentials from "../../../credentials.json";
+import credentials from "../../credentials.json";
 import nodemailer from "nodemailer";
 import {Settings} from "./Settings";
 
