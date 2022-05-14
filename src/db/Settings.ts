@@ -5,9 +5,10 @@ import type {SettingsSchema} from "../data/schema/SettingsSchema";
 export class Settings {
     private readonly user_id!: string;
     public readonly language!: string;
+    public readonly twoFactorAuthentication!: string;
 
     public async update(settings: SettingsSchema) {
-        await client.query("UPDATE settings SET language=$1 WHERE user_id=$2;", [settings.language, this.user_id]);
+        await client.query("UPDATE settings SET language=$1, \"twoFactorAuthentication\"=$2 WHERE user_id=$3;", [settings.language, settings.twoFactorAuthentication, this.user_id]);
     }
 
     public static async create(user: User) {

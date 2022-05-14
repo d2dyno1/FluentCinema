@@ -4,6 +4,7 @@ import {User} from "$db/User";
 import {Session} from "$db/Session";
 import {loginSchema} from "$data/schema/LoginSchema";
 import type {LoginSchema} from "$data/schema/LoginSchema";
+import {TwoFactorAuthentication} from "../../../db/TwoFactorAuthentication";
 
 export const post: RequestHandler = async ({ request }) => {
     if (await Session.getFromRequest(request) != null) {
@@ -22,6 +23,20 @@ export const post: RequestHandler = async ({ request }) => {
         return forbiddenWithMessage("Incorrect password.");
     }
 
+    if ((await user.getSettings()).twoFactorAuthentication) {
+        if (!params.otp) {
+            await TwoFactorAuthentication.sendOtpToUser(user);
+            return {
+                status: 200,
+                body: {
+                    success: false,
+                    otpRequired: true
+                }
+            }
+        } else if (!await TwoFactorAuthentication.isValid(user, params.otp)) {
+            return badRequestWithMessage("Incorrect one-time password.");
+        }
+    }
     return {
         status: 200,
         body: {

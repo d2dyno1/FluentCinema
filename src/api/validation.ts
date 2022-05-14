@@ -12,3 +12,7 @@ export const email = string()
 export const password = string()
     .required("A password is required.")
     .matches(passwordValidationRegex, "A password must consist of between 8 and 128 characters, including an uppercase letter, a digit and a special character.");
+
+export const otp = string()
+    .optional()
+    .matches(/^\d{6}$/);

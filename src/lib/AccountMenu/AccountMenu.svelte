@@ -30,7 +30,7 @@
         </div>
     </Button>
     <div slot="flyout">
-        <MenuFlyoutItem on:click={() => window.location.replace("/settings")}>
+        <MenuFlyoutItem on:click={() => window.location.replace("/account")}>
             {@html ProfileIcon}
             FluentCinema Account
         </MenuFlyoutItem>

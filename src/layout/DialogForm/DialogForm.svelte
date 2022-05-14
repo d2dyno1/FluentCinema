@@ -1,29 +1,17 @@
 <script lang="ts">
     import { InfoBar, TextBlock } from "fluent-svelte";
+    import {InfoBarSeverity} from "../../data/InfoBarSeverity";
 
     export let title;
 
     let showInfoBar = false;
-    let infoBarSeverity = "";
-    let infoBarMessage = "";
+    let infoBarSeverity: InfoBarSeverity;
+    let infoBarMessage: string;
 
-    export function showMessage(message) {
+    export function showMessage(message, severity: InfoBarSeverity) {
         showInfoBar = true;
         infoBarMessage = message;
-    }
-
-    export function showSuccessMessage(message) {
-        showMessage(message);
-        infoBarSeverity = "success";
-    }
-
-    export function showCriticalMessage(message) {
-        showMessage(message);
-        infoBarSeverity = "critical";
-    }
-
-    export function hideMessage() {
-        showInfoBar = false;
+        infoBarSeverity = severity;
     }
 </script>
 
