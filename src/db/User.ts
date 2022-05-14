@@ -72,6 +72,11 @@ export class User {
         return query.rowCount != 0;
     }
 
+    public static async getFromId(id: string): Promise<User | null> {
+        let query = await client.query("SELECT * FROM users WHERE id=$1;", [id]);
+        return query.rowCount == 0 ? null : Object.assign(new User(), query.rows[0]);
+    }
+
     public static async getFromEmail(email: string): Promise<User | null> {
         let query = await client.query("SELECT * FROM users WHERE email=$1;", [email]);
         return query.rowCount == 0 ? null : Object.assign(new User(), query.rows[0]);

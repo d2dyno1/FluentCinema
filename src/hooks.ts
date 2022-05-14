@@ -33,9 +33,9 @@ export const handle: Handle = async ({ event, resolve }) => {
             event.locals.session = {
                 isLoggedIn: true,
                 user: {
+                    id: user.id,
                     email: user.email,
                     username: user.username,
-                    hasCustomProfilePicture: await user.picture != null,
                     settings: {...await user.getSettings()} as Settings
                 }
             }

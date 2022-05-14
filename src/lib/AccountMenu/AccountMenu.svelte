@@ -3,6 +3,7 @@
     import { default as LoginForm } from "$layout/LoginForm.svelte";
     import { default as RegisterForm } from "$layout/RegisterForm.svelte";
     import { accountSession } from "$/stores";
+    import { AccountPicture } from "$lib";
 
     import ProfileIcon from "@fluentui/svg-icons/icons/person_32_filled.svg?raw";
     import EyeIcon from "@fluentui/svg-icons/icons/eye_24_filled.svg?raw";
@@ -20,13 +21,7 @@
     <Button>
         <div class="inner-login-button">
             {$accountSession.user.username}
-            <PersonPicture size={32} alt={$accountSession.user.username}>
-                {#if $accountSession.user.hasCustomProfilePicture}
-                    <img class="user-picture" alt={$accountSession.user.username} src="/api/account/picture/current">
-                {:else}
-                    {@html ProfileIcon}
-                {/if}
-            </PersonPicture>
+            <AccountPicture size={32} userId={$accountSession.user.id}/>
         </div>
     </Button>
     <div slot="flyout">
