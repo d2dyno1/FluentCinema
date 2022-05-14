@@ -6,7 +6,7 @@
     export let promise;
 
     export const load: Load = async ({ fetch }) => {
-        promise = fetch("/api/movies", {
+        promise = fetch("/api/cinema/movie/list", {
             headers: {
                 'Content-Type': 'application/json'
             },
