@@ -42,7 +42,7 @@
         });
         promise.then(response => response.json()).then((response: GeneralResponse) => {
             if (response.success) {
-                window.location.replace("/settings");
+                window.location.replace("/account");
             } else {
                 formComponent.showMessage(response.message, InfoBarSeverity.critical);
             }

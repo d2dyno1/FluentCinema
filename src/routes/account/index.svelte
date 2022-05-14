@@ -1,7 +1,18 @@
 <script lang="ts" context="module">
     import type { NavigationItem } from "$data/navigation";
     import { AccountCard } from "$lib";
-    import {accountSession} from "$/stores";
+    import type {Load} from "@sveltejs/kit";
+    import {ok} from "$api/responses";
+
+    export const load: Load = async ({ session }) => {
+        if (!session.isLoggedIn) {
+            return {
+                status: 302,
+                redirect: "/"
+            }
+        }
+        return ok;
+    };
 </script>
 
 <script lang="ts">
