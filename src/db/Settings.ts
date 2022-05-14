@@ -7,7 +7,7 @@ export class Settings {
     public readonly language!: string;
 
     public async update(settings: SettingsSchema) {
-        await client.query("UPDATE settings SET language=$1;", [settings.language]);
+        await client.query("UPDATE settings SET language=$1 WHERE user_id=$2;", [settings.language, this.user_id]);
     }
 
     public static async create(user: User) {
