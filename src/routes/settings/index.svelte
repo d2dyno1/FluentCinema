@@ -1,7 +1,7 @@
 <script lang="ts" context="module">
     import { ActionBlock } from "$lib";
     import { Button, ComboBox } from "fluent-svelte";
-    import { ok } from "../../lib/responses";
+    import { ok } from "$api/responses";
     import type { Session } from "$data/session";
 
     import LanguageIcon from "@fluentui/svg-icons/icons/local_language_24_filled.svg?raw";

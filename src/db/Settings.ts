@@ -1,6 +1,6 @@
 import type {User} from "./User";
-import {client} from "../db";
-import type {SettingsSchema} from "../../data/schema/SettingsSchema";
+import {client} from ".";
+import type {SettingsSchema} from "../data/schema/SettingsSchema";
 
 export class Settings {
     private readonly user_id!: string;

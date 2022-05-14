@@ -1,6 +1,6 @@
-import {forbidden, ok} from "../../../lib/responses";
+import {forbidden, ok} from "$api/responses";
 import type {RequestHandler} from "@sveltejs/kit";
-import {Session} from "../../../lib/db/Session";
+import {Session} from "$db/Session";
 
 export const del: RequestHandler = async ({ request }) => {
     let session = await Session.getFromRequest(request);

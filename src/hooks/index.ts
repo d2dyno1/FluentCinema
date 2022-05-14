@@ -1,9 +1,9 @@
 import { dev } from "$app/env";
 import { parse } from "cookie";
-import type { Session } from "$data/session";
-import { User } from "../lib/db/User";
+import type { Session } from "$data/Session";
+import { User } from "$db/User";
 import type { GetSession } from "@sveltejs/kit";
-import { Settings } from "../lib/db/Settings";
+import type { Settings } from "$db/Settings";
 
 const rateLimitedEndpoints = [
     "api/login",

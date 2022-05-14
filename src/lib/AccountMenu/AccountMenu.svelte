@@ -1,7 +1,7 @@
 <script lang="ts">
     import { PersonPicture, Button, Flyout, TextBlock, MenuFlyout, MenuFlyoutItem, MenuFlyoutDivider } from "fluent-svelte";
-    import { default as LoginForm } from "../../layout/../layout/LoginForm.svelte";
-    import { default as RegisterForm } from "../../layout/../layout/RegisterForm.svelte";
+    import { default as LoginForm } from "$layout/LoginForm.svelte";
+    import { default as RegisterForm } from "$layout/RegisterForm.svelte";
     import type { Session } from "$data/session";
     
     import ProfileIcon from "@fluentui/svg-icons/icons/person_32_filled.svg?raw";

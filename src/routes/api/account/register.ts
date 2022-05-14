@@ -1,10 +1,10 @@
-import {badRequest, badRequestWithMessage, forbidden} from "../../../lib/responses";
+import {badRequest, badRequestWithMessage, forbidden} from "$api/responses";
 import type {RequestHandler} from "@sveltejs/kit";
-import {Session} from "../../../lib/db/Session";
-import {User} from "../../../lib/db/User";
-import {EmailVerification} from "../../../lib/db/EmailVerification";
-import {registerSchema} from "../../../data/schema/RegisterSchema";
-import type {RegisterSchema} from "../../../data/schema/RegisterSchema";
+import {Session} from "$db/Session";
+import {User} from "$db/User";
+import {EmailVerification} from "$db/EmailVerification";
+import {registerSchema} from "$data/schema/RegisterSchema";
+import type {RegisterSchema} from "$data/schema/RegisterSchema";
 
 export const post: RequestHandler = async ({ request }) => {
     if (await Session.getFromRequest(request) != null) {

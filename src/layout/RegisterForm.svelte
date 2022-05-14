@@ -2,8 +2,8 @@
     import { TextBox } from "fluent-svelte";
     import { DialogForm } from "$layout";
     import { PromiseButton } from "$lib";
-    import {registerSchema} from "../data/schema/RegisterSchema";
-    import type {RegisterSchema} from "../data/schema/RegisterSchema";
+    import {registerSchema} from "$data/schema/RegisterSchema";
+    import type {RegisterSchema} from "$data/schema/RegisterSchema";
 
     let formComponent;
 

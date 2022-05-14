@@ -1,7 +1,7 @@
-import { client } from '$lib/db';
-import { internalServerError } from "$lib/responses";
+import { client } from "$db";
+import { internalServerError } from "$api/responses";
 import type {RequestHandler} from "@sveltejs/kit";
-import type {MovieData} from "../../data/movies";
+import type {MovieData} from "$data/movies";
 
 export const get: RequestHandler = async () => {
     try {

@@ -1,7 +1,7 @@
 import type {RequestHandler} from "@sveltejs/kit";
-import {badRequest, forbidden, internalServerError} from "../../../../lib/responses";
+import {badRequest, forbidden, internalServerError} from "$api/responses";
 import sharp from "sharp";
-import {Session} from "../../../../lib/db/Session";
+import {Session} from "$db/Session";
 
 const maxPictureSize = 200000;
 

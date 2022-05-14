@@ -15,7 +15,9 @@ const config = {
                                 $static: path.resolve("./static"),
                                 $lib: path.resolve("./src/lib"),
                                 $layout: path.resolve("./src/layout"),
-                                $data: path.resolve("./src/data")
+                                $data: path.resolve("./src/data"),
+                                $db: path.resolve("./src/db"),
+                                $api: path.resolve("./src/api"),
                             }
                     },
                     server: {

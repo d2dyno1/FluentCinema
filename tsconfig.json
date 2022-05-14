@@ -15,8 +15,12 @@
 		"target": "es2020",
 		"baseUrl": "src",
 		"paths": {
+			"$api": ["api"],
+			"$api/*": ["api/*"],
 			"$data": ["data"],
 			"$data/*": ["data/*"],
+			"$db": ["db"],
+			"$db/*": ["db/*"],
 			"$layout": ["layout"],
 			"$layout/*": ["layout/*"],
 			"$lib": ["lib"],

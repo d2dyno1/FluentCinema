@@ -1,6 +1,6 @@
 import crypto from "crypto";
 import { promisify } from "util";
-import {client} from "../db";
+import {client} from ".";
 import moment from "moment";
 import type {User} from "./User";
 import {Expirable, initializeExpiredEntryDeleter} from "./Expirable";

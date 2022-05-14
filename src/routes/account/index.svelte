@@ -1,7 +1,7 @@
 <script lang="ts" context="module">
     import type { NavigationItem } from "$data/navigation";
     import { AccountCard } from "$lib";
-    import { ok } from "$lib/responses";
+    import { ok } from "$api/responses";
     import type { Session } from "$data/session";
 
     let session_: Session;

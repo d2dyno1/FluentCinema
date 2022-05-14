@@ -1,14 +1,8 @@
-import {badRequest, badRequestWithMessage, internalServerError, ok} from "$lib/responses";
+import {badRequest, badRequestWithMessage, internalServerError, ok} from "$api/responses";
 import type {RequestHandler} from "@sveltejs/kit";
-import {string, object} from "yup";
-import type {InferType} from "yup";
-import {emailValidationRegex} from "../../../../lib/validation";
-import {User} from "../../../../lib/db/User";
-
-const resetPasswordSchema = object({
-    email: string().required().matches(emailValidationRegex)
-});
-interface ResetPasswordSchema extends InferType<typeof resetPasswordSchema> {}
+import {User} from "$db/User";
+import type {ResetPasswordSchema} from "$data/schema/ResetPasswordSchema";
+import {resetPasswordSchema} from "$data/schema/ResetPasswordSchema";
 
 export const post: RequestHandler = async ({ request }) => {
     try {

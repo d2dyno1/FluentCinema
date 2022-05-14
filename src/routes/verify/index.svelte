@@ -1,5 +1,5 @@
 <script lang="ts" context="module">
-    import {ok} from "../../lib/responses";
+    import {ok} from "$api/responses";
 
     export let token;
 

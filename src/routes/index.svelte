@@ -1,6 +1,6 @@
 <script lang="ts" context="module">
     import { HeroSection, MoviesSection } from "$layout";
-    import { ok } from "$lib/responses";
+    import { ok } from "$api/responses";
 
     export let promise;
 

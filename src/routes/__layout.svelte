@@ -1,9 +1,8 @@
 <script lang="ts" context="module">
     import { Navbar } from "$layout";
     import type { NavbarButton, NavbarItem } from "$data/navbar";
-    import type { User } from "$data/User";
-    import { ok } from "$lib/responses";
-    import type { Session } from "../data/session";
+    import { ok } from "$api/responses";
+    import type { Session } from "$data/session";
 
     import CodeIcon from "@fluentui/svg-icons/icons/code_24_filled.svg?raw";
     import HomeIcon from "@fluentui/svg-icons/icons/home_24_filled.svg?raw";
