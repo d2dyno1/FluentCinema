@@ -1,15 +1,7 @@
 <script lang="ts" context="module">
     import type { NavigationItem } from "$data/navigation";
     import { AccountCard } from "$lib";
-    import { ok } from "$api/responses";
-    import type { Session } from "$data/session";
-
-    let session_: Session;
-
-    export async function load({ session }) {
-        session_ = session;
-        return ok;
-    }
+    import {accountSession} from "$/stores";
 </script>
 
 <script lang="ts">
@@ -32,7 +24,7 @@
 
 <div class="wrapper">
     <div class="card">
-        <AccountCard bind:selectedItem={selectedItem} session={session_} navItems={navItems}/>
+        <AccountCard bind:selectedItem={selectedItem} session={$accountSession} navItems={navItems}/>
     </div>
     <div class="content">
         <div class="title">{selectedItem.name}</div>

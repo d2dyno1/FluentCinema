@@ -2,13 +2,11 @@
     import { Navbar } from "$layout";
     import type { NavbarButton, NavbarItem } from "$data/navbar";
     import { ok } from "$api/responses";
-    import type { Session } from "$data/session";
+    import { accountSession } from "$/stores";
 
     import CodeIcon from "@fluentui/svg-icons/icons/code_24_filled.svg?raw";
     import HomeIcon from "@fluentui/svg-icons/icons/home_24_filled.svg?raw";
-
-
-    let session_: Session; // "session" doesn't work for some reason...
+    import type {Load} from "@sveltejs/kit";
 
     const navbarItems: NavbarItem[] = [
         {
@@ -25,13 +23,13 @@
         }
     ];
 
-    export async function load({ session }) {
-        session_ = session;
+    export const load: Load = async ({ session }) => {
+        accountSession.set(session);
         return ok;
     }
 </script>
 
-<Navbar session={session_} navbarItems={navbarItems} navbarButtons={navbarButtons}/>
+<Navbar session={$accountSession} navbarItems={navbarItems} navbarButtons={navbarButtons}/>
 <slot/>
 <!-- <Footer/> -->
 
