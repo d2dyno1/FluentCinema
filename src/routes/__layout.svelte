@@ -3,11 +3,11 @@
     import type { NavbarButton, NavbarItem } from "$data/navbar";
     import type { User } from "$data/User";
     import { ok } from "$lib/responses";
+    import type { Session } from "../data/session";
 
     import CodeIcon from "@fluentui/svg-icons/icons/code_24_filled.svg?raw";
     import HomeIcon from "@fluentui/svg-icons/icons/home_24_filled.svg?raw";
 
-    import type {Session} from "../data/Session";
 
     let session_: Session; // "session" doesn't work for some reason...
 

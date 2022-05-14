@@ -1,10 +1,10 @@
 <script lang="ts">
-    import { Tooltip } from "fluent-svelte";
+    import { Button, Tooltip } from "fluent-svelte";
     import { AccountMenu } from "$lib";
     import type { User } from "$data/User";
     import type { NavbarButton, NavbarItem } from "$data/navbar";
-    import {ok} from "../../lib/responses";
-    import type {Session} from "../../data/Session";
+    import { ok } from "$lib/responses";
+    import type { Session } from "$data/session";
 
     export let session: Session;
     export let navbarItems: NavbarItem[] = [];
@@ -17,18 +17,18 @@
             FluentCinema
         </a>
         <div class="divider"></div>
-        {#each navbarItems as { name, path, type, icon }}
-            {#if type == "divider"}
+        {#each navbarItems as navbarItem}
+            {#if navbarItem.type == "divider"}
                 <div class="divider"></div>
             {:else}
-                <a 
+                <a
                     class="navbar-item"
-                    href={path}
+                    href={navbarItem.path}
                     class:selected={false}>
-                    {#if icon}
-                        {@html icon}
+                    {#if navbarItem.icon}
+                        {@html navbarItem.icon}
                     {/if}
-                    {name}
+                    {navbarItem.name}
                 </a>
             {/if}
         {/each}

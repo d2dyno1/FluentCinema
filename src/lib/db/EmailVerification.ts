@@ -3,20 +3,16 @@ import { promisify } from "util";
 import {client} from "../db";
 import moment from "moment";
 import type {User} from "./User";
+import {Expirable, initializeExpiredEntryDeleter} from "./Expirable";
 
 const randomBytesAsync = promisify(crypto.randomBytes);
 
 const baseVerificationUrl = "https://fluentcinema.zsti.eu/verify?token=";
 const tokenTimespan = 15; // in minutes
 
-export class EmailVerification {
+export class EmailVerification extends Expirable {
     private readonly user_id!: string;
     private readonly token!: string;
-    private readonly expires_at!: Date;
-
-    public isExpired() {
-        return moment().isAfter(moment(this.expires_at));
-    }
 
     public static async tryVerifyEmail(user: User, token: string): Promise<boolean> {
         let verification = await EmailVerification.getFromToken(token);
@@ -50,12 +46,4 @@ export class EmailVerification {
     }
 }
 
-setInterval(async () => {
-    let query = await client.query("SELECT * FROM email_verification_tokens;");
-    let tokens: EmailVerification[] = query.rows.map(row => Object.assign(new EmailVerification(), row));
-    for (let token of tokens) {
-        if (token.isExpired()) {
-            await token.invalidate();
-        }
-    }
-}, 60000);
+initializeExpiredEntryDeleter(() => new EmailVerification(), "email_verification_tokens");

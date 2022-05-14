@@ -13,15 +13,15 @@ picture {
     margin: 0px 12px 0px 0px;
     width: 364px;
     height: 172px;
-    box-sizing: border-box;
     padding-block: 8px;
     padding-inline: 8px;
     text-decoration: none;
-    border: none;
     outline: none;
-    border-radius: var(--fds-control-corner-radius);
     transition: var(--fds-control-faster-duration) ease background;
     user-select: none;
+    box-sizing: border-box;
+    border: none;
+    border-radius: var(--fds-control-corner-radius);
     border: 1px solid;
     border-color: var(--fds-control-border-default);
     background-color: var(--fds-control-fill-default);

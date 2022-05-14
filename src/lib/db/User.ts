@@ -4,6 +4,7 @@ import * as crypto from "crypto";
 import * as argon2 from "argon2";
 import credentials from "../../../credentials.json";
 import nodemailer from "nodemailer";
+import {Settings} from "./Settings";
 
 const mailTransporter = nodemailer.createTransport(credentials.mail);
 
@@ -34,6 +35,11 @@ export class User {
         await client.query("DELETE FROM users WHERE id=$1", [this.id]);
         await client.query("DELETE FROM sessions WHERE user_id=$1", [this.id]);
         await client.query("DELETE FROM email_verification_tokens WHERE user_id=$1", [this.id]);
+        await client.query("DELETE FROM settings WHERE user_id=$1", [this.id]);
+    }
+
+    public async getSettings() {
+        return await Settings.getFromUser(this);
     }
 
     public async verifyPassword(password: string) {
@@ -56,7 +62,9 @@ export class User {
         }
         let hashedPassword = await argon2.hash(password);
         await client.query("INSERT INTO users(id, email, hashed_password, username) VALUES ($1, $2, $3, $4)", [id, email, hashedPassword, username]);
-        return await this.getFromEmail(email) as User;
+        let user = await this.getFromEmail(email) as User;
+        await Settings.create(user);
+        return user;
     }
 
     public static async isIdTaken(id: string) {

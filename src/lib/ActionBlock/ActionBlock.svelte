@@ -4,15 +4,19 @@
     export let isClickableEffect: boolean;
     export let title: string;
     export let description: string;
+    export let icon: any;
 </script>
 
 <div class="action-block" on:click class:isClickableEffect>
-    <div class="icon">
-        <slot name="icon"/>
-    </div>
+    {#if icon != null}
+        {@html icon}
+    {/if}
+<!--    <div class="icon">-->
+<!--        <slot name="icon"/>-->
+<!--    </div>-->
     <div class="column">
         <TextBlock>{title}</TextBlock>
-        <TextBlock variant="caption" class="description-section">{description}</TextBlock>
+        <div class="description-section">{description}</div>
     </div>
     <div class="align-right">
         <slot name="action"/>

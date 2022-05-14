@@ -11,7 +11,7 @@ export const post: RequestHandler = async ({ request }) => {
     }
 
     let params: LoginSchema = await request.json();
-    if (!await loginSchema.validate(params)) {
+    if (!await loginSchema.isValid(params)) {
         return badRequest;
     }
 

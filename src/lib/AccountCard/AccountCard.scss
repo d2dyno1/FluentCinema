@@ -1,0 +1,54 @@
+@use "src/styles/mixins" as *;
+
+.wrapper {
+    @include flex($direction: column, $align: start, $justify: center);
+    flex: 0 1 auto;
+    gap: 12px;
+}
+
+.card {
+    @include flex($direction: column, $align: center, $justify: center);
+    flex: 1 1 auto;
+    background-color: var(--fds-control-fill-default);
+    width: 286px;
+    padding: 16px;
+    border-radius: 6px;
+    box-sizing: border-box;
+    border: none;
+    border-radius: var(--fds-control-corner-radius);
+    border: 1px solid;
+    border-color: var(--fds-control-border-default);
+}
+
+.user-picture {
+    user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+}
+
+.navigation {
+    width: 286px;
+    border-radius: 6px;
+    box-sizing: border-box;
+    border: none;
+    border-radius: var(--fds-control-corner-radius);
+    border: 1px solid;
+    border-color: var(--fds-control-border-default);
+    background-color: var(--fds-control-fill-default);
+}
+
+.email-text {
+    opacity: 0.8;
+    font-size: small;
+    margin-top: 4px;
+}
+
+.divider {
+    background-color: var(--fds-solid-background-secondary);
+    border-inline-start: 1px solid var(--fds-divider-stroke-default);
+}
+
+.account-img {
+    border-radius: 50%;
+    margin-bottom: 16px;
+}

@@ -1,0 +1,30 @@
+@use "src/styles/mixins" as *;
+
+.wrapper {
+    @include flex($direction: row, $justify: start);
+    flex: 1 1 auto;
+    padding: 2%;
+    gap: 16px;
+}
+
+.card {
+    top: 3%;
+    height: fit-content;
+    position: sticky;
+}
+
+.title {
+    font-size: 20px;
+    font-weight: normal;
+}
+
+.content {
+    @include flex($direction: column);
+    flex: 1 1 auto;
+    gap: 16px;
+    background-color: var(--fds-layer-background-default);
+    border-radius: 8px;
+    padding: 24px;
+    width: 100vw;
+    height: 100vh;
+}
