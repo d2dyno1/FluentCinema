@@ -6,3 +6,5 @@ export { default as Navbar } from "./Navbar/Navbar.svelte";
 
 export { default as LoginForm } from "./LoginForm.svelte";
 export { default as RegisterForm } from "./RegisterForm.svelte"
+
+export { default as MovieHeroSection } from "./Movie/MovieHeroSection/MovieHeroSection.svelte";

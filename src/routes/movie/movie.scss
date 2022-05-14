@@ -1,0 +1,6 @@
+@use "src/styles/mixins" as *;
+
+.wrapper {
+    @include flex($direction: column);
+    flex: 1 1 auto;
+}
