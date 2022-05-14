@@ -24,7 +24,7 @@
 
 <div class="wrapper">
     <div class="card">
-        <AccountCard bind:selectedItem={selectedItem} session={$accountSession} navItems={navItems}/>
+        <AccountCard bind:selectedItem={selectedItem} navItems={navItems}/>
     </div>
     <div class="content">
         <div class="title">{selectedItem.name}</div>

@@ -29,7 +29,7 @@
     }
 </script>
 
-<Navbar session={$accountSession} navbarItems={navbarItems} navbarButtons={navbarButtons}/>
+<Navbar navbarItems={navbarItems} navbarButtons={navbarButtons}/>
 <slot/>
 <!-- <Footer/> -->
 

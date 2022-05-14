@@ -2,9 +2,7 @@
     import { Tooltip } from "fluent-svelte";
     import { AccountMenu } from "$lib";
     import type { NavbarButton, NavbarItem } from "$data/navbar";
-    import type { Session } from "$data/session";
 
-    export let session: Session;
     export let navbarItems: NavbarItem[] = [];
     export let navbarButtons: NavbarButton[] = [];
 </script>
@@ -39,7 +37,7 @@
                 </a>
             </Tooltip>
         {/each}
-        <AccountMenu session={session}/>
+        <AccountMenu/>
     </div>
 </header>
 
