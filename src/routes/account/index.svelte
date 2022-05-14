@@ -35,6 +35,7 @@
         <AccountCard bind:selectedItem={selectedItem} session={session_} navItems={navItems}/>
     </div>
     <div class="content">
+        <div class="title">{selectedItem.name}</div>
         <svelte:component this={selectedItem.component}/>
     </div>
 </div>
