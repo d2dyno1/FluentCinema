@@ -1,9 +1,11 @@
 <script lang="ts">
-    import { TextBox } from "fluent-svelte";
+    import {TextBox} from "fluent-svelte";
     import { DialogForm } from "$layout";
     import { PromiseButton } from "$lib";
     import {registerSchema} from "$data/schema/RegisterSchema";
     import type {RegisterSchema} from "$data/schema/RegisterSchema";
+    import {InfoBarSeverity} from "../data/InfoBarSeverity";
+    import type {GeneralResponse} from "../data/response/GeneralResponse";
 
     let formComponent;
 
@@ -23,11 +25,11 @@
         try {
             await registerSchema.validate(params);
         } catch (e) {
-            formComponent.showCriticalMessage(e.message);
+            formComponent.showMessage(e.message, InfoBarSeverity.critical);
             return;
         }
         if (password != confirmedPassword) {
-            formComponent.showCriticalMessage("Passwords don't match.");
+            formComponent.showMessage("Passwords don't match.", InfoBarSeverity.critical);
             return;
         }
 
@@ -38,14 +40,14 @@
             method: 'POST',
             body: JSON.stringify(params)
         });
-        promise.then(response => response.json()).then(response => {
+        promise.then(response => response.json()).then((response: GeneralResponse) => {
             if (response.success) {
                 window.location.replace("/settings");
             } else {
-                formComponent.showCriticalMessage(response.message);
+                formComponent.showMessage(response.message, InfoBarSeverity.critical);
             }
         });
-        promise.catch(err => formComponent.showCriticalMessage(err.message));
+        promise.catch(err => formComponent.showMessage(err.message, InfoBarSeverity.critical));
     }
 </script>
 
