@@ -18,15 +18,14 @@
 </script>
 
 <script lang="ts">
-    import { MovieHeroSection } from "$layout";
-
+    import { MovieHeroSection, ReviewsSection } from "$layout";
     export let movie: MovieData;
 
-    
 </script>
 
 <div class="wrapper">
     <MovieHeroSection movie={movie}/>
+    <ReviewsSection/>
 </div>
 
 <style lang="scss">
