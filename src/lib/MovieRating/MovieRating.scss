@@ -1,0 +1,9 @@
+@use "src/styles/mixins" as *;
+
+.movie-rating {
+    @include flex($direction: row, $align: center, $wrap: wrap)
+}
+
+div > div {
+    height: 25px;
+}

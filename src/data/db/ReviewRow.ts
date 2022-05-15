@@ -5,7 +5,6 @@ export abstract class ReviewRow {
     public readonly rating!: number;
     public readonly content!: string;
 
-
     protected constructor(row: ReviewRow) {
         this.id = row.id;
         this.userId = row.userId;

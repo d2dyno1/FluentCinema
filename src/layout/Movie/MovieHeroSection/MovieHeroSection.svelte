@@ -1,6 +1,7 @@
 <script lang="ts">
     import { Button } from "fluent-svelte";
-    
+    import { MovieRating } from "$lib";
+
     import TimerIcon from "@fluentui/svg-icons/icons/timer_32_filled.svg?raw";
     import CalendarIcon from "@fluentui/svg-icons/icons/calendar_star_24_filled.svg?raw";
     import type {Movie} from "$db/movie/Movie";
@@ -25,6 +26,9 @@
             </div>
             <div>
                 {@html CalendarIcon} {new Date(movie.release).toLocaleDateString()}
+            </div>
+            <div>
+                <MovieRating {movie}/>
             </div>
         </div>
         <div class="movie-description">

@@ -7,3 +7,4 @@ export { default as MovieCard } from "./MovieCard/MovieCard.svelte";
 export { default as MoviePosition } from "./MoviePosition/MoviePosition.svelte";
 export { default as PromiseButton } from "./PromiseButton/PromiseButton.svelte";
 export { default as MovieReview } from "./MovieReview/MovieReview.svelte";
+export { default as MovieRating } from "./MovieRating/MovieRating.svelte";

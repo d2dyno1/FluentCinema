@@ -71,12 +71,6 @@ picture {
     margin: 0px 0px 4px 0px;
 }
 
-.rating {
-    font-size: small;
-    font-weight:300;
-    opacity: 0.8;
-}
-
 .details {
     @include flex($direction: column, $align: start, $justify: space-between);
     flex: 1 1 auto;

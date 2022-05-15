@@ -5,6 +5,6 @@ import {Movie} from "$db/movie/Movie";
 export const get: RequestHandler = async ({ params }) => {
     return {
         status: 200,
-        body: (await Movie.getFromId(params.id)).row
+        body: await Movie.getFromId(params.id)
     }
 }

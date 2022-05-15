@@ -14,8 +14,8 @@
         <Button variant="hyperlink" on:click>See all</Button> <!-- TODO: Add click -->
     </div>
     <div class="movie-positions">
-        {#each positions as { id, name, description, descriptionExtended, rating }}
-        <MoviePosition name={name} episode={description} description={descriptionExtended} rating={rating} image="/api/cinema/movie/{id}/poster"/>
+        {#each positions as movie}
+        <MoviePosition {movie}/>
         {/each}
     </div>
 </div>
