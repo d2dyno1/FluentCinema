@@ -6,3 +6,4 @@ export { default as AccountPicture } from "./AccountPicture/AccountPicture.svelt
 export { default as MovieCard } from "./MovieCard/MovieCard.svelte";
 export { default as MoviePosition } from "./MoviePosition/MoviePosition.svelte";
 export { default as PromiseButton } from "./PromiseButton/PromiseButton.svelte";
+export { default as MovieReview } from "./MovieReview/MovieReview.svelte";

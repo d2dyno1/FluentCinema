@@ -4,17 +4,18 @@ import type {Movie} from "./Movie";
 
 export class Review {
     private readonly id!: number;
-    private readonly userId!: number;
+    public readonly userId!: number;
+    public readonly username!: string;
     private readonly movieId!: number;
-    private readonly rating!: number;
-    private readonly content!: string;
+    public readonly rating!: number;
+    public readonly content!: string;
 
     public static async create(user: User, movie: Movie, rating: number, content: string) {
         await client.query('INSERT INTO reviews("userId", "movieId", rating, content) VALUES($1, $2, $3, $4)', [user.id, movie.id, rating, content]);
     }
 
     public static async getFromMovie(movie: Movie): Promise<Review[]> {
-        let reviews = (await client.query('SELECT * FROM reviews WHERE "movieId"=$1;', [movie.id])).rows;
+        let reviews = (await client.query('SELECT reviews.*, users.username FROM reviews JOIN users ON reviews."userId" = users.id WHERE "movieId"=$1;', [movie.id])).rows;
         return reviews.map(review => Object.assign(new Review(), review));
     }
 }
