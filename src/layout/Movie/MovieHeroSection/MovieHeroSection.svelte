@@ -10,7 +10,7 @@
 
 <div class="movie-content">
     <picture>
-        <img class="movie-poster" alt="img" src={movie.posterImage}>
+        <img class="movie-poster" alt="img" src="/api/cinema/movie/{movie.id}/poster">
     </picture>
     <div class="description">
         <div class="title">

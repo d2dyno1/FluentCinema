@@ -31,6 +31,7 @@
     "cookie": "^0.5.0",
     "fluent-svelte": "^1.5.1",
     "moment": "^2.29.3",
+    "node-cache": "^5.1.2",
     "node-sass": "^7.0.1",
     "nodemailer": "^6.7.5",
     "pg": "^8.7.3",

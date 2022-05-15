@@ -1,9 +1,10 @@
-import { client } from "$db";
 import type {RequestHandler} from "@sveltejs/kit";
+import {Movie} from "$db/movie/Movie";
 
+// @ts-ignore
 export const get: RequestHandler = async () => {
     return {
         status: 200,
-        body: (await client.query("SELECT * FROM movies")).rows
+        body: await Movie.getAll()
     }
 }
