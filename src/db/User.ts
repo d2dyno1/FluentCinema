@@ -6,6 +6,7 @@ import credentials from "../../credentials.json";
 import nodemailer from "nodemailer";
 import {Settings} from "./Settings";
 import NodeCache from "node-cache";
+import {Reservation} from "./movie/Reservation";
 
 const pictureCache = new NodeCache({ stdTTL: 0 });
 
@@ -30,6 +31,10 @@ export class User {
         let picture: Uint8Array = (await client.query("SELECT picture FROM users WHERE id=$1;", [this.id])).rows[0].picture;
         pictureCache.set(this.id, picture);
         return picture;
+    }
+
+    public async getReservations() {
+        return await Reservation.getFromUser(this);
     }
 
     public async changePicture(imageBuffer: Uint8Array | null) {

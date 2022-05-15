@@ -1,21 +1,32 @@
-import type {User} from "../User";
-import {client} from "../index";
+import type {User} from "$db/User";
+import {client} from "$db";
 import type {Movie} from "./Movie";
+import {ReviewRow} from "$data/db/ReviewRow";
 
-export class Review {
-    private readonly id!: number;
-    public readonly userId!: number;
+export class Review extends ReviewRow {
     public readonly username!: string;
-    private readonly movieId!: number;
-    public readonly rating!: number;
-    public readonly content!: string;
+
+    constructor(row: ReviewRow, username: string) {
+        super(row);
+        this.username = username;
+    }
+
+    private static async construct(row: ReviewRow, username: string): Promise<Review> {
+        return (async () => {
+            return new Review(row, username);
+        })();
+    }
 
     public static async create(user: User, movie: Movie, rating: number, content: string) {
         await client.query('INSERT INTO reviews("userId", "movieId", rating, content) VALUES($1, $2, $3, $4)', [user.id, movie.id, rating, content]);
     }
 
     public static async getFromMovie(movie: Movie): Promise<Review[]> {
-        let reviews = (await client.query('SELECT reviews.*, users.username FROM reviews JOIN users ON reviews."userId" = users.id WHERE "movieId"=$1;', [movie.id])).rows;
-        return reviews.map(review => Object.assign(new Review(), review));
+        let rows = (await client.query('SELECT reviews.*, users.username FROM reviews JOIN users ON reviews."userId" = users.id WHERE "movieId"=$1;', [movie.id])).rows;
+        let reviews: Review[] = [];
+        for (let row of rows) {
+            reviews.push(await Review.construct(row as ReviewRow, row.username));
+        }
+        return reviews;
     }
 }
