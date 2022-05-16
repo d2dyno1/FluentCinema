@@ -1,7 +1,7 @@
 <script lang="ts" context="module">
-    import type {Load} from "@sveltejs/kit";
-    import type {Movie} from "$db/movie/Movie";
-    import type {Review} from "$db/movie/Review";
+    import type { Load } from "@sveltejs/kit";
+    import type { Movie } from "$db/movie/Movie";
+    import type { Review } from "$db/movie/Review";
 
     export let reviews: Review[];
 
@@ -17,17 +17,17 @@
             }
         }
     }
-
 </script>
 
 <script lang="ts">
-    import { MovieHeroSection, ReviewsSection } from "$layout";
-    export let movie: Movie;
+    import { MovieHeroSection, MovieDateSection, ReviewsSection } from "$layout";
 
+    export let movie: Movie;
 </script>
 
 <div class="wrapper">
     <MovieHeroSection movie={movie}/>
+    <MovieDateSection movie={movie}/>
     <ReviewsSection reviews={reviews}/>
 </div>
 

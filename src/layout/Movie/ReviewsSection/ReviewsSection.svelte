@@ -6,10 +6,12 @@
     export let reviews: Review[];
 </script>
 
-<TextBlock>Reviews</TextBlock>
-{#each reviews as review}
+<div>
+    <TextBlock>Reviews</TextBlock>
+    {#each reviews as review}
     <MovieReview review={review}/>
-{/each}
+    {/each}
+</div>
 
 <style lang="scss">
     @use "ReviewsSection";

@@ -10,3 +10,4 @@ export { default as RegisterForm } from "./RegisterForm.svelte"
 export { default as MovieHeroSection } from "./Movie/MovieHeroSection/MovieHeroSection.svelte";
 export { default as ReviewsSection } from "./Movie/ReviewsSection/ReviewsSection.svelte";
 export { default as MovieDetailsSection } from "./Movie/MovieDetailsSection/MovieDetailsSection.svelte";
+export { default as MovieDateSection } from "./Movie/MovieDateSection/MovieDateSection.svelte";

@@ -27,7 +27,6 @@
     @include flex($direction: row, $justify: start, $align: start);
     flex: 1 1 auto;
     gap: 32px;
-    padding: 64px 128px 0 64px;
 }
 
 .movie-description {

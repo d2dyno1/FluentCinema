@@ -47,8 +47,6 @@ export class Movie extends MovieRow {
         return await Review.getFromMovie(this);
     }
 
-
-
     public static async getAll(): Promise<Movie[]> {
         let rows = (await client.query('SELECT name, description, "descriptionExtended", id, length, release FROM movies ORDER BY id;')).rows
         let movies: Movie[] = [];
