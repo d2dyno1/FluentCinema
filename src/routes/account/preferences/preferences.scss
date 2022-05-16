@@ -1,8 +1,13 @@
 @use "src/styles/mixins" as *;
 
 .settings-list {
-    @include flex($direction: column, $justify: start, $align: start);
+    @include flex($direction: column, $justify: start, $align: stretch);
     flex: 1 1 auto;
+    gap: 6px;
+}
+
+.select-file {
+    display: none;
 }
 
 .setting {
