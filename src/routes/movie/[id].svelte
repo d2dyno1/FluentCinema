@@ -6,12 +6,14 @@
     export let reviews: ReviewResponse[];
     export let screeningDates: TableDateItem[][] = [];
 
+    let screeningDatesPromise;
+
     export const load: Load = async ({ params, fetch }) => {
         let response = await fetch(`/api/cinema/movie/${params.id}`);
         let movie: MovieResponse = await response.json();
         reviews = await (await fetch(`/api/cinema/movie/${params.id}/review/list`)).json();
 
-        fetch(`/api/cinema/screenings?movieId=${movie.id}`).then(response => response.json()).then((data: Screening[]) => {
+        screeningDatesPromise = fetch(`/api/cinema/screenings?movieId=${movie.id}`).then(response => response.json()).then((data: Screening[]) => {
             let lastDate: Date;
             data.forEach((x: Screening) => {
                 let startDate = new Date(x.start);
@@ -44,7 +46,9 @@
 
 <div class="wrapper">
     <MovieHeroSection movie={movie}/>
-    <MovieDateSection movie={movie} screeningDates={screeningDates}/>
+    {#await screeningDatesPromise then x}
+        <MovieDateSection movie={movie} {screeningDates}/>
+    {/await}
     <ReviewsSection reviews={reviews}/>
 </div>
 
