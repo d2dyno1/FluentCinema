@@ -1,9 +1,9 @@
 <script lang="ts">
-    import type {Review} from "$db/movie/Review";
     import AccountPicture from "../AccountPicture/AccountPicture.svelte";
     import {TextBlock} from "fluent-svelte";
+    import {ReviewResponse} from "$data/response/ReviewResponse";
 
-    export let review: Review;
+    export let review: ReviewResponse;
 </script>
 
 <AccountPicture size={32} userId={review.userId}/>

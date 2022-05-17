@@ -1,19 +1,17 @@
 import type {User} from "$db/User";
 import {client} from "$db";
 import type {Movie} from "./Movie";
-import {ReviewRow} from "$data/db/ReviewRow";
+import {ReviewResponse} from "$data/response/ReviewResponse";
+import _ from "underscore";
 
-export class Review extends ReviewRow {
-    public readonly username!: string;
+export class Review extends ReviewResponse {
+    public readonly id!: number;
+    public readonly userId!: number;
+    public readonly movieId!: number;
 
-    constructor(row: ReviewRow, username: string) {
-        super(row);
-        this.username = username;
-    }
-
-    private static async construct(row: ReviewRow, username: string): Promise<Review> {
+    private static async construct(queryResult: Partial<Review>): Promise<Review> {
         return (async () => {
-            return new Review(row, username);
+            return Object.assign(new Review(), queryResult);
         })();
     }
 
@@ -22,11 +20,18 @@ export class Review extends ReviewRow {
     }
 
     public static async getFromMovie(movie: Movie): Promise<Review[]> {
-        let rows = (await client.query('SELECT reviews.*, users.username FROM reviews JOIN users ON reviews."userId" = users.id WHERE "movieId"=$1;', [movie.id])).rows;
+        let rows: Partial<Review>[] = (await client.query(`
+            SELECT reviews.*, users.username FROM reviews 
+            JOIN users ON reviews."userId" = users.id 
+            WHERE "movieId"=$1;`, [movie.id])).rows;
         let reviews: Review[] = [];
         for (let row of rows) {
-            reviews.push(await Review.construct(row as ReviewRow, row.username));
+            reviews.push(await Review.construct(row));
         }
         return reviews;
+    }
+
+    toJSON() {
+        return _.omit(this, ["id", "movieId"]);
     }
 }

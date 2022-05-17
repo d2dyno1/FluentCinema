@@ -4,9 +4,9 @@
 
     import TimerIcon from "@fluentui/svg-icons/icons/timer_32_filled.svg?raw";
     import CalendarIcon from "@fluentui/svg-icons/icons/calendar_star_24_filled.svg?raw";
-    import type {Movie} from "$db/movie/Movie";
+    import {MovieResponse} from "$data/response/MovieResponse";
 
-    export let movie: Movie;
+    export let movie: MovieResponse;
 </script>
 
 <div class="movie-content">

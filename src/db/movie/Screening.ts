@@ -1,31 +1,32 @@
 import {client} from "$db";
 import {Movie} from "$db/movie/Movie";
-import type {ScreeningRoom} from "$data/cinema/ScreeningRoom";
-import {ScreeningRow} from "$data/db/ScreeningRow";
-import type {MovieRow} from "$data/db/MovieRow";
+import {ScreeningResponse} from "$data/response/ScreeningResponse";
+import type {MovieResponse} from "$data/response/MovieResponse";
+import _ from "underscore";
+import type {Reservation} from "./Reservation";
+import type {ScreeningRoomResponse} from "$data/response/ScreeningRoomResponse";
+import {ScreeningRoom} from "./ScreeningRoom";
 
-export class Screening extends ScreeningRow {
-    public readonly movie: MovieRow;
-    public readonly room: ScreeningRoom;
-    public readonly takenSeats: number[];
-    private readonly soldOut: boolean;
+export class Screening extends ScreeningResponse {
+    public readonly id!: number;
+    public readonly roomId!: number;
+    public readonly movieId!: string;
+    public readonly cinemaId!: string;
 
-    private constructor(row: ScreeningRow, movie: MovieRow, room: ScreeningRoom, takenSeats: number[], soldOut: boolean) {
-        super(row);
-        this.movie = movie;
-        this.room = room;
-        this.takenSeats = takenSeats;
-        this.soldOut = soldOut;
+    private constructor(movie: MovieResponse, room: ScreeningRoomResponse, takenSeats: number[], soldOut: boolean) {
+        super(movie, room, takenSeats, soldOut);
     }
 
-    private static async construct(row: ScreeningRow): Promise<Screening> {
+    private static async construct(queryResult: Partial<Screening>): Promise<Screening> {
         return (async () => {
-            let movie = (await Movie.getFromId(row.movieId)).row;
-            let room = (await client.query('SELECT * FROM screening_rooms where id=$1;', [row.roomId])).rows[0];
-            let takenSeats: number[] = (await client.query('SELECT seat FROM reservations JOIN screenings ON reservations."screeningId" = screenings.id WHERE screenings.id=$1;', [row.id])).rows.map(row => row.seat as number);
+            let movie = await Movie.getFromId(queryResult.movieId!);
+            let room = (await ScreeningRoom.getFromId(queryResult.roomId!))!;
+            let takenSeats: number[] = (await client.query(`
+                SELECT seat FROM reservations
+                JOIN screenings ON reservations."screeningId" = screenings.id
+                WHERE screenings.id=$1;`, [queryResult.id!])).rows.map((row: Partial<Reservation>) => row.seat!);
             let soldOut = takenSeats.length == room.seatRowCount * room.seatRowLength;
-
-            return new Screening(row, movie, room, takenSeats, soldOut);
+            return Object.assign(new Screening(movie, room, takenSeats, soldOut), queryResult);
         })();
     }
 
@@ -34,11 +35,11 @@ export class Screening extends ScreeningRow {
         if (query.rowCount == 0) {
             return null;
         }
-        return Screening.construct(query.rows[0] as ScreeningRow);
+        return Screening.construct(query.rows[0]);
     }
 
     public static async getAll(cinemaId: string | null, movieId: string | null): Promise<Screening[]> {
-        let rows: ScreeningRow[] = (await client.query("SELECT * FROM screenings;")).rows;
+        let rows: Partial<Screening>[] = (await client.query("SELECT * FROM screenings;")).rows;
         let screenings: Screening[] = [];
         for (let row of rows) {
             screenings.push(await Screening.construct(row));
@@ -50,5 +51,9 @@ export class Screening extends ScreeningRow {
             screenings = screenings.filter(screening => screening.movieId == movieId);
         }
         return screenings;
+    }
+
+    toJSON() {
+        return _.omit(this, ['id', "roomId", "movieId", "cinemaId"]);
     }
 }
