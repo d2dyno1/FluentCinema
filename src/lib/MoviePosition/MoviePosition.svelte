@@ -1,8 +1,8 @@
 <script lang="ts">
-    import type { Movie } from "$db/movie/Movie";
     import { MovieRating } from "$lib";
+    import {MovieResponse} from "$data/response/MovieResponse";
 
-    export let movie: Movie;
+    export let movie: MovieResponse;
 </script>
 
 <div class="item" on:click>

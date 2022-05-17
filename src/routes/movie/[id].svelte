@@ -1,14 +1,14 @@
 <script lang="ts" context="module">
-    import type { Load } from "@sveltejs/kit";
-    import type { Movie } from "$db/movie/Movie";
-    import type { Review } from "$db/movie/Review";
+    import type {Load} from "@sveltejs/kit";
+    import { ReviewResponse } from "$data/response/ReviewResponse";
+    import { MovieResponse } from "../../data/response/MovieResponse";
 
-    export let reviews: Review[];
+    export let reviews: ReviewResponse[];
     export let screeningDates: TableDateItem[][] = [[]];
 
     export const load: Load = async ({ params, fetch }) => {
         let response = await fetch(`/api/cinema/movie/${params.id}`);
-        let movie: Movie = await response.json();
+        let movie: MovieResponse = await response.json();
         reviews = await (await fetch(`/api/cinema/movie/${params.id}/review/list`)).json();
 
         fetch(`/api/cinema/screenings?movieId=${movie.id}`).then(response => response.json()).then((data: Screening[]) => {
@@ -38,7 +38,7 @@
     import type { TableDateItem } from "$/data/table";
     import type { Screening } from "$/db/movie/Screening";
 
-    export let movie: Movie;
+    export let movie: MovieResponse;
 </script>
 
 <div class="wrapper">

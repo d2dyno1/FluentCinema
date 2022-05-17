@@ -39,15 +39,15 @@
     </ActionBlock>
     <ActionBlock title="Two-factor authentication" description="You will need to enter a 6-digit code sent to your e-mail every time you log in." icon={KeyIcon}>
         <ToggleSwitch
-            bind:checked={$accountSession.user.settings.twoFactorAuthentication}
-            on:click={(e) => updateAndUploadSettings(e.target.checked, (x) => $accountSession.user.settings.twoFactorAuthentication = x)}
-            slot="action">
-                {#if $accountSession.user.settings.twoFactorAuthentication}
-                    On
-                {:else}
-                    Off
-                {/if}
-            </ToggleSwitch>
+                bind:checked={$accountSession.user.settings.twoFactorAuthentication}
+                on:click={(e) => updateAndUploadSettings(e.target.checked, (x) => $accountSession.user.settings.twoFactorAuthentication = x)}
+                slot="action">
+            {#if $accountSession.user.settings.twoFactorAuthentication}
+                On
+            {:else}
+                Off
+            {/if}
+        </ToggleSwitch>
     </ActionBlock>
 </div>
 

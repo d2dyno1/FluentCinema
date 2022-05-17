@@ -2,8 +2,8 @@ import {client} from "$db";
 import type {User} from "$db/User";
 import {Review} from "./Review";
 import NodeCache from "node-cache";
-import {MovieRow} from "$data/db/MovieRow";
 import _ from "underscore";
+import {MovieResponse} from "$data/response/MovieResponse";
 
 interface MovieImages {
     banner: Uint8Array,
@@ -12,30 +12,38 @@ interface MovieImages {
 
 const imageCache = new NodeCache({ stdTTL: 0 });
 
-export class Movie extends MovieRow {
-    public readonly bannerImage: Uint8Array;
-    public readonly posterImage: Uint8Array;
-    public readonly rating: number;
+export class Movie extends MovieResponse {
+    readonly bannerImage: Uint8Array;
+    readonly posterImage: Uint8Array;
 
-    constructor(row: MovieRow, rating: number, images: MovieImages) {
-        super(row)
-        this.rating = rating;
+    constructor(rating: number, images: MovieImages) {
+        super(rating);
         this.bannerImage = images.banner;
         this.posterImage = images.poster;
     }
 
-    private static async construct(row: MovieRow): Promise<Movie> {
+    private static async construct(queryResult: Partial<Movie>): Promise<Movie> {
         return (async () => {
-            let rating = (await client.query(`SELECT ROUND(AVG(reviews.rating), 1) as rating FROM reviews JOIN movies ON reviews."movieId" = movies.id WHERE movies.id=$1;`, [row.id])).rows[0].rating;
+            let id = queryResult.id!;
+            let rating = (await client.query(`
+                SELECT ROUND(AVG(reviews.rating), 1) as rating 
+                FROM reviews
+                JOIN movies ON reviews."movieId" = movies.id
+                WHERE movies.id=$1;`, [id])).rows[0].rating;
             if (rating == null) {
                 rating = 0;
             }
-            if (imageCache.has(row.id)) {
-                return new Movie(row, rating, imageCache.get(row.id));
+            let images: MovieImages;
+            if (imageCache.has(id)) {
+                images = imageCache.get(id) as MovieImages;
+            } else {
+                images = (await client.query(`
+                    SELECT "bannerImage" as banner, "posterImage" as poster 
+                    FROM movies
+                    WHERE id=$1`, [id])).rows[0] as MovieImages;
+                imageCache.set(id, images);
             }
-            let images = (await client.query('SELECT "bannerImage" as banner, "posterImage" as poster FROM movies WHERE id=$1', [row.id])).rows[0] as MovieImages;
-            imageCache.set(row.id, images);
-            return new Movie(row, rating, images);
+            return Object.assign(new Movie(rating, images), queryResult);
         })();
     }
 
@@ -56,7 +64,7 @@ export class Movie extends MovieRow {
         return movies;
     }
 
-    public static async getFromId(id: string): Promise<Movie> {
+    public static async getFromId(id: number | string): Promise<Movie> {
         let movie = (await client.query('SELECT id, name, description, "descriptionExtended", length, release FROM movies WHERE id=$1;', [id])).rows[0];
         return await Movie.construct(movie);
     }

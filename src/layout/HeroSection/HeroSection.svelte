@@ -2,18 +2,18 @@
     import { fade } from "svelte/transition";
     import { Button } from "fluent-svelte";
     import { MovieCard } from "$lib";
-    import type { Movie } from "$db/movie/Movie";
+    import {MovieResponse} from "$data/response/MovieResponse";
 
-    export let cards: Movie[] = [];
-    export let currentCard: Movie = cards[0];
+    export let cards: MovieResponse[] = [];
+    export let currentCard: MovieResponse = cards[0];
     $: currentIndex = cards.indexOf(currentCard);
 
-    function cardClicked(e: Movie): void
+    function cardClicked(e: MovieResponse): void
     {
         currentCard = e;
     }
 
-    function detailsClicked(e: Movie): void
+    function detailsClicked(e: MovieResponse): void
     {
     }
 </script>

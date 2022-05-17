@@ -1,9 +1,9 @@
 <script lang="ts">
-    import type {Review} from "/db/movie/Review";
     import {MovieReview} from "$lib";
     import {TextBlock} from "fluent-svelte";
+    import {ReviewResponse} from "$data/response/ReviewResponse";
 
-    export let reviews: Review[];
+    export let reviews: ReviewResponse[];
 </script>
 
 <div>
