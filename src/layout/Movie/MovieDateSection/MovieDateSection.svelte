@@ -1,20 +1,26 @@
 <script lang="ts">
+    import type { TableDateItem } from "$/data/table";
     import type { Movie } from "$db/movie/Movie";
-    import SvelteTable from "svelte-table";
 
     export let movie: Movie;
+    export let screeningDates: TableDateItem[][] = [[]];
 
-    const rows: [] = [
-        /** data (example below) */
-        { date: "ABC" }
-    ];
-    const columns: [] = [
-        /** columns config (example below) */
+    const columns: TableDateItem[][] = [
+        [ {date: new Date(10) }, {date: new Date("2022-01-01T14:50.0") } ],
+        [ {date: new Date("2022-01-01T14:50.0") }, ],
     ];
 </script>
 
 <div>
-    <SvelteTable rows={rows} columns={columns}/>
+    {#each columns as column}
+        <div>
+            {#each column as row}
+                <div>
+                    {row.date.toTimeString()}
+                </div>
+            {/each}
+        </div>
+    {/each}
 </div>
 
 <style lang="scss">
