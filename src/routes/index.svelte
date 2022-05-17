@@ -2,7 +2,6 @@
     import { HeroSection, MoviesSection } from "$layout";
     import { ok } from "$api/responses";
     import type {Load} from "@sveltejs/kit";
-    import {MovieResponse} from "../data/response/MovieResponse";
 
     export let promise;
 
@@ -12,7 +11,7 @@
                 'Content-Type': 'application/json'
             },
             method: 'GET'
-        }).then(response => response.json()).then(response => Object.assign(new MovieResponse(), response));
+        }).then(response => response.json());
         return ok;
     }
 
