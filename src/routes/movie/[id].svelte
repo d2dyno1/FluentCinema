@@ -1,10 +1,10 @@
 <script lang="ts" context="module">
-    import type {Load} from "@sveltejs/kit";
+    import type { Load } from "@sveltejs/kit";
     import { ReviewResponse } from "$data/response/ReviewResponse";
     import { MovieResponse } from "../../data/response/MovieResponse";
 
     export let reviews: ReviewResponse[];
-    export let screeningDates: TableDateItem[][] = [[]];
+    export let screeningDates: TableDateItem[][] = [];
 
     export const load: Load = async ({ params, fetch }) => {
         let response = await fetch(`/api/cinema/movie/${params.id}`);
@@ -14,13 +14,14 @@
         fetch(`/api/cinema/screenings?movieId=${movie.id}`).then(response => response.json()).then((data: Screening[]) => {
             let lastDate: Date;
             data.forEach((x: Screening) => {
-                if (!lastDate || lastDate != x.start)
+                let startDate = new Date(x.start);
+                if (!lastDate || lastDate != startDate)
                 {
                     screeningDates.push([]);
                 }
 
-                screeningDates[--screeningDates.length].push({ date: x.start });
-                lastDate = x.start;
+                screeningDates[(screeningDates.length - 1)].push({ date: startDate });
+                lastDate = startDate;
             });
         });
 

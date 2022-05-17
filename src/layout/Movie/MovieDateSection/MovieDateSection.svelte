@@ -3,24 +3,21 @@
     import type { Movie } from "$db/movie/Movie";
 
     export let movie: Movie;
-    export let screeningDates: TableDateItem[][] = [[]];
-
-    const columns: TableDateItem[][] = [
-        [ {date: new Date(10) }, {date: new Date("2022-01-01T14:50.0") } ],
-        [ {date: new Date("2022-01-01T14:50.0") }, ],
-    ];
+    export let screeningDates: TableDateItem[][];
 </script>
 
 <div>
-    {#each columns as column}
-        <div>
-            {#each column as row}
-                <div>
-                    {row.date.toTimeString()}
-                </div>
-            {/each}
-        </div>
-    {/each}
+    {#if screeningDates} 
+        {#each screeningDates as column}
+            <div>
+                {#each column as row}
+                    <div>
+                        {row.date.toTimeString()}
+                    </div>
+                {/each}
+            </div>
+        {/each}
+    {/if}
 </div>
 
 <style lang="scss">
