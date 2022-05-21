@@ -6,19 +6,20 @@
     export let screeningDates: TableDateItem[][];
 </script>
 
-<div>
-    {#if screeningDates} 
+{#if screeningDates}
+    <div>
         {#each screeningDates as column}
             <div>
                 {#each column as row}
                     <div>
-                        {row.date.toTimeString()}
+                        {row.date.getDay()}
+                        {row.date.toLocaleTimeString()}
                     </div>
                 {/each}
             </div>
         {/each}
-    {/if}
-</div>
+    </div>
+{/if}
 
 <style lang="scss">
     @use "MovieDateSection";

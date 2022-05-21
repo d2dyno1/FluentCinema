@@ -1,7 +1,11 @@
 <script lang="ts" context="module">
-    import { HeroSection, MoviesSection } from "$layout";
+    import { MoviePosition } from "$lib";
+    import { MovieResponse } from "$data/response/MovieResponse";
+    import { ProgressRing } from "fluent-svelte";
+
     import { ok } from "$api/responses";
     import type { Load } from "@sveltejs/kit";
+
 
     export let promise;
 
@@ -14,11 +18,20 @@
         }).then(response => response.json());
         return ok;
     }
-
 </script>
 
-{#await promise then movies}
-    <HeroSection cards={movies}/>
-    <MoviesSection positions={movies}/>
+{#await promise}
+    <div class="center">
+        <ProgressRing size={64}/>
+    </div>
+{:then movies}
+    <div class="movie-list">
+        {#each movies as movie}
+            <MoviePosition {movie}/>
+        {/each}
+    </div>
 {/await}
 
+<style lang="scss">
+    @use "all-movies";
+</style>

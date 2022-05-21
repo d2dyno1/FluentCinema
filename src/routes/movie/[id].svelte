@@ -6,7 +6,7 @@
     export let reviews: ReviewResponse[];
     export let screeningDates: TableDateItem[][] = [];
 
-    let screeningDatesPromise;
+    let screeningDatesPromise: Promise<any>;
 
     export const load: Load = async ({ params, fetch }) => {
         let response = await fetch(`/api/cinema/movie/${params.id}`);

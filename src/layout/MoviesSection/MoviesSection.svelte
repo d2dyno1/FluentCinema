@@ -1,7 +1,7 @@
 <script lang="ts">
     import { Button } from "fluent-svelte";
     import { MoviePosition } from "$lib";
-    import {MovieResponse} from "$data/response/MovieResponse";
+    import { MovieResponse } from "$data/response/MovieResponse";
 
     export let positions: MovieResponse[] = [];
 </script>
@@ -11,7 +11,7 @@
         <h2>
             Explore
         </h2>
-        <Button variant="hyperlink" on:click>See all</Button> <!-- TODO: Add click -->
+        <Button variant="hyperlink" href="/all-movies">See all</Button> <!-- TODO: Add click -->
     </div>
     <div class="movie-positions">
         {#each positions as movie}
