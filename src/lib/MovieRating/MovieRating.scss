@@ -1,7 +1,2 @@
-@use "src/styles/mixins" as *;
 
-.movie-rating {
-    @include flex($direction: row, $align: start);
-    margin-bottom: -8px;
-    gap: 6px;
-}
+

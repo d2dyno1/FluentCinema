@@ -1,1 +1,32 @@
 @use "src/styles/mixins" as *;
+
+.reviews-section {
+    @include flex($direction: row, $justify: space-between);
+    background-color: var(--fds-solid-background-secondary);
+    padding: 10px;
+    height: 300px;
+}
+
+.button {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.content-wrapper {
+    display: inline-block;
+    top: 50%;
+    height: fit-content;
+    position: relative;
+    width: 100%;
+}
+
+.content {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.title {
+    margin-left: auto;
+    margin-right: auto;
+}

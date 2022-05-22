@@ -1,28 +1,11 @@
 <script lang="ts">
-    import StarRating from "svelte-star-rating";
-    import { TextBlock } from "fluent-svelte";
-    import { onMount } from "svelte";
-    import { MovieApiContext } from "../../api/MovieApiContext";
+    import { MovieApiContext } from "$api/MovieApiContext";
+    import { Rating } from "$lib/index.js";
 
     export let movie: MovieApiContext;
-    let config;
-
-    onMount(() => {
-        let computedTheme = getComputedStyle(document.body);
-        config = {
-            fullColor: computedTheme.getPropertyValue('--fds-text-secondary'),
-            emptyColor: "hsla(0, 0%, 0%, 12%)",
-            size: 16
-        }
-    });
 </script>
 
-<div class="movie-rating">
-    {#if config != null}
-        <StarRating {config} rating={movie.rating}/>
-        <TextBlock variant="caption">{movie.rating == 0 ? "No reviews" : `${movie.rating}/5`}</TextBlock>
-    {/if}
-</div>
+<Rating rating={movie.rating} text={movie.rating == 0 ? "No reviews" : `${movie.rating}/5.0`}/>
 
 <style lang="scss">
     @use "MovieRating";

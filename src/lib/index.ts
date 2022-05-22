@@ -8,3 +8,4 @@ export { default as MoviePosition } from "./MoviePosition/MoviePosition.svelte";
 export { default as PromiseButton } from "./PromiseButton/PromiseButton.svelte";
 export { default as MovieReview } from "./MovieReview/MovieReview.svelte";
 export { default as MovieRating } from "./MovieRating/MovieRating.svelte";
+export { default as Rating } from "./Rating/Rating.svelte";
