@@ -9,10 +9,8 @@
 }
 
 .header {
-    @include flex($direction: row, $align: center);
-    justify-content: space-between;
+    @include flex($direction: row, $align: center, $justify: space-between, $gap: 12px);
     flex: 1 1 auto;
-    gap: 16px
 }
 
 .movie-positions {

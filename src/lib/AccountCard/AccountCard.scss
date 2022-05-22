@@ -1,9 +1,8 @@
 @use "src/styles/mixins" as *;
 
 .wrapper {
-    @include flex($direction: column, $align: start, $justify: center);
+    @include flex($direction: column, $align: start, $justify: center, $gap: 12px);
     flex: 0 1 auto;
-    gap: 12px;
 }
 
 .card {

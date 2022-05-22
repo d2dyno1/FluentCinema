@@ -10,9 +10,8 @@
 }
 
 .inner-login-button {
-    @include flex($direction: row, $align: center, $justify: center);
+    @include flex($direction: row, $align: center, $justify: center, $gap: 12px);
     flex: 1 1 auto;
-    gap: 12px
 }
 
 .inner {

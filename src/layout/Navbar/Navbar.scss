@@ -19,9 +19,8 @@ nav,
 }
 
 .navbar-buttons {
-    @include flex($align: center);
+    @include flex($align: center, $gap: 12px);
     flex: 0 1 auto;
-    gap: 12px;
 }
 
 .navbar-button {
@@ -38,8 +37,7 @@ nav,
 }
 
 .navbar-item {
-    @include flex($justify: center);
-    gap: 6px;
+    @include flex($justify: center, $gap: 6px);
     padding: 5px 11px 6px 11px;
 	border-radius: var(--fds-control-corner-radius);
     color: var(--fds-text-secondary);

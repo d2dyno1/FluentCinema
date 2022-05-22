@@ -13,8 +13,7 @@
 }
 
 .length-and-premiere {
-    @include flex($direction: row);
-    gap: 128px;
+    @include flex($direction: row, $gap: 128px);
     margin-bottom: 16px;
 }
 
@@ -24,9 +23,8 @@
 }
 
 .movie-content {
-    @include flex($direction: row, $justify: start, $align: start);
+    @include flex($direction: row, $justify: start, $align: start, $gap: 32px);
     flex: 1 1 auto;
-    gap: 32px;
 }
 
 .movie-description {

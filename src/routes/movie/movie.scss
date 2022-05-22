@@ -1,8 +1,7 @@
 @use "src/styles/mixins" as *;
 
 .wrapper {
-    @include flex($direction: column);
+    @include flex($direction: column, $gap: 64px);
     flex: 1 1 auto;
     padding: 32px 64px 0px 64px;
-    gap: 64px;
 }
