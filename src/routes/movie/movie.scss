@@ -3,6 +3,6 @@
 .wrapper {
     @include flex($direction: column);
     flex: 1 1 auto;
-    padding: 64px 128px 0 64px;
+    padding: 32px 64px 0px 64px;
     gap: 64px;
 }

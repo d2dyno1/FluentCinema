@@ -8,18 +8,16 @@
 </script>
 
 {#if screeningDates}
-    <div class="columns">
+    <div class="wrapper">
         {#each screeningDates as item}
             <div class="column">
                 <div class="column-header">
-                    {item.dayPrefix}
+                    {item.dayName}
                 </div>
                 <div>
                     {#if item.dates}
                         {#each item.dates as date}
-                        <div class="column-row">
                             {moment(date).format('hh:mm')}
-                        </div>
                         {/each}
                     {/if}
                 </div>

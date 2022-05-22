@@ -4,21 +4,15 @@
     @include flex($direction: column, $align: center, $justify: center);
 }
 
-.columns {
-    @include flex($direction: row, $align: center, $justify: center);
+.wrapper {
+    @include flex($direction: row, $align: start, $justify: space-evenly);
     flex: 1 1 auto;
+    border-radius: var(--fds-overlay-corner-radius);
+    background-color: var(--fds-control-fill-default);
+    height: 36vh;
 }
 
 .column-header {
     font-size: 18px;
     padding: 12px;
-}
-
-.column-dates {
-    @include flex($direction: column, $align: stretch, $justify: stretch);
-    flex: 1 1 auto;
-}
-
-.column-row {
-
 }

@@ -11,11 +11,11 @@
         <h2>
             Explore
         </h2>
-        <Button variant="hyperlink" href="/all-movies">See all</Button> <!-- TODO: Add click -->
+        <Button variant="hyperlink" href="/all-movies">See all</Button>
     </div>
     <div class="movie-positions">
         {#each positions as movie}
-        <MoviePosition {movie}/>
+            <MoviePosition {movie}/>
         {/each}
     </div>
 </div>

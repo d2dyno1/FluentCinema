@@ -27,7 +27,6 @@
     @include flex($direction: row, $align: start, $justify: center);
     flex: 1 1 auto;
     margin-top: -2%;
-    overflow: auto;
     white-space: nowrap;
 }
 

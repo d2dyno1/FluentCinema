@@ -23,7 +23,7 @@
     flex: 1 1 auto;
     gap: 16px;
     background-color: var(--fds-layer-background-default);
-    border-radius: 8px;
+    border-radius: var(--fds-overlay-corner-radius);
     padding: 24px;
     width: 100vw;
     height: 100vh - 21vh; /* TODO: Not ideal */

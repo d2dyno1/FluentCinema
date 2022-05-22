@@ -3,4 +3,4 @@ const { Pool, types } = pkg;
 import credentials from "../../credentials.json"
 types.setTypeParser(1700, x => parseFloat(x));
 export const client = new Pool(credentials.db);
-client.connect().then(() => console.log("Connected to database."));
+client.connect().then(() => console.log("Connection with database has been established."));

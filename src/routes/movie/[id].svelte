@@ -18,7 +18,7 @@
             // Fill the table
             for (let i = 0; i < 7 /* Week days*/; i++)
             {
-                screeningDates.push({dayPrefix: moment().add(i, 'day').format('dddd').substring(0, 3)});
+                screeningDates.push({dayName: moment().add(i, 'day').format('dddd')});
             }
             
             // Fill screenings
@@ -40,14 +40,19 @@
 
 <script lang="ts">
     import { MovieHeroSection, MovieDateSection, ReviewsSection } from "$layout";
-import moment from "moment";
+    import { ProgressRing } from "fluent-svelte";
+    import moment from "moment";
 
     export let movie: MovieApiContext;
 </script>
 
 <div class="wrapper">
     <MovieHeroSection movie={movie}/>
-    {#await screeningDatesPromise then x}
+    {#await screeningDatesPromise}
+        <div>
+            <ProgressRing size={64}/>
+        </div>
+    {:then _} 
         <MovieDateSection movie={movie} {screeningDates}/>
     {/await}
     <ReviewsSection reviews={reviews}/>

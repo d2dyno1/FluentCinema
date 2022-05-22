@@ -2,7 +2,7 @@
 
 .movie-poster {
     width: 172px;
-    border-radius: 8px;
+    border-radius: var(--fds-control-corner-radius);
 }
 
 .title {

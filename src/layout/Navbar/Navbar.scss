@@ -38,7 +38,21 @@ nav,
 }
 
 .navbar-item {
-    justify-content: center;
+    @include flex($justify: center);
+    gap: 6px;
+    padding: 5px 11px 6px 11px;
+	border-radius: var(--fds-control-corner-radius);
+    color: var(--fds-text-secondary);
+    transition: var(--fds-control-faster-duration) linear background-color;
+    margin-right: 6px;
+
+    &:hover {
+        background-color: var(--fds-subtle-fill-secondary)
+    }
+
+    &:active {
+		background-color: var(--fds-subtle-fill-tertiary);
+	}
 
     &.selected {
         background-color: var(--fds-subtle-fill-secondary);

@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { page } from "$app/stores";
     import { Tooltip } from "fluent-svelte";
     import { AccountMenu } from "$lib";
     import type { NavbarButton, NavbarItem } from "$data/navbar";
@@ -20,7 +21,8 @@
                 <a
                     class="navbar-item"
                     href={navbarItem.path}
-                    class:selected={false}>
+                    class:selected={$page.url.pathname == navbarItem.path}>
+
                     {#if navbarItem.icon}
                         {@html navbarItem.icon}
                     {/if}
