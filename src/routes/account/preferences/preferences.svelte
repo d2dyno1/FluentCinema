@@ -1,13 +1,15 @@
 <script lang="ts">
     import { ActionBlock } from "$lib";
-    import { Button, ToggleSwitch } from "fluent-svelte";
+    import { Button, ContentDialog, ToggleSwitch } from "fluent-svelte";
     import { accountSession } from "$/stores";
 
     import ProfileIcon from "@fluentui/svg-icons/icons/person_32_filled.svg?raw";
     import KeyIcon from "@fluentui/svg-icons/icons/key_32_filled.svg?raw";
+    import DeleteIcon from "@fluentui/svg-icons/icons/delete_48_filled.svg?raw";
     import { AccountApiContext } from "../../../api/AccountApiContext";
     import { SettingsApiContext } from "../../../api/SettingsApiContext";
 
+    let showAccountDeletionConfirmationDialog;
     let uploadFiles: HTMLInputElement;
 
     async function uploadSettings(): Promise<void>
@@ -23,6 +25,11 @@
 
     async function uploadPicture() {
         await AccountApiContext.uploadProfilePicture(uploadFiles.files[0]);
+        window.location.reload();
+    }
+
+    async function deleteAccount() {
+        await AccountApiContext.delete();
         window.location.reload();
     }
 </script>
@@ -46,7 +53,17 @@
             {/if}
         </ToggleSwitch>
     </ActionBlock>
+    <ActionBlock title="Delete account" description="Delete your account and any data associated with it. Your reservations will not be refunded." icon={DeleteIcon}>
+        <Button slot="action" on:click={() => showAccountDeletionConfirmationDialog = true}>Delete</Button>
+    </ActionBlock>
 </div>
+<ContentDialog title="Delete account" bind:open={showAccountDeletionConfirmationDialog}>
+    Are you sure? This action cannot be undone!
+    <svelte:fragment slot="footer">
+        <Button slot="footer" variant="accent" on:click={deleteAccount}>Yes</Button>
+        <Button slot="footer" on:click={() => showAccountDeletionConfirmationDialog = false}>No</Button>
+    </svelte:fragment>
+</ContentDialog>
 
 <style lang="scss">
     @use "preferences";

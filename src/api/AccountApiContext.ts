@@ -33,6 +33,10 @@ export class AccountApiContext {
         return promise;
     }
 
+    static async delete(): Promise<void> {
+        await fetch("/api/account/delete", { method: "DELETE"});
+    }
+
     static async logout(): Promise<void> {
         await fetch("/api/account/logout", { method: "POST" })
     }

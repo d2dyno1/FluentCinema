@@ -18,13 +18,6 @@ const argon2Options = {
 
 const targetPictureSize = 64; // Size of the picture stored in the database
 
-const QUERY_DELETE_ACCOUNT = `
-    DELETE FROM users WHERE id=$1;
-    DELETE FROM sessions WHERE user_id=$1;
-    DELETE FROM email_verification_tokens WHERE user_id=$1;
-    DELETE FROM settings WHERE user_id=$1;
-`;
-
 export class AccountDatabaseContext {
     readonly id!: string;
     readonly email!: string;
@@ -68,7 +61,10 @@ export class AccountDatabaseContext {
     }
 
     async delete(): Promise<void> {
-        await client.query(QUERY_DELETE_ACCOUNT, [this.id]);
+        await client.query("DELETE FROM sessions WHERE user_id=$1;", [this.id]);
+        client.query("DELETE FROM users WHERE id=$1;", [this.id]);
+        client.query("DELETE FROM email_verification_tokens WHERE user_id=$1;", [this.id]);
+        client.query("DELETE FROM settings WHERE user_id=$1;", [this.id]);
     }
 
     async getSettings(): Promise<SettingsDatabaseContext> {
