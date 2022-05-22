@@ -25,7 +25,9 @@
     </div>
     <div class="movie-list">
         {#each movies as movie}
-        <MoviePosition {movie}/>
+            <div class="movie-position-wrapper">
+                <MoviePosition {movie}/>
+            </div>
         {/each}
     </div>
 </div>

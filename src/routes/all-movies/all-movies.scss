@@ -15,7 +15,7 @@
 
 .title {
     @include flex($align: center, $justify: center);
-    padding: 4% 0% 4% 0%;
+    padding: 4% 0% 12% 0%;
     font-size: 36px;
     font-weight: 500;
 }
@@ -24,4 +24,8 @@
     @include flex($align: center, $justify: start);
     flex: 1 1 auto;
     flex-wrap: wrap;
+}
+
+.movie-position-wrapper {
+    margin-bottom: 12px;
 }
