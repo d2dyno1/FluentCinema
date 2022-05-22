@@ -1,13 +1,12 @@
 <script lang="ts" context="module">
     import { MoviePosition } from "$lib";
-    import { MovieResponse } from "$data/response/MovieResponse";
     import { ProgressRing } from "fluent-svelte";
 
     import { ok } from "$api/responses";
     import type { Load } from "@sveltejs/kit";
 
 
-    export let promise;
+    export let promise: Promise<any>;
 
     export const load: Load = async ({ fetch }) => {
         promise = fetch("/api/cinema/movie/list", {
@@ -21,15 +20,20 @@
 </script>
 
 {#await promise}
-    <div class="center">
-        <ProgressRing size={64}/>
-    </div>
+<div class="center">
+    <ProgressRing size={64}/>
+</div>
 {:then movies}
+<div class="wrapper">
+    <div class="title">
+        All movies
+    </div>
     <div class="movie-list">
         {#each movies as movie}
-            <MoviePosition {movie}/>
+        <MoviePosition {movie}/>
         {/each}
     </div>
+</div>
 {/await}
 
 <style lang="scss">

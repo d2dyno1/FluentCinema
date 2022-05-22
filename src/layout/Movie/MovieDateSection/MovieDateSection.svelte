@@ -3,13 +3,13 @@
     import type { Movie } from "$db/movie/Movie";
 
     export let movie: Movie;
-    export let screeningDates: TableDateItem[][];
+    export let screeningDates: TableDateItem[][] = [];
 </script>
 
 {#if screeningDates}
     <div>
         {#each screeningDates as column}
-            <div>
+            <div class="column">
                 {#each column as row}
                     <div>
                         {row.date.getDay()}

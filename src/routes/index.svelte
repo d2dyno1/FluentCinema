@@ -3,7 +3,7 @@
     import { ok } from "$api/responses";
     import type { Load } from "@sveltejs/kit";
 
-    export let promise;
+    export let promise: Promise<any>;
 
     export const load: Load = async ({ fetch }) => {
         promise = fetch("/api/cinema/movie/list", {
