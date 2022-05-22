@@ -1,5 +1,24 @@
 @use "src/styles/mixins" as *;
 
 .column {
-    
+    @include flex($direction: column, $align: center, $justify: center);
+}
+
+.columns {
+    @include flex($direction: row, $align: center, $justify: center);
+    flex: 1 1 auto;
+}
+
+.column-header {
+    font-size: 18px;
+    padding: 12px;
+}
+
+.column-dates {
+    @include flex($direction: column, $align: stretch, $justify: stretch);
+    flex: 1 1 auto;
+}
+
+.column-row {
+
 }

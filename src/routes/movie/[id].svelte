@@ -6,7 +6,7 @@
     import { ScreeningApiContext } from "$api/ScreeningApiContext";
 
     export let reviews: ReviewApiContext[];
-    export let screeningDates: TableDateItem[][] = [];
+    export let screeningDates: TableDateItem[] = [];
 
     let screeningDatesPromise: Promise<any>;
 
@@ -15,16 +15,17 @@
         reviews = await movie.getReviews(fetch);
 
         screeningDatesPromise = movie.getScreenings(fetch).then((data: ScreeningApiContext[]) => {
-            let lastDate: Date;
+            // Fill the table
+            for (let i = 0; i < 7 /* Week days*/; i++)
+            {
+                screeningDates.push({dayPrefix: moment().add(i, 'day').format('dddd').substring(0, 3)});
+            }
+            
+            // Fill screenings
             data.forEach(x => {
                 let startDate = x.start;
-                if (!lastDate || lastDate != startDate)
-                {
-                    screeningDates.push([]);
-                }
-
-                screeningDates[(screeningDates.length - 1)].push({ date: startDate });
-                lastDate = startDate;
+                screeningDates[(startDate.getDay() - 1)].dates ??= [];
+                screeningDates[(startDate.getDay() - 1)].dates?.push(startDate);
             });
         });
 
@@ -39,6 +40,7 @@
 
 <script lang="ts">
     import { MovieHeroSection, MovieDateSection, ReviewsSection } from "$layout";
+import moment from "moment";
 
     export let movie: MovieApiContext;
 </script>

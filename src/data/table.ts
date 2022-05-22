@@ -1,3 +1,4 @@
 export type TableDateItem = {
-    date: Date;
+    dayPrefix: string;
+    dates?: Date[];
 };

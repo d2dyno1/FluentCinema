@@ -1,21 +1,28 @@
 <script lang="ts">
     import type { TableDateItem } from "$/data/table";
     import type { MovieApiContext } from "../../../api/MovieApiContext";
+    import moment from "moment";
 
     export let movie: MovieApiContext;
-    export let screeningDates: TableDateItem[][] = [];
+    export let screeningDates: TableDateItem[] = [];
 </script>
 
 {#if screeningDates}
-    <div>
-        {#each screeningDates as column}
+    <div class="columns">
+        {#each screeningDates as item}
             <div class="column">
-                {#each column as row}
-                    <div>
-                        {row.date.getDay()}
-                        {row.date.toLocaleTimeString()}
-                    </div>
-                {/each}
+                <div class="column-header">
+                    {item.dayPrefix}
+                </div>
+                <div>
+                    {#if item.dates}
+                        {#each item.dates as date}
+                        <div class="column-row">
+                            {moment(date).format('hh:mm')}
+                        </div>
+                        {/each}
+                    {/if}
+                </div>
             </div>
         {/each}
     </div>
