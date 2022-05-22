@@ -24,6 +24,6 @@
     border-radius: var(--fds-overlay-corner-radius);
     padding: 24px;
     width: 100vw;
-    height: 100vh - 21vh; /* TODO: Not ideal */
+    min-height: 100vh - 21vh; /* TODO: Not ideal */
     position: relative;
 }

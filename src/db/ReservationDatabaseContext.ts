@@ -6,6 +6,13 @@ import type {IDatabaseContext} from "./IDatabaseContext";
 import {ReservationApiContext} from "../api/ReservationApiContext";
 import type {IReservation} from "../data/model/IReservation";
 
+const QUERY_ALL_RESERVATIONS = `
+    SELECT * FROM reservations
+    JOIN screenings ON reservations."screeningId" = screenings.id
+    WHERE "userId"=$1
+    ORDER BY screenings.start DESC;
+`
+
 export class ReservationDatabaseContext implements IReservation, IDatabaseContext<ReservationApiContext> {
     readonly seat!: number;
 
@@ -16,7 +23,7 @@ export class ReservationDatabaseContext implements IReservation, IDatabaseContex
     readonly screening: ScreeningDatabaseContext;
 
     private constructor(reservation: Partial<ReservationDatabaseContext>, screening: ScreeningDatabaseContext) {
-        Object.assign(reservation);
+        Object.assign(this, reservation);
         this.screening = screening;
     }
 
@@ -32,7 +39,7 @@ export class ReservationDatabaseContext implements IReservation, IDatabaseContex
     }
 
     public static async getFromUser(user: AccountDatabaseContext): Promise<ReservationDatabaseContext[]> {
-        let query: Partial<ReservationDatabaseContext>[] = (await client.query('SELECT * FROM reservations WHERE "userId"=$1;', [user.id])).rows;
+        let query: Partial<ReservationDatabaseContext>[] = (await client.query(QUERY_ALL_RESERVATIONS, [user.id])).rows;
         let reservations: ReservationDatabaseContext[] = [];
         await async.each(query, async (reservation: Partial<ReservationDatabaseContext>) => {
             reservations.push(await ReservationDatabaseContext.construct(reservation));
