@@ -80,7 +80,7 @@ export class SessionDatabaseContext implements IExpirable {
     }
 
     static async deleteExpiredEntries(): Promise<void> {
-        await client.query("DELETE FROM sessions WHERE expires_at > $1;", [new Date()]);
+        await client.query("DELETE FROM sessions WHERE $1 > expires_at;", [new Date()]);
     }
 }
 
