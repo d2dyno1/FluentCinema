@@ -5,15 +5,14 @@
 
     import ProfileIcon from "@fluentui/svg-icons/icons/person_32_filled.svg?raw";
     import KeyIcon from "@fluentui/svg-icons/icons/key_32_filled.svg?raw";
+    import { AccountApiContext } from "../../../api/AccountApiContext";
+    import { SettingsApiContext } from "../../../api/SettingsApiContext";
 
     let uploadFiles: HTMLInputElement;
 
-    function uploadSettings(): void
+    async function uploadSettings(): Promise<void>
     {
-        fetch("/api/account/settings/update", {
-            method: "PUT",
-            body: JSON.stringify($accountSession.user.settings)
-        });
+        await SettingsApiContext.update($accountSession.user.settings);
     }
 
     function updateAndUploadSettings(newValue: any, updateSettingCallback: (newValue: any) => void): void
@@ -22,11 +21,9 @@
         uploadSettings();
     }
 
-    function uploadPicture() {
-        fetch("/api/account/picture/upload", {
-            method: "PUT",
-            body: uploadFiles.files[0]
-        }).then(() => window.location.reload());
+    async function uploadPicture() {
+        await AccountApiContext.uploadProfilePicture(uploadFiles.files[0]);
+        window.location.reload();
     }
 </script>
 

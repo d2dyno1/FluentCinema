@@ -1,9 +1,9 @@
 <script lang="ts">
-    import AccountPicture from "../AccountPicture/AccountPicture.svelte";
-    import {TextBlock} from "fluent-svelte";
-    import {ReviewResponse} from "$data/response/ReviewResponse";
+    import { AccountPicture } from "$lib";
+    import { TextBlock } from "fluent-svelte";
+    import { ReviewApiContext } from "../../api/ReviewApiContext";
 
-    export let review: ReviewResponse;
+    export let review: ReviewApiContext;
 </script>
 
 <AccountPicture size={32} userId={review.userId}/>

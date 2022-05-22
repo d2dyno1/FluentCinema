@@ -1,22 +1,23 @@
 <script lang="ts" context="module">
     import type { Load } from "@sveltejs/kit";
-    import { ReviewResponse } from "$data/response/ReviewResponse";
-    import { MovieResponse } from "../../data/response/MovieResponse";
+    import { ReviewApiContext } from "$api/ReviewApiContext";
+    import { MovieApiContext } from "$api/MovieApiContext";
+    import type { TableDateItem } from "$/data/table";
+    import { ScreeningApiContext } from "$api/ScreeningApiContext";
 
-    export let reviews: ReviewResponse[];
+    export let reviews: ReviewApiContext[];
     export let screeningDates: TableDateItem[][] = [];
 
     let screeningDatesPromise: Promise<any>;
 
     export const load: Load = async ({ params, fetch }) => {
-        let response = await fetch(`/api/cinema/movie/${params.id}`);
-        let movie: MovieResponse = await response.json();
-        reviews = await (await fetch(`/api/cinema/movie/${params.id}/review/list`)).json();
+        let movie = await MovieApiContext.getFromId(fetch, params.id);
+        reviews = await movie.getReviews(fetch);
 
-        screeningDatesPromise = fetch(`/api/cinema/screenings?movieId=${movie.id}`).then(response => response.json()).then((data: Screening[]) => {
+        screeningDatesPromise = movie.getScreenings(fetch).then((data: ScreeningApiContext[]) => {
             let lastDate: Date;
-            data.forEach((x: Screening) => {
-                let startDate = new Date(x.start);
+            data.forEach(x => {
+                let startDate = x.start;
                 if (!lastDate || lastDate != startDate)
                 {
                     screeningDates.push([]);
@@ -38,10 +39,8 @@
 
 <script lang="ts">
     import { MovieHeroSection, MovieDateSection, ReviewsSection } from "$layout";
-    import type { TableDateItem } from "$/data/table";
-    import type { Screening } from "$/db/movie/Screening";
 
-    export let movie: MovieResponse;
+    export let movie: MovieApiContext;
 </script>
 
 <div class="wrapper">

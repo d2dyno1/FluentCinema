@@ -1,13 +1,13 @@
-import {badRequest, badRequestWithMessage, forbidden, ok} from "$api/responses";
+import { badRequest, badRequestWithMessage, forbidden, ok } from "$api/responses";
 import type { RequestHandler } from "@sveltejs/kit";
-import { Session } from "$db/Session";
-import {createReservationSchema} from "$data/schema/CreateReservationSchema";
-import type {CreateReservationSchema} from "$data/schema/CreateReservationSchema"
-import {Screening} from "$db/movie/Screening";
-import {Reservation} from "$db/movie/Reservation";
+import { SessionDatabaseContext } from "$db/SessionDatabaseContext";
+import { createReservationSchema } from "$data/schema/CreateReservationSchema";
+import type { CreateReservationSchema } from "$data/schema/CreateReservationSchema"
+import { ScreeningDatabaseContext } from "$db/ScreeningDatabaseContext";
+import { ReservationDatabaseContext } from "$db/ReservationDatabaseContext";
 
 export const post: RequestHandler = async ({ request }) => {
-    let session = await Session.getFromRequest(request);
+    let session = await SessionDatabaseContext.getFromRequest(request);
     if (session == null) {
         return forbidden;
     }
@@ -17,17 +17,17 @@ export const post: RequestHandler = async ({ request }) => {
         return badRequest;
     }
 
-    let screening = await Screening.getFromId(params.screeningId);
+    let screening = await ScreeningDatabaseContext.getFromId(params.screeningId);
     if (screening == null) {
         return badRequest;
     }
 
     if (params.seat > screening.room.seatRowCount * screening.room.seatRowLength) {
         return badRequestWithMessage("Invalid seat.");
-    } else if (screening.takenSeats.indexOf(params.seat) != -1) {
+    } else if (screening.reservedSeats.indexOf(params.seat) != -1) {
         return badRequestWithMessage("This seat is already taken.");
     }
 
-    await Reservation.create(await session.getUser(), params.screeningId, params.seat);
+    await ReservationDatabaseContext.create(await session.getUser(), params.screeningId, params.seat);
     return ok;
 }

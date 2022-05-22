@@ -1,8 +1,8 @@
 <script lang="ts" context="module">
     import type { NavigationItem } from "$data/navigation";
     import { AccountCard } from "$lib";
-    import type {Load} from "@sveltejs/kit";
-    import {ok} from "$api/responses";
+    import type { Load } from "@sveltejs/kit";
+    import { ok } from "$api/responses";
 
     export const load: Load = async ({ session }) => {
         if (!session.isLoggedIn) {

@@ -1,7 +1,6 @@
 import { dev } from "$app/env";
 import type {GetSession, Handle} from "@sveltejs/kit";
-import type { Settings } from "./db/Settings";
-import {Session} from "./db/Session";
+import { SessionDatabaseContext } from "$db/SessionDatabaseContext";
 
 const requestCount = new Map<string, number>();
 
@@ -27,7 +26,7 @@ export const handle: Handle = async ({ event, resolve }) => {
     }
 
     if (event.routeId != null && !event.routeId.startsWith("api")) {
-        let session = await Session.getFromRequest(event.request);
+        let session = await SessionDatabaseContext.getFromRequest(event.request);
         if (session != null) {
             let user = await session.getUser();
             event.locals.session = {
@@ -36,7 +35,8 @@ export const handle: Handle = async ({ event, resolve }) => {
                     id: user.id,
                     email: user.email,
                     username: user.username,
-                    settings: {...await user.getSettings()} as Settings
+                    settings: {...await user.getSettings()},
+                    isVerified: user.is_verified
                 }
             }
             return resolve(event);

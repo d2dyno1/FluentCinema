@@ -1,13 +1,13 @@
 import { badRequest, badRequestWithMessage, forbidden, forbiddenWithMessage } from "$api/responses";
 import type { RequestHandler } from "@sveltejs/kit";
-import { User } from "$db/User";
-import { Session } from "$db/Session";
+import { AccountDatabaseContext } from "$db/AccountDatabaseContext";
+import { SessionDatabaseContext } from "$db/SessionDatabaseContext";
 import { loginSchema } from "$data/schema/LoginSchema";
 import type {LoginSchema } from "$data/schema/LoginSchema";
-import { TwoFactorAuthentication } from "../../../db/TwoFactorAuthentication";
+import { TwoFactorAuthenticationDatabaseContext } from "$db/TwoFactorAuthenticationDatabaseContext";
 
 export const post: RequestHandler = async ({ request }) => {
-    if (await Session.getFromRequest(request) != null) {
+    if (await SessionDatabaseContext.getFromRequest(request) != null) {
         return forbidden;
     }
 
@@ -16,7 +16,7 @@ export const post: RequestHandler = async ({ request }) => {
         return badRequest;
     }
 
-    let user = await User.getFromEmail(params.email);
+    let user = await AccountDatabaseContext.getFromEmail(params.email);
     if (user == null) {
         return badRequestWithMessage("Account does not exist.");
     } else if (!await user.verifyPassword(params.password)) {
@@ -25,7 +25,7 @@ export const post: RequestHandler = async ({ request }) => {
 
     if ((await user.getSettings()).twoFactorAuthentication) {
         if (!params.otp) {
-            await TwoFactorAuthentication.sendOtpToUser(user);
+            await TwoFactorAuthenticationDatabaseContext.sendOtpToUser(user);
             return {
                 status: 200,
                 body: {
@@ -33,7 +33,7 @@ export const post: RequestHandler = async ({ request }) => {
                     otpRequired: true
                 }
             }
-        } else if (!await TwoFactorAuthentication.isValid(user, params.otp)) {
+        } else if (!await TwoFactorAuthenticationDatabaseContext.isValid(user, params.otp)) {
             return badRequestWithMessage("Incorrect one-time password.");
         }
     }
@@ -43,7 +43,7 @@ export const post: RequestHandler = async ({ request }) => {
             success: true
         },
         headers: {
-            'Set-Cookie': (await Session.create(user)).getCookie()
+            'Set-Cookie': (await SessionDatabaseContext.create(user)).getCookie()
         }
     };
 }

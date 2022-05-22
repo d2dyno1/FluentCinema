@@ -1,12 +1,12 @@
 <script lang="ts">
     import { Button } from "fluent-svelte";
     import { MovieRating } from "$lib";
+    import { MovieApiContext } from "../../../api/MovieApiContext";
 
     import TimerIcon from "@fluentui/svg-icons/icons/timer_32_filled.svg?raw";
     import CalendarIcon from "@fluentui/svg-icons/icons/calendar_star_24_filled.svg?raw";
-    import {MovieResponse} from "$data/response/MovieResponse";
 
-    export let movie: MovieResponse;
+    export let movie: MovieApiContext;
 </script>
 
 <div class="movie-content">
