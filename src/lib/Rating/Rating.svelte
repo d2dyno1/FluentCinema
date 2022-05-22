@@ -5,7 +5,7 @@
 
     export let rating: number;
     export let text: string;
-    let config;
+    let config: any;
 
     onMount(() => {
         let computedTheme = getComputedStyle(document.body);

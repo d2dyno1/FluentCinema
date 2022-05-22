@@ -15,6 +15,7 @@
 
     function detailsClicked(e: MovieApiContext): void
     {
+        window.location.replace(`/movie/${e.id}`);
     }
 </script>
 

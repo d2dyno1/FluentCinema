@@ -3,9 +3,14 @@
     import { MovieApiContext } from "../../api/MovieApiContext";
 
     export let movie: MovieApiContext;
+
+    function goToMovie()
+    {
+        window.location.replace(`/movie/${movie.id}`);
+    }
 </script>
 
-<div class="item" on:click>
+<div class="item" on:click={goToMovie}>
     <div class="item-inner">
         <picture>
             <img class="item-poster" alt={movie.name} src="/api/cinema/movie/{movie.id}/poster">
