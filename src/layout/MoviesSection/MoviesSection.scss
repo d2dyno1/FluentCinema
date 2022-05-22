@@ -3,7 +3,7 @@
 .wrapper {
     @include flex($direction: column);
     flex: 1 1 auto;
-    padding: 0px 2% 0px 2%;
+    padding: 0px 2% 2% 2%;
     background-color: var(--fds-solid-background-secondary);
     border-block-start: 1px solid var(--fds-divider-stroke-default);
 }
@@ -18,7 +18,7 @@
 .movie-positions {
     @include flex($direction: row, $align: center, $justify: start);
     flex: 1 1 auto;
-    overflow: auto;
-    white-space: nowrap;
+    overflow-x: scroll;
+    overflow-y: hidden;
     padding-top: 6px;
 }

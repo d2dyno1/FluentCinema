@@ -3,7 +3,7 @@ import { badRequest, forbidden, internalServerError } from "$api/responses";
 import sharp from "sharp";
 import { SessionDatabaseContext } from "$db/SessionDatabaseContext";
 
-const maxPictureSize = 200000;
+const maxPictureSize = 1024 * 1024; // 1MB
 
 export const put: RequestHandler = async ({ request }) => {
     let session = await SessionDatabaseContext.getFromRequest(request);

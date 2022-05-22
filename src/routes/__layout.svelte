@@ -1,5 +1,5 @@
 <script lang="ts" context="module">
-    import { Navbar } from "$layout";
+    import { Navbar, Footer } from "$layout";
     import type { NavbarButton, NavbarItem } from "$data/navbar";
     import { ok } from "$api/responses";
     import { accountSession } from "$/stores";
@@ -37,7 +37,7 @@
 
 <Navbar navbarItems={navbarItems} navbarButtons={navbarButtons}/>
 <slot/>
-<!-- <Footer/> -->
+<Footer/>
 
 <style global lang="scss">
     @use "src/styles/global";

@@ -1,0 +1,15 @@
+@use "src/styles/mixins" as *;
+
+.footer-wrapper {
+    @include flex($direction: row, $align: center, $justify: start);
+    flex: 1 1 auto;
+    background-color: var(--fds-solid-background-secondary);
+}
+
+h2 {
+    font-weight: 500;
+}
+
+.site-name-column {
+    @include flex($direction: column);
+}

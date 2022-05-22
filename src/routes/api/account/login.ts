@@ -1,10 +1,10 @@
 import { badRequest, badRequestWithMessage, forbidden, forbiddenWithMessage } from "$api/responses";
-import type { RequestHandler } from "@sveltejs/kit";
 import { AccountDatabaseContext } from "$db/AccountDatabaseContext";
 import { SessionDatabaseContext } from "$db/SessionDatabaseContext";
 import { loginSchema } from "$data/schema/LoginSchema";
-import type {LoginSchema } from "$data/schema/LoginSchema";
 import { TwoFactorAuthenticationDatabaseContext } from "$db/TwoFactorAuthenticationDatabaseContext";
+import type { RequestHandler } from "@sveltejs/kit";
+import type { LoginSchema } from "$data/schema/LoginSchema";
 
 export const post: RequestHandler = async ({ request }) => {
     if (await SessionDatabaseContext.getFromRequest(request) != null) {
