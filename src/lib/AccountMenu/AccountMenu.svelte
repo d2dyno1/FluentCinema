@@ -4,6 +4,7 @@
     import { default as RegisterForm } from "$layout/RegisterForm.svelte";
     import { accountSession } from "$/stores";
     import { AccountPicture } from "$lib";
+    import {AccountApiContext} from "../../api/AccountApiContext";
 
     import ProfileIcon from "@fluentui/svg-icons/icons/person_32_filled.svg?raw";
     import EyeIcon from "@fluentui/svg-icons/icons/eye_24_filled.svg?raw";
@@ -11,8 +12,9 @@
 
     let isLoginPage = true;
 
-    function logOut() {
-        fetch("/api/account/logout", { method: "POST" }).then(() => window.location.replace("/"));
+    async function logout() {
+        await AccountApiContext.logout();
+        window.location.replace("/");
     }
 </script>
 
@@ -34,7 +36,7 @@
             View reservations
         </MenuFlyoutItem>
         <MenuFlyoutDivider/>
-        <MenuFlyoutItem on:click={logOut}>
+        <MenuFlyoutItem on:click={logout}>
             {@html DoorArrowLeftIcon}
             Log out
         </MenuFlyoutItem>

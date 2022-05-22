@@ -1,9 +1,9 @@
 import { forbidden } from "$api/responses";
-import type {RequestHandler} from "@sveltejs/kit";
-import {Session} from "$db/Session";
+import type { RequestHandler } from "@sveltejs/kit";
+import { SessionDatabaseContext } from "$db/SessionDatabaseContext";
 
 export const post: RequestHandler = async ({ request }) => {
-    let session = await Session.getFromRequest(request);
+    let session = await SessionDatabaseContext.getFromRequest(request);
     if (session == null) {
         return forbidden;
     }
@@ -15,7 +15,7 @@ export const post: RequestHandler = async ({ request }) => {
             success: true
         },
         headers: {
-            "Set-Cookie": Session.generateEmptyCookie()
+            "Set-Cookie": SessionDatabaseContext.generateEmptyCookie()
         }
     };
 }

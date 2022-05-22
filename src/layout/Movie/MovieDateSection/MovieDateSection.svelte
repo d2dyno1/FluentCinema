@@ -1,8 +1,8 @@
 <script lang="ts">
     import type { TableDateItem } from "$/data/table";
-    import type { Movie } from "$db/movie/Movie";
+    import type { MovieApiContext } from "../../../api/MovieApiContext";
 
-    export let movie: Movie;
+    export let movie: MovieApiContext;
     export let screeningDates: TableDateItem[][];
 </script>
 

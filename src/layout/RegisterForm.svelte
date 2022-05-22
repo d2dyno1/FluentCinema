@@ -1,11 +1,12 @@
 <script lang="ts">
-    import {TextBox} from "fluent-svelte";
+    import { TextBox } from "fluent-svelte";
     import { DialogForm } from "$layout";
     import { PromiseButton } from "$lib";
-    import {registerSchema} from "$data/schema/RegisterSchema";
-    import type {RegisterSchema} from "$data/schema/RegisterSchema";
-    import {InfoBarSeverity} from "../data/InfoBarSeverity";
-    import type {GeneralResponse} from "../data/response/GeneralResponse";
+    import { registerSchema } from "$data/schema/RegisterSchema";
+    import type { RegisterSchema } from "$data/schema/RegisterSchema";
+    import { InfoBarSeverity } from "$data/InfoBarSeverity";
+    import type { GeneralResponse } from "$data/response/GeneralResponse";
+    import { AccountApiContext } from "../api/AccountApiContext";
 
     let formComponent;
 
@@ -19,7 +20,7 @@
         password: password
     } as RegisterSchema;
 
-    let promise: Promise<Response>;
+    let promise: Promise<GeneralResponse>;
 
     async function onRegister() {
         try {
@@ -33,14 +34,8 @@
             return;
         }
 
-        promise = fetch("/api/account/register", {
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            method: 'POST',
-            body: JSON.stringify(params)
-        });
-        promise.then(response => response.json()).then((response: GeneralResponse) => {
+        promise = AccountApiContext.register(params);
+        promise.then((response: GeneralResponse) => {
             if (response.success) {
                 window.location.replace("/account");
             } else {

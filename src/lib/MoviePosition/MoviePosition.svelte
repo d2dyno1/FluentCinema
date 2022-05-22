@@ -1,8 +1,8 @@
 <script lang="ts">
     import { MovieRating } from "$lib";
-    import {MovieResponse} from "$data/response/MovieResponse";
+    import { MovieApiContext } from "../../api/MovieApiContext";
 
-    export let movie: MovieResponse;
+    export let movie: MovieApiContext;
 </script>
 
 <div class="item" on:click>

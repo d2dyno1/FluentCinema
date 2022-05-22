@@ -1,9 +1,10 @@
-import { client } from "$db";
-import type {RequestHandler} from "@sveltejs/kit";
+import type { RequestHandler } from "@sveltejs/kit";
+import { CinemaDatabaseContext } from "$db/CinemaDatabaseContext";
+import type { CinemaApiContext } from "$api/CinemaApiContext";
 
-export const get: RequestHandler = async () => {
+export const get: RequestHandler<any, any[]> = async () => {
     return {
         status: 200,
-        body: (await client.query("SELECT * FROM cinemas;")).rows
+        body: (await CinemaDatabaseContext.getAll()).map(cinema => cinema.toApiContext()) as CinemaApiContext[]
     }
 }

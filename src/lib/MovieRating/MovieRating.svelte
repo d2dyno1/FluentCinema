@@ -1,10 +1,10 @@
 <script lang="ts">
     import StarRating from "svelte-star-rating";
     import { TextBlock } from "fluent-svelte";
-    import {onMount} from "svelte";
-    import {MovieResponse} from "$data/response/MovieResponse";
+    import { onMount } from "svelte";
+    import { MovieApiContext } from "../../api/MovieApiContext";
 
-    export let movie: MovieResponse;
+    export let movie: MovieApiContext;
     let config;
 
     onMount(() => {

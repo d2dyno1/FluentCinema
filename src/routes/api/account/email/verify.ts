@@ -1,12 +1,12 @@
-import {badRequest, forbidden, ok} from "$api/responses";
+import { badRequest, forbidden, ok } from "$api/responses";
 import type { RequestHandler } from "@sveltejs/kit";
-import {Session} from "$db/Session";
-import {EmailVerification} from "$db/EmailVerification";
-import {verifyEmailSchema} from "$data/schema/VerifyEmailSchema";
-import type {VerifyEmailSchema} from "$data/schema/VerifyEmailSchema";
+import { SessionDatabaseContext } from "$db/SessionDatabaseContext";
+import { EmailVerificationDatabaseContext } from "$db/EmailVerificationDatabaseContext";
+import { verifyEmailSchema } from "$data/schema/VerifyEmailSchema";
+import type { VerifyEmailSchema } from "$data/schema/VerifyEmailSchema";
 
 export const post: RequestHandler = async ({ request }) => {
-    let session = await Session.getFromRequest(request);
+    let session = await SessionDatabaseContext.getFromRequest(request);
     if (session == null) {
         return forbidden;
     }
@@ -17,9 +17,8 @@ export const post: RequestHandler = async ({ request }) => {
     }
 
     let user = await session.getUser();
-    if (await EmailVerification.tryVerifyEmail(user, params.token)) {
+    if (await EmailVerificationDatabaseContext.tryVerifyEmail(user, params.token)) {
         return ok;
     }
-
     return badRequest;
 }

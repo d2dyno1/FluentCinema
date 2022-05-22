@@ -1,11 +1,11 @@
-import type {RequestHandler} from "@sveltejs/kit";
-import {Movie} from "$db/movie/Movie";
-import type {MovieResponse} from "$data/response/MovieResponse";
+import type { RequestHandler } from "@sveltejs/kit";
+import { MovieDatabaseContext } from "$db/MovieDatabaseContext";
+import type { MovieApiContext } from "$api/MovieApiContext";
 
 // @ts-ignore
-export const get: RequestHandler<any, MovieResponse[]> = async () => {
+export const get: RequestHandler<any, MovieApiContext[]> = async () => {
     return {
         status: 200,
-        body: await Movie.getAll()
+        body: (await MovieDatabaseContext.getAll()).map(movie => movie.toApiContext())
     }
 }

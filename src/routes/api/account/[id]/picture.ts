@@ -1,16 +1,16 @@
-import type {RequestHandler} from "@sveltejs/kit";
-import {badRequest, ok} from "$api/responses";
-import {User} from "$db/User";
+import type { RequestHandler } from "@sveltejs/kit";
+import { badRequest, ok } from "$api/responses";
+import { AccountDatabaseContext } from "$db/AccountDatabaseContext";
 
 // @ts-ignore
 export const get: RequestHandler = async ({ params }) => {
     let userId = params.id;
-    let user = await User.getFromId(userId);
+    let user = await AccountDatabaseContext.getFromId(userId);
     if (user == null) {
         return badRequest;
     }
 
-    let picture = await user.getPicture();
+    let picture = await user.picture;
     if (picture != null) {
         return {
             status: 200,

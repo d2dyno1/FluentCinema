@@ -2,10 +2,11 @@
     import { TextBox, TextBlock } from "fluent-svelte";
     import { DialogForm } from "$layout";
     import { PromiseButton } from "$lib";
-    import {loginSchema} from "$data/schema/LoginSchema";
-    import type {LoginSchema} from "$data/schema/LoginSchema";
-    import {InfoBarSeverity} from "../data/InfoBarSeverity";
-    import type {LoginResponse} from "../data/response/LoginResponse";
+    import { loginSchema } from "$data/schema/LoginSchema";
+    import type { LoginSchema } from "$data/schema/LoginSchema";
+    import { InfoBarSeverity } from "$data/InfoBarSeverity";
+    import type { LoginResponse } from "$data/response/LoginResponse";
+    import { AccountApiContext } from "../api/AccountApiContext";
 
     let email: string;
     let password: string;
@@ -19,7 +20,7 @@
     let formComponent;
 
     let isOtpRequired = false;
-    let promise: Promise<Response>;
+    let promise: Promise<LoginResponse>;
 
     async function onLogin() {
         try {
@@ -29,14 +30,8 @@
             return;
         }
 
-        promise = fetch("/api/account/login", {
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            method: 'POST',
-            body: JSON.stringify(params)
-        });
-        promise.then(response => response.json()).then((response: LoginResponse) => {
+        promise = AccountApiContext.login(params);
+        promise.then(response => {
             if (response.otpRequired) {
                 isOtpRequired = true;
                 formComponent.showMessage("Two-factor authentication is enabled. A one-time password has been sent to your e-mail.", InfoBarSeverity.attention);

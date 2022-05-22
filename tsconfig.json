@@ -13,10 +13,9 @@
 		"sourceMap": true,
 		"strict": true,
 		"target": "es2020",
-		"baseUrl": "src",
+		"baseUrl": "src/",
 		"paths": {
 			"$/*": ["*"],
-			"$api": ["api"],
 			"$api/*": ["api/*"],
 			"$data": ["data"],
 			"$data/*": ["data/*"],

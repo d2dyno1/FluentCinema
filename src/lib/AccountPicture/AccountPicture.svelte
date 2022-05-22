@@ -3,40 +3,28 @@
 
     import ProfileIcon from "@fluentui/svg-icons/icons/person_32_filled.svg?raw";
     import {onMount} from "svelte";
+    import {AccountApiContext} from "../../api/AccountApiContext";
 
     export let userId: string;
     export let size: number;
 
-    let base64;
-    let isDefault;
-    let promise;
+    let base64: Promise<string | null>;
 
-    onMount(() => {
-        fetch(`/api/account/${userId}/picture`).then(response => {
-            if (response.headers.get("content-type").startsWith("image/")) {
-                promise = fetch(`/api/account/${userId}/picture`).then(response => response.arrayBuffer()).then(buffer => {
-                    let reader = new FileReader();
-                    reader.onload = (event) => {
-                        base64 = event.target.result.split(",")[1];
-                        isDefault = false;
-                    }
-                    reader.readAsDataURL(new Blob([buffer]));
-                });
-            } else {
-                isDefault = true;
-            }
-        });
+    onMount(async () => {
+        base64 = AccountApiContext.getProfilePicture(userId);
     });
 </script>
 
 <PersonPicture size={size}>
-    {#await promise then value}
-        {#if isDefault}
-            {@html ProfileIcon}
-        {:else}
-            <img style="height: {size}px; width: {size}px;" class="user-picture" alt=" " src={`data:image/png;base64,${base64}`}>
-        {/if}
-    {/await}
+    {#if base64 != null}
+        {#await base64 then value}
+            {#if value == null}
+                {@html ProfileIcon}
+            {:else}
+                <img style="height: {size}px; width: {size}px;" class="user-picture" alt=" " src={`data:image/png;base64,${value}`}>
+            {/if}
+        {/await}
+    {/if}
 </PersonPicture>
 
 <style lang="scss">

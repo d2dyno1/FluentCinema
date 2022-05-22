@@ -1,9 +1,9 @@
 <script lang="ts">
     import {MovieReview} from "$lib";
     import {TextBlock} from "fluent-svelte";
-    import {ReviewResponse} from "$data/response/ReviewResponse";
+    import {ReviewApiContext} from "../../../api/ReviewApiContext";
 
-    export let reviews: ReviewResponse[];
+    export let reviews: ReviewApiContext[];
 </script>
 
 <div>
