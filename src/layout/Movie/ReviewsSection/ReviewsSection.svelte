@@ -1,8 +1,11 @@
 <script lang="ts">
-    import {MovieReview} from "$lib";
+    import { MovieReview } from "$lib";
     import { Button, TextBlock } from "fluent-svelte";
-    import {ReviewApiContext} from "../../../api/ReviewApiContext";
+    import { ReviewApiContext } from "../../../api/ReviewApiContext";
     import { fade } from "svelte/transition";
+
+    import RightArrow from "@fluentui/svg-icons/icons/caret_right_24_filled.svg?raw";
+    import LeftArrow from "@fluentui/svg-icons/icons/caret_left_24_filled.svg?raw";
 
     export let reviews: ReviewApiContext[];
     export let currentReview: number = 0;
@@ -29,8 +32,8 @@
         <TextBlock variant="title">Reviews</TextBlock>
     </div>
     <div class="reviews-section">
-        <div class="button">
-            <Button on:click={previousReview}>&lt;</Button>
+        <div class="button-wrapper">
+            <div class="flipview-button" on:click={previousReview}>{@html LeftArrow}</div>
         </div>
         <div class="content-wrapper">
             {#each [reviews[currentReview]] as review (currentReview)}
@@ -39,8 +42,8 @@
                 </div>
             {/each}
         </div>
-        <div class="button">
-            <Button on:click={nextReview}>&gt;</Button>
+        <div class="button-wrapper">
+            <div class="flipview-button" on:click={nextReview}>{@html RightArrow}</div>
         </div>
     </div>
 {/if}

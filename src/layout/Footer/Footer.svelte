@@ -5,7 +5,7 @@
 </script>
 
 <div class="footer-wrapper">
-    <div class="column title-column">
+    <div class="title-column">
         <h2>
             FluentCinema
         </h2>

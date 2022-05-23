@@ -28,8 +28,9 @@ h2 {
 
 .column {
     @include flex($direction: column, $align: center, $justify: start);
+}
 
-    &.title-column {
-        align-items: flex-start;
-    }
+.title-column {
+    @include flex($direction: column, $align: start, $justify: start);
+    margin-top: -48px;
 }

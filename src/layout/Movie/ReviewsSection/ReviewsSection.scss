@@ -7,9 +7,34 @@
     height: 300px;
 }
 
-.button {
+.button-wrapper {
     margin-top: auto;
     margin-bottom: auto;
+}
+
+.flipview-button {
+    @include flex($inline: true, $align: center, $justify: center);
+
+	position: relative;
+	box-sizing: border-box;
+	padding-block: 6px 6px;
+	text-decoration: none;
+	border: none;
+	outline: none;
+	cursor: default;
+	border-radius: var(--fds-control-corner-radius);
+	transition: var(--fds-control-faster-duration) ease background;
+    background-color: var(--fds-layer-on-acrylic-background-default);
+
+    &:hover {
+        background-color: var(--fds-control-fill-secondary);
+    }
+
+    &:active {
+        border-color: var(--fds-control-stroke-default);
+        background-color: var(--fds-control-fill-tertiary);
+        color: var(--fds-text-secondary);
+    }
 }
 
 .content-wrapper {
