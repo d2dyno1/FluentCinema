@@ -24,8 +24,12 @@
             // Fill screenings
             data.forEach(x => {
                 let startDate = x.start;
-                screeningDates[(startDate.getDay() - 1)].dates ??= [];
-                screeningDates[(startDate.getDay() - 1)].dates?.push(startDate);
+                let day = startDate.getDay() - 1;
+                if (day < 0) {
+                    day = 6;
+                }
+                screeningDates[day].dates ??= [];
+                screeningDates[day].dates?.push(startDate);
             });
         });
 
