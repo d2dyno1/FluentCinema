@@ -28,6 +28,11 @@
         window.location.reload();
     }
 
+    async function deletePicture() {
+        await AccountApiContext.uploadProfilePicture(null);
+        window.location.reload();
+    }
+
     async function deleteAccount() {
         await AccountApiContext.delete();
         window.location.reload();
@@ -37,6 +42,9 @@
 <div class="settings-list">
     <ActionBlock title="Account picture" description="Update or remove your profile picture." icon={ProfileIcon}>
         <svelte:fragment slot="action">
+            {#if $accountSession.user.hasCustomProfilePicture}
+                <Button on:click={deletePicture}>Remove</Button>
+            {/if}
             <input on:change={uploadPicture} type="file" class="select-file" bind:this={uploadFiles} accept=".jpg, .jpeg, .png, .svg">
             <Button on:click={() => uploadFiles.click()}>Change</Button>
         </svelte:fragment>

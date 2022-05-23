@@ -7,6 +7,7 @@ export type AccountSession = {
         email: string,
         username: string
         settings: ISettings,
-        isVerified: boolean
+        isVerified: boolean,
+        hasCustomProfilePicture: boolean
     }
 }

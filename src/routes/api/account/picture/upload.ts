@@ -27,3 +27,15 @@ export const put: RequestHandler = async ({ request }) => {
         status: 200
     }
 }
+
+export const del: RequestHandler = async ({ request }) => {
+    let session = await SessionDatabaseContext.getFromRequest(request);
+    if (session == null) {
+        return forbidden;
+    }
+    let user = await session.getUser();
+    await user.changePicture(null);
+    return {
+        status: 200
+    }
+}

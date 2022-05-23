@@ -5,10 +5,14 @@ import type { GeneralResponse } from "$data/response/GeneralResponse";
 
 export class AccountApiContext {
     static async uploadProfilePicture(file: File): Promise<void> {
-        await fetch("/api/account/picture/upload", {
-            method: "PUT",
-            body: file
-        });
+        if (file == null) {
+            await fetch("/api/account/picture/upload", { method: "DELETE" });
+        } else {
+            await fetch("/api/account/picture/upload", {
+                method: "PUT",
+                body: file
+            });
+        }
     }
 
     /**

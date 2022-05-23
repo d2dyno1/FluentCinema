@@ -1,6 +1,6 @@
 <script lang="ts">
     import { MovieApiContext } from "$api/MovieApiContext";
-    import { Rating } from "$lib/index.js";
+    import { Rating } from "$lib";
 
     export let movie: MovieApiContext;
 </script>

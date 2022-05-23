@@ -36,7 +36,8 @@ export const handle: Handle = async ({ event, resolve }) => {
                     email: user.email,
                     username: user.username,
                     settings: {...await user.getSettings()},
-                    isVerified: user.is_verified
+                    isVerified: user.is_verified,
+                    hasCustomProfilePicture: user.picture != null
                 }
             }
             return resolve(event);
