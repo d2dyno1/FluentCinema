@@ -2,8 +2,9 @@
 
 .reviews-section {
     @include flex($direction: row, $justify: space-between);
-    background-color: var(--fds-solid-background-secondary);
-    padding: 10px;
+    background-color: var(--fds-control-fill-default);
+    border-radius: var(--fds-overlay-corner-radius);
+    padding: 16px;
     height: 300px;
 }
 

@@ -14,10 +14,13 @@
                 <div class="column-header">
                     {item.dayName}
                 </div>
-                <div>
+                <hr class="divider"/>
+                <div class="column-dates">
                     {#if item.dates}
                         {#each item.dates as date}
-                            {moment(date).format('hh:mm')}
+                            <div class="item-date">
+                                {moment(date).format('hh:mm')}
+                            </div>
                         {/each}
                     {/if}
                 </div>
