@@ -1,21 +1,23 @@
 <script lang="ts">
     import { onMount } from "svelte";
+    import { ProgressRing, TextBlock } from "fluent-svelte";
     import { ReservationApiContext } from "$api/ReservationApiContext";
     import { Reservation } from "$lib";
-    import { ProgressRing, TextBlock } from "fluent-svelte";
 
     let reservations: Promise<ReservationApiContext[]>;
 
     onMount(async () => {
         reservations = ReservationApiContext.getAll();
-    })
+    });
 </script>
 
 {#if reservations == null}
     <ProgressRing size={64}/>
 {:else}
     {#await reservations}
-        <ProgressRing size={64}/>
+        <div class="progress-ring-overlay">
+            <ProgressRing size={64}/>
+        </div>
     {:then response}
         {#if response.length == 0}
             <TextBlock>You don't have any reservations.</TextBlock>

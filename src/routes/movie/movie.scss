@@ -5,3 +5,9 @@
     flex: 1 1 auto;
     padding: 32px 64px 0px 64px;
 }
+
+.progress-ring-overlay {
+    @include flex($align: center, $justify: center);
+    width: 100%;
+    height: 64px;
+}

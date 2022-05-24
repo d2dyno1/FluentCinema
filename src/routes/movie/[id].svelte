@@ -1,13 +1,12 @@
 <script lang="ts" context="module">
     import type { Load } from "@sveltejs/kit";
-    import type { ReviewApiContext } from "$api/ReviewApiContext";
     import type { ScreeningApiContext } from "$api/ScreeningApiContext";
     import type { TableDateItem } from "$/data/table";
     import { MovieApiContext } from "$api/MovieApiContext";
 
-    export let reviews: ReviewApiContext[];
     export let screeningDates: TableDateItem[] = [];
 
+    let reviewsPromise: Promise<any>;
     let screeningDatesPromise: Promise<any>;
 
     export const load: Load = async ({ params, fetch }) => {
@@ -20,26 +19,28 @@
             };
         }
 
-        reviews = await movie.getReviews(fetch);
+        reviewsPromise = movie.getReviews(fetch);
 
-        screeningDatesPromise = movie.getScreenings(fetch).then((data: ScreeningApiContext[]) => {
-            // Fill the table
-            for (let i = 0; i < 7 /* Week days*/; i++)
-            {
-                screeningDates.push({dayName: moment().add(i, 'day').format('dddd')});
-            }
-            
-            // Fill screenings
-            data.forEach(x => {
-                let startDate = x.start;
-                let day = startDate.getDay() - 1;
-                if (day < 0) {
-                    day = 6;
+        if (movie.type != MovieType.SERIES) {
+            screeningDatesPromise = movie.getScreenings(fetch).then((data: ScreeningApiContext[]) => {
+                // Fill the table
+                for (let i = 0; i < 7 /* Week days*/; i++)
+                {
+                    screeningDates.push({dayName: moment().add(i, 'day').format('dddd')});
                 }
-                screeningDates[day].dates ??= [];
-                screeningDates[day].dates?.push({ date: startDate, type: x.type });
+
+                // Fill screenings
+                data.forEach(x => {
+                    let startDate = x.start;
+                    let day = startDate.getDay() - 1;
+                    if (day < 0) {
+                        day = 6;
+                    }
+                    screeningDates[day].dates ??= [];
+                    screeningDates[day].dates?.push({ date: startDate, type: x.type });
+                });
             });
-        });
+        }
 
         return {
             status: 200,
@@ -54,20 +55,29 @@
     import { MovieHeroSection, MovieDateSection, MovieReviewsSection } from "$layout";
     import { ProgressRing } from "fluent-svelte";
     import moment from "moment";
+import { MovieType } from "$/data/MovieType";
 
     export let movie: MovieApiContext;
 </script>
 
 <div class="wrapper">
     <MovieHeroSection {movie}/>
-    {#await screeningDatesPromise}
-        <div>
+    {#if movie.type != MovieType.SERIES}
+        {#await screeningDatesPromise}
+            <div class="progress-ring-overlay">
+                <ProgressRing size={64}/>
+            </div>
+        {:then _}
+            <MovieDateSection {screeningDates}/>
+        {/await}
+    {/if}
+    {#await reviewsPromise}
+        <div class="progress-ring-overlay">
             <ProgressRing size={64}/>
         </div>
-    {:then _}
-        <MovieDateSection {screeningDates}/>
+    {:then reviews} 
+        <MovieReviewsSection {reviews}/>
     {/await}
-    <MovieReviewsSection {reviews}/>
 </div>
 
 <style lang="scss">
