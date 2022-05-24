@@ -6,6 +6,7 @@ import {ReviewDatabaseContext} from "./ReviewDatabaseContext";
 import type {IDatabaseContext} from "./IDatabaseContext";
 import {MovieApiContext} from "../api/MovieApiContext";
 import * as async from "async";
+import type { MovieType } from "$data/MovieType";
 
 interface MovieImages {
     banner: Uint8Array,
@@ -15,7 +16,7 @@ interface MovieImages {
 const imageCache = new NodeCache({ stdTTL: 0 });
 
 const QUERY_ALL_MOVIES = `
-    SELECT name, description, "descriptionExtended", id, length, release, (
+    SELECT name, description, "descriptionExtended", id, length, release, type, (
         SELECT coalesce(ROUND(AVG(reviews.rating), 1), 0) 
         FROM reviews
         JOIN movies ON reviews."movieId" = movies.id 
@@ -37,6 +38,7 @@ export class MovieDatabaseContext implements IMovie, IDatabaseContext<MovieApiCo
     readonly name!: string;
     readonly rating!: number;
     readonly release!: Date;
+    readonly type!: MovieType;
 
     readonly bannerImage: Uint8Array;
     readonly posterImage: Uint8Array;

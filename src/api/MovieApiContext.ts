@@ -2,6 +2,7 @@ import type { IMovie } from "$data/model/IMovie";
 import type { Fetch } from "./ApiContext";
 import { ReviewApiContext } from "./ReviewApiContext";
 import { ScreeningApiContext } from "./ScreeningApiContext";
+import type { MovieType } from "$data/MovieType";
 
 export class MovieApiContext implements IMovie {
     readonly description: string;
@@ -11,6 +12,7 @@ export class MovieApiContext implements IMovie {
     readonly name: string;
     readonly rating: number;
     readonly release: string | Date;
+    readonly type: MovieType;
 
     constructor(movie: IMovie) {
         this.description = movie.description;
@@ -20,6 +22,7 @@ export class MovieApiContext implements IMovie {
         this.name = movie.name;
         this.rating = movie.rating;
         this.release = new Date(movie.release);
+        this.type = movie.type;
     }
 
     async getReviews(fetch: Fetch) {

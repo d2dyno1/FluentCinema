@@ -1,3 +1,5 @@
+import type { MovieType } from "$data/MovieType";
+
 export interface IMovie {
     readonly id: number;
     readonly name: string;
@@ -6,4 +8,5 @@ export interface IMovie {
     readonly length: number;
     readonly release: string | Date;
     readonly rating: number;
+    readonly type: MovieType;
 }
