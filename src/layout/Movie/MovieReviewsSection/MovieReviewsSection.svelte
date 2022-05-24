@@ -8,7 +8,12 @@
     import LeftArrow from "@fluentui/svg-icons/icons/caret_left_24_filled.svg?raw";
 
     export let reviews: ReviewApiContext[];
-    export let currentReview: number = 0;
+    export let currentReview = 0;
+
+    let isRightVisible = true;
+    let isLeftVisible = true;
+
+    updateButtons();
 
     function nextReview() {
         if (currentReview + 1 >= reviews.length) {
@@ -16,6 +21,8 @@
         } else {
             currentReview++;
         }
+
+        updateButtons();
     }
 
     function previousReview() {
@@ -24,6 +31,13 @@
         } else {
             currentReview--;
         }
+
+        updateButtons();
+    }
+
+    function updateButtons() {
+        isRightVisible = (currentReview + 1) < reviews.length;
+        isLeftVisible = (currentReview - 1) > 0;
     }
 </script>
 
@@ -33,7 +47,11 @@
     </div>
     <div class="reviews-section">
         <div class="button-wrapper">
-            <div class="flipview-button" on:click={previousReview}>{@html LeftArrow}</div>
+            {#if isLeftVisible}
+                <div transition:fade={{duration: 125}} class="flipview-button" on:click={previousReview}>{@html LeftArrow}</div>
+            {:else}
+                <div class="flipview-button-placeholder"/>
+            {/if}
         </div>
         <div class="content-wrapper">
             {#each [reviews[currentReview]] as review (currentReview)}
@@ -43,7 +61,11 @@
             {/each}
         </div>
         <div class="button-wrapper">
-            <div class="flipview-button" on:click={nextReview}>{@html RightArrow}</div>
+            {#if isRightVisible}
+                <div transition:fade={{duration: 125}} class="flipview-button" on:click={nextReview}>{@html RightArrow}</div>
+            {:else}
+                <div class="flipview-button-placeholder"/>
+            {/if}
         </div>
     </div>
 {/if}

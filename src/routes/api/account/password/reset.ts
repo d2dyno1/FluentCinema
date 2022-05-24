@@ -1,7 +1,7 @@
-import { badRequest, badRequestWithMessage, internalServerError, ok } from "$api/responses";
 import type { RequestHandler } from "@sveltejs/kit";
-import { AccountDatabaseContext } from "$db/AccountDatabaseContext";
 import type { ResetPasswordSchema } from "$data/schema/ResetPasswordSchema";
+import { badRequest, badRequestWithMessage, internalServerError, ok } from "$api/responses";
+import { AccountDatabaseContext } from "$db/AccountDatabaseContext";
 import { resetPasswordSchema } from "$data/schema/ResetPasswordSchema";
 
 export const post: RequestHandler = async ({ request }) => {

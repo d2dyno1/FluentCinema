@@ -65,7 +65,7 @@
             <ProgressRing size={64}/>
         </div>
     {:then _}
-        <MovieDateSection {movie} {screeningDates}/>
+        <MovieDateSection {screeningDates}/>
     {/await}
     <MovieReviewsSection {reviews}/>
 </div>

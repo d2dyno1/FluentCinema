@@ -26,7 +26,6 @@ export class AccountApiContext {
             let buffer = await response.arrayBuffer();
             let reader = new FileReader();
             reader.onload = (event) => {
-                console.log(event.target!.result)
                 resolvePromise((event.target!.result as string).split(",")[1]);
             }
             reader.readAsDataURL(new Blob([buffer]));

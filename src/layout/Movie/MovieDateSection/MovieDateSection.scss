@@ -14,12 +14,30 @@
     border-top: 1px;
 }
 
-.wrapper {
+.vertical-divider {
+    display: inline-block;
+    width: 1px;
+    border-color: var(--fds-divider-stroke-default);
+    border-style: solid;
+    border-left: 1px;
+    margin-left: -1px;
+    border-top: 0px;
+    border-bottom: 0px;
+    height: 100%;
+    margin: 0px;
+}
+
+.calendar-wrapper {
     @include flex($direction: row, $align: start, $justify: space-evenly);
     flex: 1 1 auto;
     border-radius: var(--fds-overlay-corner-radius);
     background-color: var(--fds-control-fill-default);
     height: 36vh;
+    overflow: auto;
+}
+
+.wrapper {
+    @include flex($direction: column);
 }
 
 .item-date {

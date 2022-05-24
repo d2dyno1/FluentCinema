@@ -1,11 +1,11 @@
 <script lang="ts">
     import type { TableDateItem } from "$/data/table";
-    import type { MovieApiContext } from "../../../api/MovieApiContext";
     import { ScreeningType } from "$data/ScreeningType";
     import moment from "moment";
 
-    export let movie: MovieApiContext;
     export let screeningDates: TableDateItem[] = [];
+
+    let innerWidth = 869;
 
     function getFriendlyTypeName(movieType: ScreeningType): string {
         switch (movieType.toString())
@@ -21,12 +21,25 @@
     }
 </script>
 
+<svelte:window bind:innerWidth />
+
 {#if screeningDates}
-    <div class="wrapper">
-        {#each screeningDates as item}
+<div class="wrapper">
+    <div>
+        Available on:
+    </div>
+    <div class="calendar-wrapper">
+        {#each screeningDates as item, i}
+            {#if i != 0} <!-- Skip the first divider -->
+                <hr class="vertical-divider"/>
+            {/if}
             <div class="column">
                 <div class="column-header">
-                    {item.dayName}
+                    {#if innerWidth > 868}
+                        {item.dayName}
+                    {:else}
+                        {item.dayName.substring(0, 3)}
+                    {/if}
                 </div>
                 <hr class="divider"/>
                 <div class="column-dates">
@@ -41,6 +54,8 @@
             </div>
         {/each}
     </div>
+</div>
+
 {/if}
 
 <style lang="scss">
