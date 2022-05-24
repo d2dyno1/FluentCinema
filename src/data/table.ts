@@ -1,4 +1,4 @@
-import type { MovieType } from "$data/MovieType";
+import type { ScreeningType } from "./ScreeningType";
 
 export type TableDateItem = {
     dayName: string;
@@ -7,5 +7,5 @@ export type TableDateItem = {
 
 export type DateWithType = {
     date: Date;
-    type: MovieType;
+    type: ScreeningType;
 };

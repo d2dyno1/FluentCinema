@@ -1,7 +1,7 @@
 <script lang="ts">
+    import type { ReviewApiContext } from "$api/ReviewApiContext";
     import { MovieReview } from "$lib";
-    import { Button, TextBlock } from "fluent-svelte";
-    import { ReviewApiContext } from "../../../api/ReviewApiContext";
+    import { TextBlock } from "fluent-svelte";
     import { fade } from "svelte/transition";
 
     import RightArrow from "@fluentui/svg-icons/icons/caret_right_24_filled.svg?raw";

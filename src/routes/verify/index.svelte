@@ -4,8 +4,7 @@
     let token;
 
     export const load: Load = async ({ session, url }) => {
-        console.log(session.user.isVerified);
-        if (!session.isLoggedIn || session.user.isVerified) {
+        if (!session.isLoggedIn || session.user?.isVerified) {
             return {
                 status: 302,
                 redirect: "/"

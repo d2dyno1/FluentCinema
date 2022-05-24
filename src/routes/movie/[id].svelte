@@ -1,9 +1,9 @@
 <script lang="ts" context="module">
     import type { Load } from "@sveltejs/kit";
-    import { ReviewApiContext } from "$api/ReviewApiContext";
-    import { MovieApiContext } from "$api/MovieApiContext";
+    import type { ReviewApiContext } from "$api/ReviewApiContext";
+    import type { ScreeningApiContext } from "$api/ScreeningApiContext";
     import type { TableDateItem } from "$/data/table";
-    import { ScreeningApiContext } from "$api/ScreeningApiContext";
+    import { MovieApiContext } from "$api/MovieApiContext";
 
     export let reviews: ReviewApiContext[];
     export let screeningDates: TableDateItem[] = [];
@@ -64,7 +64,7 @@
         <div>
             <ProgressRing size={64}/>
         </div>
-    {:then _} 
+    {:then _}
         <MovieDateSection {movie} {screeningDates}/>
     {/await}
     <MovieReviewsSection {reviews}/>

@@ -13,7 +13,7 @@
         <TextBlock>{review.username}</TextBlock>
     </div>
     <div class="content">
-        <Rating rating={review.rating} text="{review.rating}/5.0"></Rating>
+        <Rating rating={review.rating} text="{review.rating}/5"></Rating>
         <TextBlock>{review.content}</TextBlock>
     </div>
 </div>

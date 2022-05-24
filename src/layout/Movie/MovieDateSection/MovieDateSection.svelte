@@ -1,14 +1,23 @@
 <script lang="ts">
     import type { TableDateItem } from "$/data/table";
     import type { MovieApiContext } from "../../../api/MovieApiContext";
-    import type { MovieType } from "$data/MovieType";
+    import { ScreeningType } from "$data/ScreeningType";
     import moment from "moment";
 
     export let movie: MovieApiContext;
     export let screeningDates: TableDateItem[] = [];
 
-    function getFriendlyTypeName(movieType: MovieType): string {
-        return movieType;
+    function getFriendlyTypeName(movieType: ScreeningType): string {
+        switch (movieType.toString())
+        {
+            case ScreeningType.SUBTITLES_2D: return "Sub 2D";
+            case ScreeningType.SUBTITLES_3D: return "Sub 3D";
+
+            case ScreeningType.DUBBING_2D: return "Dub 2D";
+            case ScreeningType.DUBBING_3D: return "Dub 3D";
+
+            default: return "";
+        }
     }
 </script>
 
