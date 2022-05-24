@@ -5,6 +5,10 @@
     flex: 1 1 auto;
 }
 
+.account-picture-options {
+    @include flex($gap: 8px);
+}
+
 .select-file {
     display: none;
 }
