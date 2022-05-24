@@ -17,7 +17,8 @@ h2 {
     margin-bottom: 8px;
 
     &.copyright {
-        margin-top: -16px;
+        font-size: 14px;
+        opacity: 0.6;
     }
 }
 
@@ -28,6 +29,15 @@ h2 {
 
 .column {
     @include flex($direction: column, $align: center, $justify: start);
+}
+
+.title {
+    font-size: 28px;
+    font-weight: 500;
+}
+
+.column-item {
+    margin-bottom: 8px;
 }
 
 .title-column {
