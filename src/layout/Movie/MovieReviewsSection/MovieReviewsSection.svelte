@@ -49,5 +49,5 @@
 {/if}
 
 <style lang="scss">
-    @use "ReviewsSection";
+    @use "MovieReviewsSection";
 </style>

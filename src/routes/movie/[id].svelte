@@ -12,6 +12,14 @@
 
     export const load: Load = async ({ params, fetch }) => {
         let movie = await MovieApiContext.getFromId(fetch, params.id);
+        if (!movie)
+        {
+            return {
+                status: 403,
+                props: { }
+            };
+        }
+
         reviews = await movie.getReviews(fetch);
 
         screeningDatesPromise = movie.getScreenings(fetch).then((data: ScreeningApiContext[]) => {
@@ -29,7 +37,7 @@
                     day = 6;
                 }
                 screeningDates[day].dates ??= [];
-                screeningDates[day].dates?.push(startDate);
+                screeningDates[day].dates?.push({ date: startDate, type: x.type });
             });
         });
 
@@ -43,7 +51,7 @@
 </script>
 
 <script lang="ts">
-    import { MovieHeroSection, MovieDateSection, ReviewsSection } from "$layout";
+    import { MovieHeroSection, MovieDateSection, MovieReviewsSection } from "$layout";
     import { ProgressRing } from "fluent-svelte";
     import moment from "moment";
 
@@ -51,15 +59,15 @@
 </script>
 
 <div class="wrapper">
-    <MovieHeroSection movie={movie}/>
+    <MovieHeroSection {movie}/>
     {#await screeningDatesPromise}
         <div>
             <ProgressRing size={64}/>
         </div>
     {:then _} 
-        <MovieDateSection movie={movie} {screeningDates}/>
+        <MovieDateSection {movie} {screeningDates}/>
     {/await}
-    <ReviewsSection reviews={reviews}/>
+    <MovieReviewsSection {reviews}/>
 </div>
 
 <style lang="scss">

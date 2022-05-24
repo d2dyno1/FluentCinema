@@ -16,7 +16,6 @@
 .movie-positions {
     @include flex($direction: row, $align: center, $justify: start);
     flex: 1 1 auto;
-    overflow-x: scroll;
-    overflow-y: hidden;
+    overflow: auto;
     padding-top: 6px;
 }
