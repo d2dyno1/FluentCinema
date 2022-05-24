@@ -7,6 +7,7 @@ import {ScreeningRoomDatabaseContext} from "./ScreeningRoomDatabaseContext";
 import type {QueryResult} from "pg";
 import type {ReservationDatabaseContext} from "./ReservationDatabaseContext";
 import * as async from "async";
+import type { ScreeningType } from "$data/ScreeningType";
 
 const QUERY_RESERVED_SEATS = `
     SELECT seat FROM reservations
@@ -21,6 +22,7 @@ export class ScreeningDatabaseContext implements IScreening, IDatabaseContext<Sc
     readonly soldOut: boolean;
     readonly start!: string | Date;
     readonly seat!: number;
+    readonly type!: ScreeningType;
 
     readonly id!: number;
     readonly roomId!: number;
