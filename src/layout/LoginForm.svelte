@@ -29,7 +29,8 @@
 
     async function onLogin() {
         promise = AccountApiContext.login(params);
-        promise.then(response => {
+        try {
+            let response = await promise;
             if (response.otpRequired) {
                 isOtpRequired = true;
                 formComponent.showMessage("Two-factor authentication is enabled. A one-time password has been sent to your e-mail.", InfoBarSeverity.attention);
@@ -40,8 +41,9 @@
             } else {
                 formComponent.showMessage(response.message, InfoBarSeverity.critical);
             }
-        });
-        promise.catch(err => formComponent.showMessage(err, InfoBarSeverity.critical));
+        } catch (e) {
+            formComponent.showMessage(e, InfoBarSeverity.critical)
+        }
     }
 </script>
 

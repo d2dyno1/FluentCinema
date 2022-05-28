@@ -1,6 +1,6 @@
 <script lang="ts">
     import { ActionBlock } from "$lib";
-    import { Button, ContentDialog, TextBlock, ToggleSwitch } from "fluent-svelte";
+    import { Button, ContentDialog, InfoBar, TextBlock, ToggleSwitch } from "fluent-svelte";
     import { accountSession } from "$/stores";
 
     import ProfileIcon from "@fluentui/svg-icons/icons/person_32_filled.svg?raw";
@@ -11,11 +11,9 @@
     import { AccountApiContext } from "$api/AccountApiContext";
     import { SettingsApiContext } from "$api/SettingsApiContext";
     import { PromiseButton } from "$lib";
+    import { EmailVerificationApiContext } from "$api/EmailVerificationApiContext";
 
     let changePicturePromise: Promise<void>;
-    let removePicturePromise: Promise<void>;
-    let deleteAccountPromise: Promise<void>;
-    let invalidateSessionsPromise: Promise<void>;
 
     let showAccountDeletionConfirmationDialog: boolean;
     let uploadFiles: HTMLInputElement;
@@ -31,42 +29,49 @@
         uploadSettings();
     }
 
-    async function uploadPicture() {
-        changePicturePromise = AccountApiContext.uploadProfilePicture(uploadFiles.files[0]);
-        await changePicturePromise;
-        window.location.reload();
+    async function resendVerificationEmail(): Promise<void> {
+        return EmailVerificationApiContext.beginVerification();
     }
 
-    async function deletePicture() {
-        removePicturePromise = AccountApiContext.uploadProfilePicture(null);
-        await removePicturePromise;
-        window.location.reload();
+    async function uploadPicture(): Promise<void> {
+        return AccountApiContext.uploadProfilePicture(uploadFiles.files[0]).then(() => window.location.reload());
     }
 
-    async function deleteAccount() {
-        deleteAccountPromise = AccountApiContext.delete();
-        await deleteAccountPromise;
-        window.location.reload();
+    async function deletePicture(): Promise<void> {
+        return AccountApiContext.uploadProfilePicture(null).then(() => {
+            window.location.reload();
+        });
     }
 
-    async function invalidateSessions() {
-        invalidateSessionsPromise = AccountApiContext.invalidateOtherSessions();
+    async function deleteAccount(): Promise<void> {
+        return AccountApiContext.delete().then(() => {
+            window.location.reload();
+        });
+    }
+
+    async function invalidateSessions(): Promise<void> {
+        return AccountApiContext.invalidateOtherSessions();
     }
 </script>
 
+{#if !$accountSession.user.isVerified}
+    <InfoBar title="Unverified e-mail address" message="In order to verify your e-mail address, follow the instructions within the e-mail that was sent. If you can't find it even after checking the spam folder, press the button below." severity="caution" closable={false}>
+        <PromiseButton slot="action" onClick={resendVerificationEmail}>Resend verification e-mail</PromiseButton>
+    </InfoBar>
+{/if}
 <div class="settings-list">
     <ActionBlock title="Account picture" description="Update or remove your profile picture." icon={ProfileIcon}>
         <div class="account-picture-options" slot="action">
             {#if $accountSession.user?.hasCustomProfilePicture}
-                <PromiseButton promise={removePicturePromise} keepDisabledAfterResolve={true} on:click={deletePicture}>Remove</PromiseButton>
+                <PromiseButton keepDisabledAfterResolve={true} onClick={deletePicture}>Remove</PromiseButton>
             {/if}
-            <input on:change={uploadPicture} type="file" class="select-file" bind:this={uploadFiles} accept=".jpg, .jpeg, .png, .svg">
+            <input on:change={() => changePicturePromise = uploadPicture()} type="file" class="select-file" bind:this={uploadFiles} accept=".jpg, .jpeg, .png, .svg">
             <PromiseButton promise={changePicturePromise} keepDisabledAfterResolve={true} on:click={() => uploadFiles.click()}>Change</PromiseButton>
         </div>
     </ActionBlock>
     <TextBlock>Security</TextBlock>
     <ActionBlock title="Invalidate sessions" description="Invalidate all sessions except this one." icon={DeleteIcon}>
-        <PromiseButton slot="action" promise={invalidateSessionsPromise} on:click={invalidateSessions}>Invalidate</PromiseButton>
+        <PromiseButton slot="action" onClick={invalidateSessions}>Invalidate</PromiseButton>
     </ActionBlock>
     <ActionBlock title="Two-factor authentication" description="You will need to enter a 6-digit code sent to your e-mail every time you log in." icon={KeyIcon}>
         <ToggleSwitch
@@ -88,7 +93,7 @@
 <ContentDialog title="Delete account" bind:open={showAccountDeletionConfirmationDialog}>
     Are you sure? This action cannot be undone!
     <svelte:fragment slot="footer">
-        <PromiseButton variant="accent" promise={deleteAccountPromise} keepDisabledAfterResolve={true} on:click={deleteAccount}>Yes</PromiseButton>
+        <PromiseButton variant="accent" keepDisabledAfterResolve={true} onClick={deleteAccount}>Yes</PromiseButton>
         <Button on:click={() => showAccountDeletionConfirmationDialog = false}>Cancel</Button>
     </svelte:fragment>
 </ContentDialog>

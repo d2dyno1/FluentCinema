@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { TextBox } from "fluent-svelte";
     import { DialogForm } from "$layout";
     import { PromiseButton } from "$lib";
     import type { RegisterSchema } from "$data/schema/RegisterSchema";
@@ -26,18 +25,19 @@
         password: password
     } as RegisterSchema;
 
-    let promise: Promise<GeneralResponse>;
-
-    async function onRegister() {
-        promise = AccountApiContext.register(params);
-        promise.then((response: GeneralResponse) => {
+    async function onRegister(): Promise<GeneralResponse> {
+        let promise = AccountApiContext.register(params);
+        try {
+            let response = await promise;
             if (response.success) {
                 window.location.replace("/account");
             } else {
                 formComponent.showMessage(response.message, InfoBarSeverity.critical);
             }
-        });
-        promise.catch(err => formComponent.showMessage(err, InfoBarSeverity.critical));
+        } catch (e) {
+            formComponent.showMessage(e, InfoBarSeverity.critical);
+        }
+        return promise;
     }
 </script>
 
@@ -48,7 +48,7 @@
     <ValidatedTextBox type="password" placeholder="Confirm password" validator={string().equals([password], "Passwords don't match.")} bind:isValid={isConfirmedPasswordValid}></ValidatedTextBox>
     <PromiseButton
             disabled={!isUsernameValid || !isEmailValid || !isPasswordValid || !isConfirmedPasswordValid}
-            variant="accent" keepDisabledAfterResolve={true} slot="footer-left" bind:promise={promise} on:click={onRegister}>Register</PromiseButton>
+            variant="accent" keepDisabledAfterResolve={true} slot="footer-left" onClick={onRegister}>Register</PromiseButton>
     <slot/>
 </DialogForm>
 

@@ -1,6 +1,10 @@
 import type { GeneralResponse } from "$data/response/GeneralResponse";
 
 export class EmailVerificationApiContext {
+    static async beginVerification(): Promise<void> {
+        await fetch("/api/account/email/beginverification", { method: "POST" });
+    }
+
     /**
      * @return Whether the verification was successful.
      */
