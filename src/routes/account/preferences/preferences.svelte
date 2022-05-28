@@ -6,8 +6,13 @@
     import ProfileIcon from "@fluentui/svg-icons/icons/person_32_filled.svg?raw";
     import KeyIcon from "@fluentui/svg-icons/icons/key_32_filled.svg?raw";
     import DeleteIcon from "@fluentui/svg-icons/icons/delete_48_filled.svg?raw";
-    import { AccountApiContext } from "../../../api/AccountApiContext";
-    import { SettingsApiContext } from "../../../api/SettingsApiContext";
+    import { AccountApiContext } from "$api/AccountApiContext";
+    import { SettingsApiContext } from "$api/SettingsApiContext";
+    import { PromiseButton } from "$lib";
+
+    let changePicturePromise: Promise<void>;
+    let removePicturePromise: Promise<void>;
+    let deleteAccountPromise: Promise<void>;
 
     let showAccountDeletionConfirmationDialog: boolean;
     let uploadFiles: HTMLInputElement;
@@ -24,17 +29,20 @@
     }
 
     async function uploadPicture() {
-        await AccountApiContext.uploadProfilePicture(uploadFiles.files[0]);
+        changePicturePromise = AccountApiContext.uploadProfilePicture(uploadFiles.files[0]);
+        await changePicturePromise;
         window.location.reload();
     }
 
     async function deletePicture() {
-        await AccountApiContext.uploadProfilePicture(null);
+        removePicturePromise = AccountApiContext.uploadProfilePicture(null);
+        await removePicturePromise;
         window.location.reload();
     }
 
     async function deleteAccount() {
-        await AccountApiContext.delete();
+        deleteAccountPromise = AccountApiContext.delete();
+        await deleteAccountPromise;
         window.location.reload();
     }
 </script>
@@ -43,10 +51,10 @@
     <ActionBlock title="Account picture" description="Update or remove your profile picture." icon={ProfileIcon}>
         <div class="account-picture-options" slot="action">
             {#if $accountSession.user?.hasCustomProfilePicture}
-                <Button on:click={deletePicture}>Remove</Button>
+                <PromiseButton promise={removePicturePromise} keepDisabledAfterResolve={true} on:click={deletePicture}>Remove</PromiseButton>
             {/if}
             <input on:change={uploadPicture} type="file" class="select-file" bind:this={uploadFiles} accept=".jpg, .jpeg, .png, .svg">
-            <Button on:click={() => uploadFiles.click()}>Change</Button>
+            <PromiseButton promise={changePicturePromise} keepDisabledAfterResolve={true} on:click={() => uploadFiles.click()}>Change</PromiseButton>
         </div>
     </ActionBlock>
     <ActionBlock title="Two-factor authentication" description="You will need to enter a 6-digit code sent to your e-mail every time you log in." icon={KeyIcon}>
@@ -68,8 +76,8 @@
 <ContentDialog title="Delete account" bind:open={showAccountDeletionConfirmationDialog}>
     Are you sure? This action cannot be undone!
     <svelte:fragment slot="footer">
-        <Button slot="footer" variant="accent" on:click={deleteAccount}>Yes</Button>
-        <Button slot="footer" on:click={() => showAccountDeletionConfirmationDialog = false}>Cancel</Button>
+        <PromiseButton variant="accent" promise={deleteAccountPromise} keepDisabledAfterResolve={true} on:click={deleteAccount}>Yes</PromiseButton>
+        <Button on:click={() => showAccountDeletionConfirmationDialog = false}>Cancel</Button>
     </svelte:fragment>
 </ContentDialog>
 
