@@ -10,3 +10,4 @@ export { default as MovieReview } from "./MovieReview/MovieReview.svelte";
 export { default as MovieRating } from "./MovieRating/MovieRating.svelte";
 export { default as Rating } from "./Rating/Rating.svelte";
 export { default as Reservation } from "./Reservation/Reservation.svelte";
+export { default as ValidatedTextBox } from "./ValidatedTextBox/ValidatedTextBox.svelte";

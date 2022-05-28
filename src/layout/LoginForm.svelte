@@ -1,12 +1,11 @@
 <script lang="ts">
     import { TextBlock } from "fluent-svelte";
     import { DialogForm } from "$layout";
-    import { PromiseButton } from "$lib";
+    import { PromiseButton, ValidatedTextBox } from "$lib";
     import type { LoginSchema } from "$data/schema/LoginSchema";
     import { InfoBarSeverity } from "$data/InfoBarSeverity";
     import type { LoginResponse } from "$data/response/LoginResponse";
-    import { AccountApiContext } from "../api/AccountApiContext";
-    import ValidatedTextBox from "$lib/ValidatedTextBox/ValidatedTextBox.svelte";
+    import { AccountApiContext } from "$api/AccountApiContext";
     import { emailSchema, passwordSchema, otpSchema } from "$api/validation";
 
     let isEmailValid = false;

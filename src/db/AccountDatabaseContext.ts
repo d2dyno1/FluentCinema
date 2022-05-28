@@ -7,6 +7,7 @@ import nodemailer from "nodemailer";
 import NodeCache from "node-cache";
 import { ReservationDatabaseContext } from "./ReservationDatabaseContext";
 import { SettingsDatabaseContext } from "$db/SettingsDatabaseContext";
+import { EmailVerificationDatabaseContext } from "$db/EmailVerificationDatabaseContext";
 
 const pictureCache = new NodeCache({ stdTTL: 0 });
 
@@ -73,6 +74,12 @@ export class AccountDatabaseContext {
 
     async verifyPassword(password: string): Promise<boolean> {
         return argon2.verify(this.hashed_password, password, argon2Options);
+    }
+
+    async changeEmail(email: string): Promise<void> {
+        await client.query("UPDATE users SET email=$1, is_verified=false WHERE id=$2", [email, this.id]);
+        await client.query(`UPDATE settings SET "twoFactorAuthentication"=false WHERE user_id=$1`, [this.id]);
+        await EmailVerificationDatabaseContext.beginVerification(await AccountDatabaseContext.getFromId(this.id) as AccountDatabaseContext);
     }
 
     async sendMail(subject: string, content: string): Promise<void> {

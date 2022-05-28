@@ -1,4 +1,4 @@
-import { badRequest, ok, forbidden } from "$api/responses";
+import { badRequest, ok, forbidden, badRequestWithMessage } from "$api/responses";
 import type { RequestHandler } from "@sveltejs/kit";
 import { SessionDatabaseContext } from "$db/SessionDatabaseContext";
 import { settingsSchema } from "$data/schema/SettingsSchema";
@@ -16,6 +16,10 @@ export const put: RequestHandler = async ({ request }) => {
     }
 
     let user = await session.getUser();
+    if (params.twoFactorAuthentication && !user.is_verified) {
+        return badRequest;
+    }
+
     let settings = await user.getSettings();
     await settings.update(params);
     return ok;

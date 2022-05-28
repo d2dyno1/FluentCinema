@@ -4,6 +4,20 @@ import type { RegisterSchema } from "$data/schema/RegisterSchema";
 import type { GeneralResponse } from "$data/response/GeneralResponse";
 
 export class AccountApiContext {
+    static async changeEmailAddress(email: string): Promise<GeneralResponse> {
+        let response: GeneralResponse = await fetch("/api/account/email/change", {
+            headers: {
+                "Content-Type": "application/json"
+            },
+            method: "PUT",
+            body: JSON.stringify({ email })
+        }).then(response => response.json());
+        if (!response.success) {
+            throw response.message;
+        }
+        return response;
+    }
+
     static async invalidateOtherSessions(): Promise<void> {
         await fetch("/api/account/invalidateothersessions", { method: "DELETE" });
     }
