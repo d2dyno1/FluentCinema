@@ -35,6 +35,7 @@
             if (response.otpRequired) {
                 isOtpRequired = true;
                 formComponent.showMessage("Two-factor authentication is enabled. A one-time password has been sent to your e-mail.", InfoBarSeverity.attention);
+                promise = null;
                 return;
             } else if (response.success) {
                 window.location.reload();
@@ -42,7 +43,7 @@
                 formComponent.showMessage(response.message, InfoBarSeverity.critical);
             }
         });
-        promise.catch(err => formComponent.showMessage(err.message, InfoBarSeverity.critical));
+        promise.catch(err => formComponent.showMessage(err, InfoBarSeverity.critical));
     }
 </script>
 
@@ -54,7 +55,7 @@
     {:else}
         <TextBox bind:value={otp} placeholder="One-time password"/>
     {/if}
-    <PromiseButton slot="footer-left" bind:promise={promise} on:click={onLogin}>Log in</PromiseButton>
+    <PromiseButton variant="accent" keepDisabledAfterResolve={true} promise={promise} on:click={onLogin} slot="footer-left">Log in</PromiseButton>
     <svelte:fragment slot="footer-right">
         {#if !isOtpRequired}
             <TextBlock><a href="/resetpassword">Forgot password?</a></TextBlock>

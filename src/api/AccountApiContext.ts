@@ -45,22 +45,30 @@ export class AccountApiContext {
     }
 
     static async login(schema: LoginSchema): Promise<LoginResponse> {
-        return fetch("/api/account/login", {
+        let response: LoginResponse = await fetch("/api/account/login", {
             headers: {
                 'Content-Type': 'application/json'
             },
             method: 'POST',
             body: JSON.stringify(schema)
-        }).then(response => response.json())
+        }).then(response => response.json());
+        if (!response.success) {
+            throw response.message;
+        }
+        return response;
     }
 
     static async register(schema: RegisterSchema): Promise<GeneralResponse> {
-        return fetch("/api/account/register", {
+        let response: GeneralResponse = await fetch("/api/account/register", {
             headers: {
                 'Content-Type': 'application/json'
             },
             method: 'POST',
             body: JSON.stringify(schema)
-        }).then(response => response.json())
+        }).then(response => response.json());
+        if (!response.success) {
+            throw response.message;
+        }
+        return response;
     }
 }

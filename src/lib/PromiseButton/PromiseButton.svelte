@@ -2,19 +2,35 @@
     import { Button, ProgressRing } from "fluent-svelte";
     import { createEventDispatcher } from "svelte";
 
-    export let variant = "accent";
+    export let variant: "standard" | "accent" | "hyperlink" = "standard";
     export let promise: Promise<any>;
+    export let keepDisabledAfterResolve: boolean = false;
+
+    let isPromisePending: boolean = false;
+    let isPromiseRejected: boolean = false;
+
+    $: inProgress = !isPromiseRejected && (isPromisePending || (promise != null && keepDisabledAfterResolve));
+
+    $: if (promise != null) {
+        isPromisePending = true;
+        isPromiseRejected = false;
+
+        promise.then(() => {
+            isPromisePending = false;
+        });
+        promise.catch(() => {
+            isPromisePending = false;
+            isPromiseRejected = true;
+        })
+    }
 
     const dispatch = createEventDispatcher();
     const click = () => dispatch('click');
 </script>
 
-<div>
-    {#await promise}
-        <ProgressRing size={28}/>
-    {:then value}
-        <Button {variant} on:click={click}><slot/></Button>
-    {:catch err}
-        <Button {variant} on:click={click}><slot/></Button>
-    {/await}
-</div>
+<Button disabled={inProgress} {variant} on:click={click}>
+    <slot/>
+    {#if inProgress}
+        &nbsp;&nbsp;<ProgressRing/>
+    {/if}
+</Button>

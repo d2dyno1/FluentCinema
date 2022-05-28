@@ -42,7 +42,7 @@
                 formComponent.showMessage(response.message, InfoBarSeverity.critical);
             }
         });
-        promise.catch(err => formComponent.showMessage(err.message, InfoBarSeverity.critical));
+        promise.catch(err => formComponent.showMessage(err, InfoBarSeverity.critical));
     }
 </script>
 
@@ -51,7 +51,7 @@
     <TextBox bind:value={email} type="email" placeholder="E-mail"/>
     <TextBox bind:value={password} type="password" placeholder="Password"/>
     <TextBox bind:value={confirmedPassword} type="password" placeholder="Confirm password"/>
-    <PromiseButton slot="footer-left" bind:promise={promise} on:click={onRegister}>Register</PromiseButton>
+    <PromiseButton variant="accent" keepDisabledAfterResolve={true} slot="footer-left" bind:promise={promise} on:click={onRegister}>Register</PromiseButton>
     <slot/>
 </DialogForm>
 

@@ -29,7 +29,7 @@ export const post: RequestHandler = async ({ request }) => {
             return {
                 status: 200,
                 body: {
-                    success: false,
+                    success: true,
                     otpRequired: true
                 }
             }
