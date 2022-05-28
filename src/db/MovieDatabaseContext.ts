@@ -63,10 +63,6 @@ export class MovieDatabaseContext implements IMovie, IDatabaseContext<MovieApiCo
         })();
     }
 
-    async addReview(user: AccountDatabaseContext, rating: number, content: string) {
-        await ReviewDatabaseContext.create(user, this, rating, content);
-    }
-
     async getReviews() {
         return await ReviewDatabaseContext.getFromMovie(this);
     }

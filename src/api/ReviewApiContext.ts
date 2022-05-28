@@ -15,7 +15,7 @@ export class ReviewApiContext implements IReview {
     }
 
     static async getFromMovieId(fetch: Fetch, movieId: string | number): Promise<ReviewApiContext[]> {
-        return fetch(`/api/cinema/movie/${movieId}/review/list`).then(response => response.json()).then((reviews: IReview[]) => {
+        return fetch(`/api/cinema/movie/${movieId}/reviews`).then(response => response.json()).then((reviews: IReview[]) => {
             return reviews.map(review => new ReviewApiContext(review))
         });
     }

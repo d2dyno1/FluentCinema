@@ -18,10 +18,6 @@ export class ReviewDatabaseContext implements IReview, IDatabaseContext<ReviewAp
         Object.assign(this, review);
     }
 
-    public static async create(user: AccountDatabaseContext, movie: MovieDatabaseContext, rating: number, content: string) {
-        await client.query('INSERT INTO reviews("userId", "movieId", rating, content) VALUES($1, $2, $3, $4)', [user.id, movie.id, rating, content]);
-    }
-
     public static async getFromMovie(movie: MovieDatabaseContext): Promise<ReviewDatabaseContext[]> {
         return (await client.query(`
             SELECT reviews.*, users.username FROM reviews 
