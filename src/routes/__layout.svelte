@@ -46,6 +46,9 @@
     :global(body) {
         background-color: var(--fds-solid-background-base);
         color: var(--fds-text-primary);
-        margin: 0px;
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
     }
 </style>
