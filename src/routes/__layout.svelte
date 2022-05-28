@@ -1,18 +1,24 @@
 <script lang="ts" context="module">
-    import { Navbar } from "$layout";
+    import { Navbar, Footer } from "$layout";
     import type { NavbarButton, NavbarItem } from "$data/navbar";
     import { ok } from "$api/responses";
     import { accountSession } from "$/stores";
+    import type { Load } from "@sveltejs/kit";
 
     import CodeIcon from "@fluentui/svg-icons/icons/code_24_filled.svg?raw";
     import HomeIcon from "@fluentui/svg-icons/icons/home_24_filled.svg?raw";
-    import type {Load} from "@sveltejs/kit";
+    import MoviesIcon from "@fluentui/svg-icons/icons/movies_and_tv_24_filled.svg?raw";
 
     const navbarItems: NavbarItem[] = [
         {
             name: "Home",
             path: "/",
             icon: HomeIcon
+        },
+        {
+            name: "Movies",
+            path: "/all-movies",
+            icon: MoviesIcon
         }
     ];
     const navbarButtons: NavbarButton[] = [
@@ -31,7 +37,7 @@
 
 <Navbar navbarItems={navbarItems} navbarButtons={navbarButtons}/>
 <slot/>
-<!-- <Footer/> -->
+<Footer/>
 
 <style global lang="scss">
     @use "src/styles/global";
@@ -40,6 +46,9 @@
     :global(body) {
         background-color: var(--fds-solid-background-base);
         color: var(--fds-text-primary);
-        margin: 0px;
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
     }
 </style>

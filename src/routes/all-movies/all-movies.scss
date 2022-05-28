@@ -1,0 +1,31 @@
+@use "src/styles/mixins" as *;
+
+.center {
+    @include flex($align: center, $justify: center);
+    height: 100%;
+    width: 100%;
+    position: fixed;
+}
+
+.wrapper {
+    @include flex($direction: column, $justify: start);
+    flex: 1 1 auto;
+    padding: 16px 64px 16px 64px;
+}
+
+.title {
+    @include flex($align: center, $justify: center);
+    padding: 4% 0% 12% 0%;
+    font-size: 36px;
+    font-weight: 500;
+}
+
+.movie-list {
+    @include flex($align: center, $justify: start);
+    flex: 1 1 auto;
+    flex-wrap: wrap;
+}
+
+.movie-position-wrapper {
+    margin-bottom: 12px;
+}

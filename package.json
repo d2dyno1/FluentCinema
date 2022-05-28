@@ -2,7 +2,7 @@
   "name": "fluentcinema",
   "version": "0.0.1",
   "scripts": {
-    "dev": "svelte-kit dev",
+    "dev": "svelte-kit dev --host",
     "build": "svelte-kit build",
     "package": "svelte-kit package",
     "preview": "svelte-kit preview",
@@ -13,13 +13,16 @@
   "devDependencies": {
     "@sveltejs/adapter-auto": "next",
     "@sveltejs/kit": "next",
+    "@types/async": "^3.2.13",
     "@types/cookie": "^0.5.1",
     "@types/nodemailer": "^6.4.4",
     "@types/pg": "^8.6.5",
     "@types/sharp": "^0.30.2",
+    "@types/underscore": "^1.11.4",
     "svelte": "^3.44.0",
     "svelte-check": "^2.2.6",
     "svelte-preprocess": "^4.10.1",
+    "svelte-star-rating": "^1.3.2",
     "tslib": "^2.3.1",
     "typescript": "~4.6.2"
   },
@@ -28,14 +31,17 @@
     "@fluentui/svg-icons": "^1.1.169",
     "@sveltejs/adapter-node": "^1.0.0-next.73",
     "argon2": "^0.28.5",
+    "async": "^3.2.3",
     "cookie": "^0.5.0",
     "fluent-svelte": "^1.5.1",
     "moment": "^2.29.3",
+    "node-cache": "^5.1.2",
     "node-sass": "^7.0.1",
     "nodemailer": "^6.7.5",
     "pg": "^8.7.3",
     "sass": "^1.51.0",
     "sharp": "^0.30.4",
+    "underscore": "^1.13.3",
     "yup": "^0.32.11"
   }
 }

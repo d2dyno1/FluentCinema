@@ -3,6 +3,9 @@
     import { default as LoginForm } from "$layout/LoginForm.svelte";
     import { default as RegisterForm } from "$layout/RegisterForm.svelte";
     import { accountSession } from "$/stores";
+    import { AccountPicture } from "$lib";
+    import {AccountApiContext} from "../../api/AccountApiContext";
+    import { goto } from "$app/navigation";
 
     import ProfileIcon from "@fluentui/svg-icons/icons/person_32_filled.svg?raw";
     import EyeIcon from "@fluentui/svg-icons/icons/eye_24_filled.svg?raw";
@@ -10,8 +13,9 @@
 
     let isLoginPage = true;
 
-    function logOut() {
-        fetch("/api/account/logout", { method: "POST" }).then(() => window.location.replace("/"));
+    async function logout() {
+        await AccountApiContext.logout();
+        window.location.reload();
     }
 </script>
 
@@ -20,26 +24,20 @@
     <Button>
         <div class="inner-login-button">
             {$accountSession.user.username}
-            <PersonPicture size={32} alt={$accountSession.user.username}>
-                {#if $accountSession.user.hasCustomProfilePicture}
-                    <img class="user-picture" alt={$accountSession.user.username} src="/api/account/picture/current">
-                {:else}
-                    {@html ProfileIcon}
-                {/if}
-            </PersonPicture>
+            <AccountPicture size={32} userId={$accountSession.user.id}/>
         </div>
     </Button>
     <div slot="flyout">
-        <MenuFlyoutItem on:click={() => window.location.replace("/account")}>
+        <MenuFlyoutItem on:click={() => goto("/account/preferences")}>
             {@html ProfileIcon}
             FluentCinema Account
         </MenuFlyoutItem>
-        <MenuFlyoutItem on:click>
+        <MenuFlyoutItem on:click={() => goto("/account/reservations")}>
             {@html EyeIcon}
             View reservations
         </MenuFlyoutItem>
         <MenuFlyoutDivider/>
-        <MenuFlyoutItem on:click={logOut}>
+        <MenuFlyoutItem on:click={logout}>
             {@html DoorArrowLeftIcon}
             Log out
         </MenuFlyoutItem>

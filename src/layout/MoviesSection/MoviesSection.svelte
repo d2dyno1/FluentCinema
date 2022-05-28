@@ -1,9 +1,9 @@
 <script lang="ts">
     import { Button } from "fluent-svelte";
     import { MoviePosition } from "$lib";
-    import type { MovieData } from "$data/movies";
+    import { MovieApiContext } from "../../api/MovieApiContext";
 
-    export let positions: MovieData[] = [];
+    export let positions: MovieApiContext[] = [];
 </script>
 
 <div class="wrapper">
@@ -11,11 +11,11 @@
         <h2>
             Explore
         </h2>
-        <Button variant="hyperlink" on:click>See all</Button> <!-- TODO: Add click -->
+        <Button variant="hyperlink" href="/all-movies">See all</Button>
     </div>
     <div class="movie-positions">
-        {#each positions as { name, description, descriptionExtended, rating, posterImage }}
-        <MoviePosition name={name} episode={description} description={descriptionExtended} rating={rating} image={posterImage} />
+        {#each positions as movie}
+            <MoviePosition {movie}/>
         {/each}
     </div>
 </div>

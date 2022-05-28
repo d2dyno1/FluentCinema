@@ -1,0 +1,33 @@
+@use "src/styles/mixins" as *;
+
+.movie-poster {
+    width: 172px;
+    border-radius: var(--fds-control-corner-radius);
+}
+
+.title {
+    @include flex($direction: row, $justify: space-between);
+    font-weight: 500;
+    font-size: 34px;
+    margin-bottom: 8px;
+}
+
+.length-and-premiere {
+    @include flex($direction: row, $gap: 128px);
+    margin-bottom: 16px;
+}
+
+.description {
+    @include flex($direction: column, $justify: start);
+    flex: 1 1 auto;   
+}
+
+.movie-content {
+    @include flex($direction: row, $justify: start, $align: start, $gap: 32px);
+    flex: 1 1 auto;
+}
+
+.movie-description {
+    opacity: 0.8;
+    font-size: 16;
+}

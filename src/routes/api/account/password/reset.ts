@@ -1,8 +1,8 @@
-import {badRequest, badRequestWithMessage, internalServerError, ok} from "$api/responses";
-import type {RequestHandler} from "@sveltejs/kit";
-import {User} from "$db/User";
-import type {ResetPasswordSchema} from "$data/schema/ResetPasswordSchema";
-import {resetPasswordSchema} from "$data/schema/ResetPasswordSchema";
+import type { RequestHandler } from "@sveltejs/kit";
+import type { ResetPasswordSchema } from "$data/schema/ResetPasswordSchema";
+import { badRequest, badRequestWithMessage, internalServerError, ok } from "$api/responses";
+import { AccountDatabaseContext } from "$db/AccountDatabaseContext";
+import { resetPasswordSchema } from "$data/schema/ResetPasswordSchema";
 
 export const post: RequestHandler = async ({ request }) => {
     try {
@@ -11,7 +11,7 @@ export const post: RequestHandler = async ({ request }) => {
             return badRequest;
         }
 
-        let existingUser = await User.getFromEmail(params.email);
+        let existingUser = await AccountDatabaseContext.getFromEmail(params.email);
         if (existingUser == null) {
             return badRequestWithMessage("This e-mail address is not associated with any account.");
         }

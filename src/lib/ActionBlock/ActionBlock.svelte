@@ -1,7 +1,7 @@
 <script lang="ts">
     import { TextBlock } from "fluent-svelte";
 
-    export let isClickableEffect: boolean;
+    export let isClickableEffect: boolean = false;
     export let title: string;
     export let description: string;
     export let icon: any;

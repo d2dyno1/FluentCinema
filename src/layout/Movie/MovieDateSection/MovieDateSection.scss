@@ -1,0 +1,56 @@
+@use "src/styles/mixins" as *;
+
+.column {
+    @include flex($direction: column, $align: center, $justify: start);
+    flex: 1 1 auto;
+    height: 100%;
+}
+
+.divider {
+    border-color: var(--fds-divider-stroke-default);
+    border-style: solid;
+    border-right: 0px;
+    border-left: 0px;
+    border-top: 1px;
+}
+
+.vertical-divider {
+    display: inline-block;
+    width: 1px;
+    border-color: var(--fds-divider-stroke-default);
+    border-style: solid;
+    border-left: 1px;
+    margin-left: -1px;
+    border-top: 0px;
+    border-bottom: 0px;
+    height: 100%;
+    margin: 0px;
+}
+
+.calendar-wrapper {
+    @include flex($direction: row, $align: start, $justify: space-evenly);
+    flex: 1 1 auto;
+    border-radius: var(--fds-overlay-corner-radius);
+    background-color: var(--fds-control-fill-default);
+    height: 36vh;
+    overflow: auto;
+}
+
+.wrapper {
+    @include flex($direction: column);
+}
+
+.item-date {
+    opacity: 0.8;
+}
+
+.column-dates {
+    @include flex($direction: column, $align: center, $justify: center);
+    height: 100%;
+}
+
+.column-header {
+    margin-bottom: -8px;
+    font-size: 18px;
+    padding: 12px;
+}

@@ -1,11 +1,11 @@
-import {object} from "yup";
-import type {InferType} from "yup";
-import {email, otp, password} from "$api/validation";
+import { object } from "yup";
+import type { InferType } from "yup";
+import { emailSchema, otpSchema, passwordSchema } from "$api/validation";
 
 export const loginSchema = object({
-    email: email,
-    password: password,
-    otp: otp
+    email: emailSchema,
+    password: passwordSchema,
+    otp: otpSchema
 });
 
 export interface LoginSchema extends InferType<typeof loginSchema> {}

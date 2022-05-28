@@ -1,0 +1,6 @@
+@use "src/styles/mixins" as *;
+
+.rating {
+    @include flex($direction: row, $align: start, $gap: 6px);
+    margin-bottom: -8px;
+}

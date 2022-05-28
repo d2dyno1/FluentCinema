@@ -1,0 +1,63 @@
+@use "src/styles/mixins" as *;
+
+.reviews-section {
+    @include flex($direction: row, $justify: space-between);
+    background-color: var(--fds-control-fill-default);
+    border-radius: var(--fds-overlay-corner-radius);
+    padding: 16px;
+    height: 300px;
+}
+
+.button-wrapper {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.flipview-button {
+    @include flex($inline: true, $align: center, $justify: center);
+
+	position: relative;
+	box-sizing: border-box;
+	padding-block: 6px 6px;
+	text-decoration: none;
+	border: none;
+	outline: none;
+	cursor: default;
+	border-radius: var(--fds-control-corner-radius);
+	transition: var(--fds-control-faster-duration) ease background;
+    background-color: var(--fds-layer-on-acrylic-background-default);
+
+    &:hover {
+        background-color: var(--fds-control-fill-secondary);
+    }
+
+    &:active {
+        border-color: var(--fds-control-stroke-default);
+        background-color: var(--fds-control-fill-tertiary);
+        color: var(--fds-text-secondary);
+    }
+}
+
+.flipview-button-placeholder {
+    width: 20px;
+    background-color: transparent;
+}
+
+.content-wrapper {
+    display: inline-block;
+    top: 50%;
+    height: fit-content;
+    position: relative;
+    width: 100%;
+}
+
+.content {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.title {
+    margin-left: auto;
+    margin-right: auto;
+}

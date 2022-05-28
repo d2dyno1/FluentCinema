@@ -1,4 +1,4 @@
 import {writable} from "svelte/store";
-import type {Session} from "./data/Session";
+import type {AccountSession} from "./data/AccountSession";
 
-export const accountSession = writable<Session>(undefined);
+export const accountSession = writable<AccountSession>(undefined);

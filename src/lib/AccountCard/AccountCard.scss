@@ -1,9 +1,8 @@
 @use "src/styles/mixins" as *;
 
 .wrapper {
-    @include flex($direction: column, $align: start, $justify: center);
+    @include flex($direction: column, $align: start, $justify: center, $gap: 12px);
     flex: 0 1 auto;
-    gap: 12px;
 }
 
 .card {
@@ -12,7 +11,7 @@
     background-color: var(--fds-control-fill-default);
     width: 286px;
     padding: 16px;
-    border-radius: 6px;
+    border-radius: var(--fds-control-corner-radius);
     box-sizing: border-box;
     border: none;
     border-radius: var(--fds-control-corner-radius);
@@ -20,15 +19,8 @@
     border-color: var(--fds-control-border-default);
 }
 
-.user-picture {
-    user-select: none;
-    -webkit-user-drag: none;
-    -webkit-user-select: none;
-}
-
 .navigation {
     width: 286px;
-    border-radius: 6px;
     box-sizing: border-box;
     border: none;
     border-radius: var(--fds-control-corner-radius);
@@ -46,9 +38,4 @@
 .divider {
     background-color: var(--fds-solid-background-secondary);
     border-inline-start: 1px solid var(--fds-divider-stroke-default);
-}
-
-.account-img {
-    border-radius: 50%;
-    margin-bottom: 16px;
 }

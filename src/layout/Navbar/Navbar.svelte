@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { page } from "$app/stores";
     import { Tooltip } from "fluent-svelte";
     import { AccountMenu } from "$lib";
     import type { NavbarButton, NavbarItem } from "$data/navbar";
@@ -9,7 +10,7 @@
 
 <header class="navbar">
     <nav>
-        <a href="/" class="app-title">
+        <a href="/" class="app-title" sveltekit:prefetch>
             FluentCinema
         </a>
         <div class="divider"></div>
@@ -18,9 +19,11 @@
                 <div class="divider"></div>
             {:else}
                 <a
+                    sveltekit:prefetch
                     class="navbar-item"
                     href={navbarItem.path}
-                    class:selected={false}>
+                    class:selected={$page.url.pathname == navbarItem.path}>
+
                     {#if navbarItem.icon}
                         {@html navbarItem.icon}
                     {/if}

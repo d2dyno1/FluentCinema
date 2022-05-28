@@ -17,25 +17,28 @@ picture {
     padding-inline: 8px;
     text-decoration: none;
     outline: none;
-    transition: var(--fds-control-faster-duration) ease background;
     user-select: none;
     box-sizing: border-box;
     border: none;
+    transition: var(--fds-control-faster-duration) ease background-color, var(--fds-control-normal-duration) ease transform;
     border-radius: var(--fds-control-corner-radius);
     border: 1px solid;
     border-color: var(--fds-control-border-default);
     background-color: var(--fds-control-fill-default);
     color: var(--fds-text-primary);
     background-clip: padding-box;
+    box-shadow: 1px 0px 5px var(--fds-solid-background-quarternary);
 
     &:hover {
         background-color: var(--fds-control-fill-secondary);
+        transform: translateY(-2px);
     }
 
     &:active {
         border-color: var(--fds-control-stroke-default);
         background-color: var(--fds-control-fill-tertiary);
         color: var(--fds-text-secondary);
+        transform: translateY(0px);
     }
 }
 
@@ -51,7 +54,7 @@ picture {
     -webkit-user-select: none;
     max-height: 100%;
     max-width: 100%;
-    border-radius: 4px;
+    border-radius: var(--fds-control-corner-radius);
 }
 
 .title {
@@ -69,12 +72,6 @@ picture {
 .description-text {
     font-size: small;
     margin: 0px 0px 4px 0px;
-}
-
-.rating {
-    font-size: small;
-    font-weight:300;
-    opacity: 0.8;
 }
 
 .details {

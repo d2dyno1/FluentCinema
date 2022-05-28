@@ -1,0 +1,16 @@
+@use "src/styles/mixins" as *;
+
+.movie-review {
+    @include flex($direction: column, $align: center, $gap: 30px);
+    margin-top: 30px;
+    margin-bottom: 30px;
+    width: 100%;
+}
+
+.reviewer {
+    text-align: center;
+}
+
+.content {
+    @include flex($direction: column, $align: center)
+}

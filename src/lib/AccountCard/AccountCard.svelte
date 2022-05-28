@@ -1,10 +1,7 @@
 <script lang="ts">
     import type { NavigationItem } from "$data/navigation";
-    import { NavigationList } from "$lib";
-    import { PersonPicture } from "fluent-svelte";
+    import { AccountPicture, NavigationList } from "$lib";
     import { accountSession } from "$/stores";
-
-    import ProfileIcon from "@fluentui/svg-icons/icons/person_32_filled.svg?raw";
 
     export let navItems: NavigationItem[] = [];
     export let selectedItem: NavigationItem;
@@ -13,13 +10,7 @@
 <div class="wrapper">
     <div class="card">
         {#if $accountSession.isLoggedIn}
-            <PersonPicture size={64} class="account-img" src="/api/account/picture/current" alt="?">
-                {#if $accountSession.user.hasCustomProfilePicture}
-                    <img class="user-picture" alt={$accountSession.user.username} src="/api/account/picture/current">
-                {:else}
-                    {@html ProfileIcon}
-                {/if}
-            </PersonPicture>
+            <AccountPicture size={64} userId={$accountSession.user.id}/>
             <div>{$accountSession.user.username}</div>
             <div class="email-text">{$accountSession.user.email}</div>
         {:else}

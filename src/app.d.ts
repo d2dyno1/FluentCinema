@@ -1,4 +1,4 @@
-import type {Session as AccountSession} from "$data/Session";
+import type {AccountSession as AccountSession} from "./data/AccountSession";
 
 declare global {
     declare namespace App {
