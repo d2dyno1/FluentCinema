@@ -2,18 +2,24 @@
     import { TextBox } from "fluent-svelte";
     import { DialogForm } from "$layout";
     import { PromiseButton } from "$lib";
-    import { registerSchema } from "$data/schema/RegisterSchema";
     import type { RegisterSchema } from "$data/schema/RegisterSchema";
     import { InfoBarSeverity } from "$data/InfoBarSeverity";
     import type { GeneralResponse } from "$data/response/GeneralResponse";
-    import { AccountApiContext } from "../api/AccountApiContext";
+    import { AccountApiContext } from "$api/AccountApiContext";
+    import { emailSchema, passwordSchema, usernameSchema } from "$api/validation.js";
+    import { string } from "yup";
+    import ValidatedTextBox from "$lib/ValidatedTextBox/ValidatedTextBox.svelte";
 
     let formComponent;
+
+    let isUsernameValid = false;
+    let isEmailValid = false;
+    let isPasswordValid = false;
+    let isConfirmedPasswordValid = false;
 
     let username: string;
     let email: string;
     let password: string;
-    let confirmedPassword: string;
     $: params = {
         username: username,
         email: email,
@@ -23,17 +29,6 @@
     let promise: Promise<GeneralResponse>;
 
     async function onRegister() {
-        try {
-            await registerSchema.validate(params);
-        } catch (e) {
-            formComponent.showMessage(e.message, InfoBarSeverity.critical);
-            return;
-        }
-        if (password != confirmedPassword) {
-            formComponent.showMessage("Passwords don't match.", InfoBarSeverity.critical);
-            return;
-        }
-
         promise = AccountApiContext.register(params);
         promise.then((response: GeneralResponse) => {
             if (response.success) {
@@ -47,11 +42,13 @@
 </script>
 
 <DialogForm title="Register" bind:this={formComponent}>
-    <TextBox bind:value={username} placeholder="Username"/>
-    <TextBox bind:value={email} type="email" placeholder="E-mail"/>
-    <TextBox bind:value={password} type="password" placeholder="Password"/>
-    <TextBox bind:value={confirmedPassword} type="password" placeholder="Confirm password"/>
-    <PromiseButton variant="accent" keepDisabledAfterResolve={true} slot="footer-left" bind:promise={promise} on:click={onRegister}>Register</PromiseButton>
+    <ValidatedTextBox placeholder="Username" validator={usernameSchema} bind:value={username} bind:isValid={isUsernameValid}></ValidatedTextBox>
+    <ValidatedTextBox type="email" placeholder="E-mail" validator={emailSchema} bind:value={email} bind:isValid={isEmailValid}></ValidatedTextBox>
+    <ValidatedTextBox type="password" placeholder="Password" validator={passwordSchema} bind:value={password} bind:isValid={isPasswordValid}></ValidatedTextBox>
+    <ValidatedTextBox type="password" placeholder="Confirm password" validator={string().equals([password], "Passwords don't match.")} bind:isValid={isConfirmedPasswordValid}></ValidatedTextBox>
+    <PromiseButton
+            disabled={!isUsernameValid || !isEmailValid || !isPasswordValid || !isConfirmedPasswordValid}
+            variant="accent" keepDisabledAfterResolve={true} slot="footer-left" bind:promise={promise} on:click={onRegister}>Register</PromiseButton>
     <slot/>
 </DialogForm>
 

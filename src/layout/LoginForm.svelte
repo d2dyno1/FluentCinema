@@ -1,12 +1,17 @@
 <script lang="ts">
-    import { TextBox, TextBlock } from "fluent-svelte";
+    import { TextBlock } from "fluent-svelte";
     import { DialogForm } from "$layout";
     import { PromiseButton } from "$lib";
-    import { loginSchema } from "$data/schema/LoginSchema";
     import type { LoginSchema } from "$data/schema/LoginSchema";
     import { InfoBarSeverity } from "$data/InfoBarSeverity";
     import type { LoginResponse } from "$data/response/LoginResponse";
     import { AccountApiContext } from "../api/AccountApiContext";
+    import ValidatedTextBox from "$lib/ValidatedTextBox/ValidatedTextBox.svelte";
+    import { emailSchema, passwordSchema, otpSchema } from "$api/validation";
+
+    let isEmailValid = false;
+    let isPasswordValid = false;
+    let isOtpValid = false;
 
     let email: string;
     let password: string;
@@ -23,13 +28,6 @@
     let promise: Promise<LoginResponse>;
 
     async function onLogin() {
-        try {
-            await loginSchema.validate(params);
-        } catch (e) {
-            formComponent.showMessage(e.message, InfoBarSeverity.critical);
-            return;
-        }
-
         promise = AccountApiContext.login(params);
         promise.then(response => {
             if (response.otpRequired) {
@@ -49,13 +47,13 @@
 
 <DialogForm title="Log in" bind:this={formComponent}>
     {#if !isOtpRequired}
-        <TextBox bind:value={email} type="email" placeholder="E-mail"/>
-        <TextBox bind:value={password} type="password" placeholder="Password"/>
+        <ValidatedTextBox type="email" placeholder="E-mail" validator={emailSchema} bind:value={email} bind:isValid={isEmailValid}></ValidatedTextBox>
+        <ValidatedTextBox type="password" placeholder="Password" validator={passwordSchema} bind:value={password} bind:isValid={isPasswordValid}></ValidatedTextBox>
         <slot/>
     {:else}
-        <TextBox bind:value={otp} placeholder="One-time password"/>
+        <ValidatedTextBox type="password" placeholder="One-time password" validator={otpSchema} bind:value={otp} bind:isValid={isOtpValid}></ValidatedTextBox>
     {/if}
-    <PromiseButton variant="accent" keepDisabledAfterResolve={true} promise={promise} on:click={onLogin} slot="footer-left">Log in</PromiseButton>
+    <PromiseButton disabled={!isEmailValid || !isPasswordValid || isOtpRequired != isOtpValid} variant="accent" keepDisabledAfterResolve={true} promise={promise} on:click={onLogin} slot="footer-left">Log in</PromiseButton>
     <svelte:fragment slot="footer-right">
         {#if !isOtpRequired}
             <TextBlock><a href="/resetpassword">Forgot password?</a></TextBlock>

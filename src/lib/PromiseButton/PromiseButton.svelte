@@ -5,6 +5,7 @@
     export let variant: "standard" | "accent" | "hyperlink" = "standard";
     export let promise: Promise<any>;
     export let keepDisabledAfterResolve: boolean = false;
+    export let disabled: boolean = false;
 
     let isPromisePending: boolean = false;
     let isPromiseRejected: boolean = false;
@@ -28,7 +29,7 @@
     const click = () => dispatch('click');
 </script>
 
-<Button disabled={inProgress} {variant} on:click={click}>
+<Button disabled={disabled || inProgress} {variant} on:click={click}>
     <slot/>
     {#if inProgress}
         &nbsp;&nbsp;<ProgressRing/>
