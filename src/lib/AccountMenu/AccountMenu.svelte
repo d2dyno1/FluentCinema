@@ -28,11 +28,11 @@
         </div>
     </Button>
     <div slot="flyout">
-        <MenuFlyoutItem on:click={() => goto("/account")}>
+        <MenuFlyoutItem on:click={() => goto("/account/preferences")}>
             {@html ProfileIcon}
             FluentCinema Account
         </MenuFlyoutItem>
-        <MenuFlyoutItem on:click>
+        <MenuFlyoutItem on:click={() => goto("/account/reservations")}>
             {@html EyeIcon}
             View reservations
         </MenuFlyoutItem>

@@ -30,7 +30,7 @@
         try {
             let response = await promise;
             if (response.success) {
-                window.location.replace("/account");
+                window.location.replace("/account/preferences");
             } else {
                 formComponent.showMessage(response.message, InfoBarSeverity.critical);
             }

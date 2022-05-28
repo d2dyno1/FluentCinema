@@ -1,9 +1,9 @@
 <script lang="ts">
     import { ProgressRing, TextBlock } from "fluent-svelte";
-    import { ReservationApiContext } from "$api/ReservationApiContext";
     import { Reservation } from "$lib";
+    import { ReservationApiContext } from "$api/ReservationApiContext";
 
-    let reservations: Promise<ReservationApiContext[]> = ReservationApiContext.getAll();
+    export let reservations: Promise<ReservationApiContext[]> = ReservationApiContext.getAll();
 </script>
 
 {#if reservations == null}

@@ -4,7 +4,10 @@
     import { AccountCard } from "$lib";
     import { ok } from "$api/responses";
 
-    export const load: Load = async ({ session }) => {
+    export let href: string;
+
+    export const load: Load = async ({ session, url }) => {
+        href = url.pathname;
         if (!session.isLoggedIn) {
             return {
                 status: 302,
@@ -16,21 +19,18 @@
 </script>
 
 <script lang="ts">
-    import Preferences from "./preferences/preferences.svelte";
-    import Reservations from "./reservations/reservations.svelte";
-
     const navItems: NavigationItem[] = [
         {
             name: "Account preferences",
-            component: Preferences
+            href: "/account/preferences"
         },
         {
             name: "Your reservations",
-            component: Reservations
+            href: "/account/reservations"
         }
     ];
 
-    let selectedItem = navItems[0];
+    let selectedItem = navItems.find(item => item.href == href);
 </script>
 
 <div class="wrapper">
@@ -39,7 +39,7 @@
     </div>
     <div class="content">
         <div class="title">{selectedItem.name}</div>
-        <svelte:component this={selectedItem.component}/>
+        <slot/>
     </div>
 </div>
 
