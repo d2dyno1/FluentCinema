@@ -5,6 +5,7 @@
     import { accountSession } from "$/stores";
     import { AccountPicture } from "$lib";
     import {AccountApiContext} from "../../api/AccountApiContext";
+    import { goto } from "$app/navigation";
 
     import ProfileIcon from "@fluentui/svg-icons/icons/person_32_filled.svg?raw";
     import EyeIcon from "@fluentui/svg-icons/icons/eye_24_filled.svg?raw";
@@ -14,7 +15,7 @@
 
     async function logout() {
         await AccountApiContext.logout();
-        window.location.replace("/");
+        window.location.reload();
     }
 </script>
 
@@ -27,12 +28,10 @@
         </div>
     </Button>
     <div slot="flyout">
-        <a href="/account">
-            <MenuFlyoutItem>
-                {@html ProfileIcon}
-                FluentCinema Account
-            </MenuFlyoutItem>
-        </a>
+        <MenuFlyoutItem on:click={() => goto("/account")}>
+            {@html ProfileIcon}
+            FluentCinema Account
+        </MenuFlyoutItem>
         <MenuFlyoutItem on:click>
             {@html EyeIcon}
             View reservations

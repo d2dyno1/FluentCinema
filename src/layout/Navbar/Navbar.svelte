@@ -10,7 +10,7 @@
 
 <header class="navbar">
     <nav>
-        <a href="/" class="app-title">
+        <a href="/" class="app-title" sveltekit:prefetch>
             FluentCinema
         </a>
         <div class="divider"></div>
@@ -19,6 +19,7 @@
                 <div class="divider"></div>
             {:else}
                 <a
+                    sveltekit:prefetch
                     class="navbar-item"
                     href={navbarItem.path}
                     class:selected={$page.url.pathname == navbarItem.path}>

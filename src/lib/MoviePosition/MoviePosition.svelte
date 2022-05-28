@@ -5,7 +5,7 @@
     export let movie: MovieApiContext;
 </script>
 
-<a class="item" href="/movie/{movie.id}">
+<a class="item" href="/movie/{movie.id}" sveltekit:prefetch>
     <div class="item-inner">
         <picture>
             <img class="item-poster" alt={movie.name} src="/api/cinema/movie/{movie.id}/poster">

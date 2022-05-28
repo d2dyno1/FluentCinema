@@ -3,6 +3,7 @@
     import { Button } from "fluent-svelte";
     import { MovieCard } from "$lib";
     import type { MovieApiContext } from "../../api/MovieApiContext";
+    import { goto } from "$app/navigation";
 
     export let cards: MovieApiContext[] = [];
     export let currentCard: MovieApiContext = cards[0];
@@ -15,7 +16,7 @@
 
     function detailsClicked(e: MovieApiContext): void
     {
-        window.location.replace(`/movie/${e.id}`);
+        goto(`/movie/${e.id}`);
     }
 </script>
 
@@ -29,7 +30,7 @@
         <div class="hero-left">
             <h1>{currentCard.name}</h1>
             <p class="banner-subtitle">{currentCard.description}</p>
-            <a href="/movie/{currentCard.id}">
+            <a href="/movie/{currentCard.id}" sveltekit:prefetch>
                 <Button class="details-button">See details</Button>
             </a>
         </div>
