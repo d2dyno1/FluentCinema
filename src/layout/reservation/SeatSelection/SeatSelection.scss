@@ -1,0 +1,33 @@
+@use "src/styles/mixins" as *;
+
+.seat-selection {
+    @include flex($direction: column, $align: center);
+}
+
+.seats {
+    @include flex($direction: column, $gap: 5px);
+    background-color: var(--fds-solid-background-tertiary);
+    border-radius: var(--fds-control-corner-radius);
+    padding: 20px 100px 20px 20px;
+    width: fit-content;
+}
+
+.row {
+    @include flex($direction: row, $gap: 5px);
+    height: fit-content;
+}
+
+.legend {
+    @include flex($direction: row, $gap: 20px);
+    background-color: var(--fds-solid-background-base);
+    border-radius: var(--fds-control-corner-radius);
+    padding: 20px;
+    width: fit-content;
+
+    div {
+        @include flex($direction: row, $gap: 10px, $align: center);
+        background-color: var(--fds-solid-background-tertiary);
+        border-radius: var(--fds-control-corner-radius);
+        padding: 10px;
+    }
+}

@@ -5,7 +5,7 @@
     import { InfoBarSeverity } from "$data/InfoBarSeverity";
     import type { GeneralResponse } from "$data/response/GeneralResponse";
     import { AccountApiContext } from "$api/AccountApiContext";
-    import { emailSchema, passwordSchema, usernameSchema } from "$api/validation.js";
+    import { emailSchema, passwordSchema, usernameSchema } from "$api/validation";
     import { string } from "yup";
     import ValidatedTextBox from "$lib/ValidatedTextBox/ValidatedTextBox.svelte";
 
