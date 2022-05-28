@@ -4,6 +4,10 @@ import type { RegisterSchema } from "$data/schema/RegisterSchema";
 import type { GeneralResponse } from "$data/response/GeneralResponse";
 
 export class AccountApiContext {
+    static async invalidateOtherSessions(): Promise<void> {
+        await fetch("/api/account/invalidateothersessions", { method: "DELETE" });
+    }
+
     static async uploadProfilePicture(file: File): Promise<void> {
         if (file == null) {
             await fetch("/api/account/picture/upload", { method: "DELETE" });

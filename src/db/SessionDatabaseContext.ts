@@ -11,11 +11,16 @@ const randomBytesAsync = promisify(crypto.randomBytes);
 const sessionTimespan = 7; // in days
 
 export class SessionDatabaseContext implements IExpirable {
+    private readonly user_id!: string;
     private readonly session!: string; // TODO rename to token
     private readonly expires_at!: Date;
 
     async invalidate() {
         await client.query("DELETE FROM sessions WHERE session=$1;", [this.session]);
+    }
+
+    async invalidateOtherSessions() {
+        await client.query("DELETE FROM sessions WHERE user_id = $1 AND session != $2", [this.user_id, this.session]);
     }
 
     isExpired(): boolean {

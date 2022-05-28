@@ -1,11 +1,13 @@
 <script lang="ts">
     import { ActionBlock } from "$lib";
-    import { Button, ContentDialog, ToggleSwitch } from "fluent-svelte";
+    import { Button, ContentDialog, TextBlock, ToggleSwitch } from "fluent-svelte";
     import { accountSession } from "$/stores";
 
     import ProfileIcon from "@fluentui/svg-icons/icons/person_32_filled.svg?raw";
     import KeyIcon from "@fluentui/svg-icons/icons/key_32_filled.svg?raw";
     import DeleteIcon from "@fluentui/svg-icons/icons/delete_48_filled.svg?raw";
+    import PersonDeleteIcon from "@fluentui/svg-icons/icons/person_delete_24_filled.svg?raw";
+
     import { AccountApiContext } from "$api/AccountApiContext";
     import { SettingsApiContext } from "$api/SettingsApiContext";
     import { PromiseButton } from "$lib";
@@ -13,6 +15,7 @@
     let changePicturePromise: Promise<void>;
     let removePicturePromise: Promise<void>;
     let deleteAccountPromise: Promise<void>;
+    let invalidateSessionsPromise: Promise<void>;
 
     let showAccountDeletionConfirmationDialog: boolean;
     let uploadFiles: HTMLInputElement;
@@ -45,6 +48,10 @@
         await deleteAccountPromise;
         window.location.reload();
     }
+
+    async function invalidateSessions() {
+        invalidateSessionsPromise = AccountApiContext.invalidateOtherSessions();
+    }
 </script>
 
 <div class="settings-list">
@@ -56,6 +63,10 @@
             <input on:change={uploadPicture} type="file" class="select-file" bind:this={uploadFiles} accept=".jpg, .jpeg, .png, .svg">
             <PromiseButton promise={changePicturePromise} keepDisabledAfterResolve={true} on:click={() => uploadFiles.click()}>Change</PromiseButton>
         </div>
+    </ActionBlock>
+    <TextBlock>Security</TextBlock>
+    <ActionBlock title="Invalidate sessions" description="Invalidate all sessions except this one." icon={DeleteIcon}>
+        <PromiseButton slot="action" promise={invalidateSessionsPromise} on:click={invalidateSessions}>Invalidate</PromiseButton>
     </ActionBlock>
     <ActionBlock title="Two-factor authentication" description="You will need to enter a 6-digit code sent to your e-mail every time you log in." icon={KeyIcon}>
         <ToggleSwitch
@@ -69,7 +80,8 @@
             {/if}
         </ToggleSwitch>
     </ActionBlock>
-    <ActionBlock title="Delete account" description="Delete your account and any data associated with it. Your reservations will not be refunded." icon={DeleteIcon}>
+    <TextBlock>Other</TextBlock>
+    <ActionBlock title="Delete account" description="Delete your account and any data associated with it. Your reservations will not be refunded." icon={PersonDeleteIcon}>
         <Button slot="action" on:click={() => showAccountDeletionConfirmationDialog = true}>Delete</Button>
     </ActionBlock>
 </div>
