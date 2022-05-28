@@ -2,4 +2,4 @@
     import SeatSelection from "$layout/reservation/SeatSelection/SeatSelection.svelte";
 </script>
 
-<SeatSelection seatRowCount={10} seatRowLength={20} reservedSeats={[1, 21, 41, 61, 81, 101, 121, 141, 161, 181, 2, 22, 42, 62, 82, 102, 122, 142, 162]}/>
+<SeatSelection seatRowCount={20} seatRowLength={10} reservedSeats={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 22, 25, 29]}/>
