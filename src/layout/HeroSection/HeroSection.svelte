@@ -29,7 +29,9 @@
         <div class="hero-left">
             <h1>{currentCard.name}</h1>
             <p class="banner-subtitle">{currentCard.description}</p>
-            <Button class="details-button" on:click={() => detailsClicked(currentCard)}>See details</Button>
+            <a href="/movie/{currentCard.id}">
+                <Button class="details-button">See details</Button>
+            </a>
         </div>
         <div class="hero-overlay"></div>
     </div>

@@ -3,14 +3,9 @@
     import { MovieApiContext } from "../../api/MovieApiContext";
 
     export let movie: MovieApiContext;
-
-    function goToMovie()
-    {
-        window.location.replace(`/movie/${movie.id}`);
-    }
 </script>
 
-<div class="item" on:click={goToMovie}>
+<a class="item" href="/movie/{movie.id}">
     <div class="item-inner">
         <picture>
             <img class="item-poster" alt={movie.name} src="/api/cinema/movie/{movie.id}/poster">
@@ -24,7 +19,7 @@
             <MovieRating {movie}/>
         </div>
     </div>
-</div>
+</a>
 
 <style lang="scss">
     @use "MoviePosition";

@@ -1,14 +1,9 @@
 <script lang="ts">
-    import { onMount } from "svelte";
     import { ProgressRing, TextBlock } from "fluent-svelte";
     import { ReservationApiContext } from "$api/ReservationApiContext";
     import { Reservation } from "$lib";
 
-    let reservations: Promise<ReservationApiContext[]>;
-
-    onMount(async () => {
-        reservations = ReservationApiContext.getAll();
-    });
+    let reservations: Promise<ReservationApiContext[]> = ReservationApiContext.getAll();
 </script>
 
 {#if reservations == null}

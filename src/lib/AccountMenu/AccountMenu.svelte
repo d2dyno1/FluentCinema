@@ -27,10 +27,12 @@
         </div>
     </Button>
     <div slot="flyout">
-        <MenuFlyoutItem on:click={() => window.location.replace("/account")}>
-            {@html ProfileIcon}
-            FluentCinema Account
-        </MenuFlyoutItem>
+        <a href="/account">
+            <MenuFlyoutItem>
+                {@html ProfileIcon}
+                FluentCinema Account
+            </MenuFlyoutItem>
+        </a>
         <MenuFlyoutItem on:click>
             {@html EyeIcon}
             View reservations
