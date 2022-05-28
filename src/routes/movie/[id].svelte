@@ -21,7 +21,7 @@
 
         reviewsPromise = movie.getReviews(fetch);
 
-        if (movie.type != MovieType.SERIES) {
+        if (screeningDates.length == 0 && movie.type != MovieType.SERIES) {
             screeningDatesPromise = movie.getScreenings(fetch).then((data: ScreeningApiContext[]) => {
                 // Fill the table
                 for (let i = 0; i < 7 /* Week days*/; i++)
