@@ -9,7 +9,7 @@
     export { className as class };
 </script>
 
-<div class="seat {className}" class:reserved class:selected>
+<div class="seat" class:reserved class:selected>
     {#if number != null}
         <div class="number">
             <TextBlock variant="body">{number}</TextBlock>

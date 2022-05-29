@@ -30,14 +30,14 @@
         {/each}
     </div>
     <div class="legend">
-        <div>
-            <Seat class="rounded-seat"/>Seat
+        <div class="seat">
+            <div class="seat-color black"/>Seat
         </div>
-        <div>
-            <Seat reserved={true}/>Reserved seat
+        <div class="seat">
+            <div class="seat-color red"/>Reserved seat
         </div>
-        <div>
-            <Seat selected={true}/>Selected seat
+        <div class="seat">
+            <div class="seat-color blue"/>Selected seat
         </div>
     </div>
 </div>

@@ -6,7 +6,6 @@
 
 .seats {
     @include flex($direction: row, $gap: 5px);
-    background-color: var(--fds-solid-background-tertiary);
     border-radius: var(--fds-control-corner-radius);
     padding: 20px 100px 20px 20px;
     width: fit-content;
@@ -19,19 +18,38 @@
 
 .legend {
     @include flex($direction: row, $gap: 20px);
-    background-color: var(--fds-solid-background-base);
     border-radius: var(--fds-control-corner-radius);
     padding: 20px;
     width: fit-content;
 
-    div {
+    .seat {
         @include flex($direction: row, $gap: 10px, $align: center);
-        background-color: var(--fds-solid-background-tertiary);
-        border-radius: var(--fds-control-corner-radius);
-        padding: 10px;
+        background-color: var(--fds-control-fill-tertiary);
+        border-radius: 50px;
+        padding: 4px 10px 4px 10px;
+    }
+}
+
+.seat-color {
+    border-radius: 50px;
+    background-color: red;
+    padding: 8px;
+
+    &.black {
+        background-color: var(--fds-solid-background-base);
+    }
+
+    &.red {
+        background-color: var(--fds-system-background-critical);
+    }
+
+    &.blue {
+        background-color: var(--fds-accent-tertiary);
     }
 }
 
 .rounded-seat {
     border-radius: 50px;
+    background-color: red;
+    padding: 18px;
 }

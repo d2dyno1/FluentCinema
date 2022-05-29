@@ -23,7 +23,7 @@
         <TextBlock>{moment(reservation.date).format("h:mm")}</TextBlock>
     </div>
     <div>
-<!--        chair icon -->
+        <!-- chair icon -->
         <TextBlock>{reservation.seat}</TextBlock>
     </div>
 </div>
