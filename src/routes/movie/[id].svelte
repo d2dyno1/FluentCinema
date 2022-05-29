@@ -1,51 +1,20 @@
 <script lang="ts" context="module">
     import type { Load } from "@sveltejs/kit";
-    import type { Screening } from "$api/Screening";
-    import type { TableDateItem } from "$/data/table";
     import { Movie } from "$api/Movie";
-
-    export let screeningDates: TableDateItem[] = [];
-
-    let reviewsPromise: Promise<any>;
-    let screeningDatesPromise: Promise<any>;
 
     export const load: Load = async ({ params, fetch }) => {
         let movie = await Movie.getFromId(fetch, params.id);
-        if (!movie)
-        {
+        if (!movie) {
             return {
                 status: 403,
-                props: { }
             };
         }
-
-        reviewsPromise = movie.getReviews(fetch);
-
-        if (movie.type != MovieType.SERIES) {
-            screeningDatesPromise = movie.getScreenings(fetch).then((data: Screening[]) => {
-                // Fill the table
-                for (let i = 0; i < 7 /* Week days*/; i++)
-                {
-                    screeningDates.push({dayName: moment().add(i, 'day').format('dddd')});
-                }
-
-                // Fill screenings
-                data.forEach(x => {
-                    let startDate = x.start;
-                    let day = startDate.getDay() - 1;
-                    if (day < 0) {
-                        day = 6;
-                    }
-                    screeningDates[day].dates ??= [];
-                    screeningDates[day].dates?.push({ date: startDate, type: x.type });
-                });
-            });
-        }
-
         return {
             status: 200,
             props: {
-                movie: movie
+                movie,
+                reviewsPromise: movie.getReviews(fetch),
+                screeningDatesPromise: movie.getScreenings(fetch)
             }
         };
     }
@@ -54,10 +23,37 @@
 <script lang="ts">
     import { MovieHeroSection, MovieDateSection, MovieReviewsSection } from "$layout";
     import { ProgressRing } from "fluent-svelte";
+    import { MovieType } from "$data/MovieType";
+    import type { TableDateItem } from "$data/table";
+    import { Screening } from "$api/Screening";
     import moment from "moment";
-import { MovieType } from "$/data/MovieType";
 
     export let movie: Movie;
+    export let reviewsPromise: Promise<any>;
+    export let screeningDatesPromise: Promise<any>;
+
+    let screeningDates: TableDateItem[] = [];
+
+    if (movie.type != MovieType.SERIES) {
+        screeningDatesPromise.then((data: Screening[]) => {
+            // Fill the table
+            for (let i = 0; i < 7 /* Week days*/; i++)
+            {
+                screeningDates.push({dayName: moment().add(i, 'day').format('dddd')});
+            }
+
+            // Fill screenings
+            data.forEach(x => {
+                let startDate = x.start as Date;
+                let day = startDate.getDay() - 1;
+                if (day < 0) {
+                    day = 6;
+                }
+                screeningDates[day].dates ??= [];
+                screeningDates[day].dates?.push({ date: startDate, type: x.type });
+            });
+        });
+    }
 </script>
 
 <div class="wrapper">
