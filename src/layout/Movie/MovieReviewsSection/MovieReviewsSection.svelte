@@ -42,6 +42,7 @@
 </script>
 
 {#if reviews.length > 0}
+<div class="wrapper">
     <div class="title">
         <TextBlock variant="title">Reviews</TextBlock>
     </div>
@@ -68,6 +69,7 @@
             {/if}
         </div>
     </div>
+</div>
 {/if}
 
 <style lang="scss">

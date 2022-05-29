@@ -61,3 +61,8 @@
     margin-left: auto;
     margin-right: auto;
 }
+
+.wrapper {
+    @include flex($direction: column);
+    gap: 32px;
+}

@@ -1,6 +1,7 @@
 <script lang="ts">
-    import type { TableDateItem } from "$/data/table";
+    import type { TableDateItem } from "$data/table";
     import { ScreeningType } from "$data/ScreeningType";
+    import { TextBlock } from "fluent-svelte";
     import moment from "moment";
 
     export let screeningDates: TableDateItem[] = [];
@@ -25,8 +26,8 @@
 
 {#if screeningDates}
 <div class="wrapper">
-    <div>
-        Available on:
+    <div class="title">
+        <TextBlock variant="title">Available on</TextBlock>
     </div>
     <div class="calendar-wrapper">
         {#each screeningDates as item, i}
