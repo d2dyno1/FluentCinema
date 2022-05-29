@@ -1,0 +1,19 @@
+@use "src/styles/mixins" as *;
+
+.wrapper {
+    @include flex($direction: column, $align: center, $gap: 16px);
+}
+
+.ticket-frame {
+    @include flex($direction: row, $align: center, $gap: 32px);
+    background-color: var(--fds-control-fill-tertiary);
+    padding: 16px;
+    border-radius: var(--fds-control-corner-radius);
+}
+
+.ticket-title {
+    @include flex($direction: row, $align: center, $gap: 8px);
+    font-size: large;
+    font-weight: 500;
+    white-space: nowrap;
+}
