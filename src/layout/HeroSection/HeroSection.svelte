@@ -2,19 +2,19 @@
     import { fade } from "svelte/transition";
     import { Button } from "fluent-svelte";
     import { MovieCard } from "$lib";
-    import type { MovieApiContext } from "../../api/MovieApiContext";
+    import type { Movie } from "$api/Movie";
     import { goto } from "$app/navigation";
 
-    export let cards: MovieApiContext[] = [];
-    export let currentCard: MovieApiContext = cards[0];
+    export let cards: Movie[] = [];
+    export let currentCard: Movie = cards[0];
     $: currentIndex = cards.indexOf(currentCard);
 
-    function cardClicked(e: MovieApiContext): void
+    function cardClicked(e: Movie): void
     {
         currentCard = e;
     }
 
-    function detailsClicked(e: MovieApiContext): void
+    function detailsClicked(e: Movie): void
     {
         goto(`/movie/${e.id}`);
     }
@@ -24,7 +24,7 @@
     <div class="hero-section">
         <picture>
             {#each [cards[currentIndex]] as src (currentIndex)}
-                <img transition:fade src="/api/cinema/movie/{currentCard.id}/banner" alt={currentCard.name} class="banner-img">
+                <img transition:fade src="/api/movie/{currentCard.id}/banner" alt={currentCard.name} class="banner-img">
             {/each}
         </picture>
         <div class="hero-left">
@@ -43,7 +43,7 @@
                 on:dblclick={() => { cardClicked(card); detailsClicked(card); }}
                 selected={currentCard == card}
                 name={card.name}
-                image="/api/cinema/movie/{card.id}/banner"/>
+                image="/api/movie/{card.id}/banner"/>
         {/each}
     </div>
 </div>

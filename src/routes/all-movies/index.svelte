@@ -1,15 +1,15 @@
 <script lang="ts" context="module">
     import { MoviePosition } from "$lib";
-    import { MovieApiContext } from "../../api/MovieApiContext";
+    import { Movie } from "$api/Movie";
     import { ProgressRing } from "fluent-svelte";
 
     import { ok } from "$api/responses";
     import type { Load } from "@sveltejs/kit";
 
-    export let promise: Promise<MovieApiContext[]>;
+    export let promise: Promise<Movie[]>;
 
     export const load: Load = async ({ fetch }) => {
-        promise = MovieApiContext.getAll(fetch);
+        promise = Movie.getList(fetch);
         return ok;
     }
 </script>

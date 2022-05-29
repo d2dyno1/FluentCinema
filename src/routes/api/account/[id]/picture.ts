@@ -1,11 +1,11 @@
 import type { RequestHandler } from "@sveltejs/kit";
 import { badRequest, ok } from "$api/responses";
-import { AccountDatabaseContext } from "$db/AccountDatabaseContext";
+import { AccountController } from "$db/AccountController";
 
 // @ts-ignore
 export const get: RequestHandler = async ({ params }) => {
     let userId = params.id;
-    let user = await AccountDatabaseContext.getFromId(userId);
+    let user = await AccountController.getFromId(userId);
     if (user == null) {
         return badRequest;
     }

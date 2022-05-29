@@ -5,7 +5,7 @@
     import type { LoginSchema } from "$data/schema/LoginSchema";
     import { InfoBarSeverity } from "$data/InfoBarSeverity";
     import type { LoginResponse } from "$data/response/LoginResponse";
-    import { AccountApiContext } from "$api/AccountApiContext";
+    import { Account } from "$api/Account";
     import { emailSchema, passwordSchema, otpSchema } from "$api/validation";
 
     let isEmailValid = false;
@@ -27,7 +27,7 @@
     let promise: Promise<LoginResponse>;
 
     async function onLogin() {
-        promise = AccountApiContext.login(params);
+        promise = Account.login(params);
         try {
             let response = await promise;
             if (response.otpRequired) {

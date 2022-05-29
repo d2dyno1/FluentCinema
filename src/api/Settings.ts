@@ -1,6 +1,6 @@
 import type { ISettings } from "$data/model/ISettings";
 
-export class SettingsApiContext implements ISettings {
+export class Settings implements ISettings {
     readonly language: string;
     readonly twoFactorAuthentication: boolean;
 

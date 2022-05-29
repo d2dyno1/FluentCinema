@@ -5,7 +5,7 @@
     import { emailSchema as _emailSchema } from "$api/validation";
     import { accountSession } from "$/stores";
     import { Button, ContentDialog, InfoBar } from "fluent-svelte";
-    import { AccountApiContext } from "$api/AccountApiContext";
+    import { Account } from "$api/Account";
 
     const emailSchema = _emailSchema.notOneOf([$accountSession.user.email], "Your new e-mail address cannot be the same as your current one.");
 
@@ -17,7 +17,7 @@
 
     async function changeEmail(): Promise<void> {
         try {
-            await AccountApiContext.changeEmailAddress(email);
+            await Account.changeEmailAddress(email);
             window.location.reload();
         } catch (e) {
             errorMessage = e;

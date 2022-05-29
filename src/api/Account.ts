@@ -3,7 +3,7 @@ import type { LoginResponse } from "$data/response/LoginResponse";
 import type { RegisterSchema } from "$data/schema/RegisterSchema";
 import type { GeneralResponse } from "$data/response/GeneralResponse";
 
-export class AccountApiContext {
+export class Account {
     static async changeEmailAddress(email: string): Promise<GeneralResponse> {
         let response: GeneralResponse = await fetch("/api/account/email/change", {
             headers: {

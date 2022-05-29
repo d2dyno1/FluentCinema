@@ -1,13 +1,13 @@
 import type { ICinema } from "$data/model/ICinema";
 
-export class CinemaApiContext implements ICinema {
+export class Cinema implements ICinema {
     readonly id: number;
-    readonly country: string;
+    readonly city: string;
     readonly address: string;
 
     constructor(cinema: ICinema) {
         this.id = cinema.id;
-        this.country = cinema.country;
+        this.city = cinema.city;
         this.address = cinema.address;
     }
 }

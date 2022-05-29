@@ -1,12 +1,12 @@
 import type { RequestHandler } from "@sveltejs/kit";
-import { badRequest, forbidden, internalServerError } from "$api/responses";
+import { badRequest, forbidden } from "$api/responses";
 import sharp from "sharp";
-import { SessionDatabaseContext } from "$db/SessionDatabaseContext";
+import { SessionController } from "$db/SessionController";
 
 const maxPictureSize = 1024 * 1024; // 1MB
 
 export const put: RequestHandler = async ({ request }) => {
-    let session = await SessionDatabaseContext.getFromRequest(request);
+    let session = await SessionController.getFromRequest(request);
     if (session == null) {
         return forbidden;
     }
@@ -29,7 +29,7 @@ export const put: RequestHandler = async ({ request }) => {
 }
 
 export const del: RequestHandler = async ({ request }) => {
-    let session = await SessionDatabaseContext.getFromRequest(request);
+    let session = await SessionController.getFromRequest(request);
     if (session == null) {
         return forbidden;
     }

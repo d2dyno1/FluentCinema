@@ -1,14 +1,14 @@
 <script lang="ts">
     import { MovieRating } from "$lib";
-    import { MovieApiContext } from "../../api/MovieApiContext";
+    import { Movie } from "$api/Movie";
 
-    export let movie: MovieApiContext;
+    export let movie: Movie;
 </script>
 
 <a class="item" href="/movie/{movie.id}" sveltekit:prefetch>
     <div class="item-inner">
         <picture>
-            <img class="item-poster" alt={movie.name} src="/api/cinema/movie/{movie.id}/poster">
+            <img class="item-poster" alt={movie.name} src="/api/movie/{movie.id}/poster">
         </picture>
         <div class="details">
             <div>

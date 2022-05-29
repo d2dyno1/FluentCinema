@@ -1,5 +1,5 @@
 import type { RequestHandler } from "@sveltejs/kit";
-import { ScreeningDatabaseContext } from "$db/ScreeningDatabaseContext";
+import { ScreeningController } from "$db/ScreeningController";
 
 // @ts-ignore
 export const get: RequestHandler<any, ScreeningResponse[]> = async ({ url, params }) => {
@@ -7,6 +7,6 @@ export const get: RequestHandler<any, ScreeningResponse[]> = async ({ url, param
     let movieId = url.searchParams.has("movieId") ? url.searchParams.get("movieId") : null;
     return {
         status: 200,
-        body: (await ScreeningDatabaseContext.getAll(cinemaId, movieId)).map(screening => screening.toApiContext())
+        body: (await ScreeningController.getAll(cinemaId, movieId)).map(screening => screening.toApiContext())
     }
 }

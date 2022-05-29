@@ -1,12 +1,12 @@
 import { badRequest, forbidden, ok } from "$api/responses";
 import type { RequestHandler } from "@sveltejs/kit";
-import { SessionDatabaseContext } from "$db/SessionDatabaseContext";
-import type { ReservationApiContext } from "$api/ReservationApiContext";
-import { EmailVerificationDatabaseContext } from "$db/EmailVerificationDatabaseContext";
+import { SessionController } from "$db/SessionController";
+import type { Reservation } from "$api/Reservation";
+import { EmailVerificationController } from "$db/EmailVerificationController";
 
 // @ts-ignore
-export const post: RequestHandler<any, ReservationApiContext> = async ({ request }) => {
-    let session = await SessionDatabaseContext.getFromRequest(request);
+export const post: RequestHandler<any, Reservation> = async ({ request }) => {
+    let session = await SessionController.getFromRequest(request);
     if (session == null) {
         return forbidden;
     }
@@ -14,6 +14,6 @@ export const post: RequestHandler<any, ReservationApiContext> = async ({ request
     if (user.is_verified) {
         return badRequest;
     }
-    await EmailVerificationDatabaseContext.beginVerification(user);
+    await EmailVerificationController.beginVerification(user);
     return ok;
 }

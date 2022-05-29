@@ -1,10 +1,10 @@
 <script lang="ts">
     import { AccountPicture } from "$lib";
     import { TextBlock } from "fluent-svelte";
-    import { ReviewApiContext } from "../../api/ReviewApiContext";
+    import { Review } from "$api/Review";
     import Rating from "$lib/Rating/Rating.svelte";
 
-    export let review: ReviewApiContext;
+    export let review: Review;
 </script>
 
 <div class="movie-review">

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { MovieApiContext } from "$api/MovieApiContext";
+    import type { Movie } from "$api/Movie";
     import { Button } from "fluent-svelte";
     import { MovieRating } from "$lib";
     import { MovieType } from "$data/MovieType";
@@ -7,12 +7,12 @@
     import TimerIcon from "@fluentui/svg-icons/icons/timer_32_filled.svg?raw";
     import CalendarIcon from "@fluentui/svg-icons/icons/calendar_star_24_filled.svg?raw";
 
-    export let movie: MovieApiContext;
+    export let movie: Movie;
 </script>
 
 <div class="movie-content">
     <picture>
-        <img class="movie-poster" alt="img" src="/api/cinema/movie/{movie.id}/poster">
+        <img class="movie-poster" alt="img" src="/api/movie/{movie.id}/poster">
     </picture>
     <div class="description">
         <div class="title">

@@ -1,10 +1,9 @@
-import {client} from "$db";
-import type {AccountDatabaseContext} from "./AccountDatabaseContext";
+import { client } from "$db";
 import NodeCache from "node-cache";
-import type {IMovie} from "../data/model/IMovie";
-import {ReviewDatabaseContext} from "./ReviewDatabaseContext";
-import type {IDatabaseContext} from "./IDatabaseContext";
-import {MovieApiContext} from "../api/MovieApiContext";
+import type { IMovie } from "$data/model/IMovie";
+import { ReviewController } from "./ReviewController";
+import type { IDatabaseContext } from "./IDatabaseContext";
+import { Movie } from "$api/Movie";
 import * as async from "async";
 import type { MovieType } from "$data/MovieType";
 
@@ -30,7 +29,7 @@ const QUERY_MOVIE_IMAGES = `
     WHERE id=$1;
 `
 
-export class MovieDatabaseContext implements IMovie, IDatabaseContext<MovieApiContext> {
+export class MovieController implements IMovie, IDatabaseContext<Movie> {
     readonly description!: string;
     readonly descriptionExtended!: string;
     readonly id!: number;
@@ -43,13 +42,13 @@ export class MovieDatabaseContext implements IMovie, IDatabaseContext<MovieApiCo
     readonly bannerImage: Uint8Array;
     readonly posterImage: Uint8Array;
 
-    private constructor(movie: Partial<MovieDatabaseContext>, images: MovieImages) {
+    private constructor(movie: Partial<MovieController>, images: MovieImages) {
         Object.assign(this, movie);
         this.bannerImage = images.banner;
         this.posterImage = images.poster;
     }
 
-    private static async construct(queryResult: Partial<MovieDatabaseContext>): Promise<MovieDatabaseContext> {
+    private static async construct(queryResult: Partial<MovieController>): Promise<MovieController> {
         return (async () => {
             let id = queryResult.id!;
             let images: MovieImages;
@@ -59,29 +58,29 @@ export class MovieDatabaseContext implements IMovie, IDatabaseContext<MovieApiCo
                 images = (await client.query(QUERY_MOVIE_IMAGES, [id])).rows[0] as MovieImages;
                 imageCache.set(id, images);
             }
-            return new MovieDatabaseContext(queryResult, images);
+            return new MovieController(queryResult, images);
         })();
     }
 
     async getReviews() {
-        return await ReviewDatabaseContext.getFromMovie(this);
+        return await ReviewController.getFromMovie(this);
     }
 
-    static async getAll(): Promise<MovieDatabaseContext[]> {
-        let rows: Partial<MovieDatabaseContext>[] = (await client.query(QUERY_ALL_MOVIES)).rows
-        let movies: MovieDatabaseContext[] = [];
+    static async getAll(): Promise<MovieController[]> {
+        let rows: Partial<MovieController>[] = (await client.query(QUERY_ALL_MOVIES)).rows
+        let movies: MovieController[] = [];
         await async.each(rows, async movie => {
-            movies.push(await MovieDatabaseContext.construct(movie));
+            movies.push(await MovieController.construct(movie));
         })
         return movies;
     }
 
-    static async getFromId(id: number | string): Promise<MovieDatabaseContext> {
+    static async getFromId(id: number | string): Promise<MovieController> {
         let movie = (await client.query(QUERY_MOVIE_BY_ID, [id])).rows[0];
-        return MovieDatabaseContext.construct(movie);
+        return MovieController.construct(movie);
     }
 
-    toApiContext(): MovieApiContext {
-        return new MovieApiContext(this);
+    toApiContext(): Movie {
+        return new Movie(this);
     }
 }

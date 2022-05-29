@@ -2,7 +2,7 @@ import crypto from "crypto";
 import { promisify } from "util";
 import {client} from ".";
 import moment from "moment";
-import type {AccountDatabaseContext} from "$db/AccountDatabaseContext";
+import type { AccountController } from "$db/AccountController";
 import type { IExpirable } from "$db/IExpirable";
 
 const randomBytesAsync = promisify(crypto.randomBytes);
@@ -10,12 +10,12 @@ const randomBytesAsync = promisify(crypto.randomBytes);
 const baseVerificationUrl = "https://fluentcinema.zsti.eu/verify?token=";
 const tokenTimespan = 15; // in minutes
 
-export class EmailVerificationDatabaseContext implements IExpirable {
+export class EmailVerificationController implements IExpirable {
     private readonly user_id!: string;
     private readonly token!: string;
     private readonly expires_at!: string;
 
-    private constructor(emailVerification: Partial<EmailVerificationDatabaseContext>) {
+    private constructor(emailVerification: Partial<EmailVerificationController>) {
         Object.assign(this, emailVerification);
     }
 
@@ -27,8 +27,8 @@ export class EmailVerificationDatabaseContext implements IExpirable {
         await client.query("DELETE FROM email_verification_tokens WHERE token=$1;", [this.token]);
     }
 
-    static async tryVerifyEmail(user: AccountDatabaseContext, token: string): Promise<boolean> {
-        let verification = await EmailVerificationDatabaseContext.getFromToken(token);
+    static async tryVerifyEmail(user: AccountController, token: string): Promise<boolean> {
+        let verification = await EmailVerificationController.getFromToken(token);
         if (verification == null || verification.user_id != user.id || verification.isExpired()) {
             return false;
         }
@@ -41,16 +41,16 @@ export class EmailVerificationDatabaseContext implements IExpirable {
         return true;
     }
 
-    static async getFromToken(token: string): Promise<EmailVerificationDatabaseContext | null> {
+    static async getFromToken(token: string): Promise<EmailVerificationController | null> {
         let query = await client.query("SELECT * FROM email_verification_tokens WHERE token=$1;", [token]);
-        return query.rowCount == 0 ? null : new EmailVerificationDatabaseContext(query.rows[0]);
+        return query.rowCount == 0 ? null : new EmailVerificationController(query.rows[0]);
     }
 
-    static async beginVerification(user: AccountDatabaseContext) {
-        await user.sendMail("test", await EmailVerificationDatabaseContext.generateVerificationLink(user));
+    static async beginVerification(user: AccountController) {
+        await user.sendMail("test", await EmailVerificationController.generateVerificationLink(user));
     }
 
-    private static async generateVerificationLink(user: AccountDatabaseContext) {
+    private static async generateVerificationLink(user: AccountController) {
         let bytes = await randomBytesAsync(128);
         let token = bytes.toString("base64");
         let expiresAt = moment().add(tokenTimespan, "minutes").toDate();
@@ -64,5 +64,5 @@ export class EmailVerificationDatabaseContext implements IExpirable {
 }
 
 setInterval(async () => {
-    await EmailVerificationDatabaseContext.deleteExpiredEntries();
+    await EmailVerificationController.deleteExpiredEntries();
 }, 600000);

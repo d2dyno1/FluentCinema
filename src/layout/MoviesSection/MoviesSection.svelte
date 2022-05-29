@@ -1,9 +1,9 @@
 <script lang="ts">
     import { Button } from "fluent-svelte";
     import { MoviePosition } from "$lib";
-    import { MovieApiContext } from "../../api/MovieApiContext";
+    import { Movie } from "$api/Movie";
 
-    export let positions: MovieApiContext[] = [];
+    export let positions: Movie[] = [];
 </script>
 
 <div class="wrapper">

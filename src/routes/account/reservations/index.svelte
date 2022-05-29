@@ -1,9 +1,9 @@
 <script lang="ts">
     import { ProgressRing, TextBlock } from "fluent-svelte";
-    import { Reservation } from "$lib";
-    import { ReservationApiContext } from "$api/ReservationApiContext";
+    import { MovieReservation } from "$lib";
+    import { Reservation } from "$api/Reservation";
 
-    export let reservations: Promise<ReservationApiContext[]> = ReservationApiContext.getAll();
+    export let reservations: Promise<Reservation[]> = Reservation.getAll();
 </script>
 
 {#if reservations == null}
@@ -18,7 +18,7 @@
             <TextBlock>You don't have any reservations.</TextBlock>
         {/if}
         {#each response as reservation}
-            <Reservation {reservation}/>
+            <MovieReservation {reservation}/>
         {/each}
     {/await}
 {/if}

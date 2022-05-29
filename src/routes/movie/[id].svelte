@@ -1,8 +1,8 @@
 <script lang="ts" context="module">
     import type { Load } from "@sveltejs/kit";
-    import type { ScreeningApiContext } from "$api/ScreeningApiContext";
+    import type { Screening } from "$api/Screening";
     import type { TableDateItem } from "$/data/table";
-    import { MovieApiContext } from "$api/MovieApiContext";
+    import { Movie } from "$api/Movie";
 
     export let screeningDates: TableDateItem[] = [];
 
@@ -10,7 +10,7 @@
     let screeningDatesPromise: Promise<any>;
 
     export const load: Load = async ({ params, fetch }) => {
-        let movie = await MovieApiContext.getFromId(fetch, params.id);
+        let movie = await Movie.getFromId(fetch, params.id);
         if (!movie)
         {
             return {
@@ -21,8 +21,8 @@
 
         reviewsPromise = movie.getReviews(fetch);
 
-        if (screeningDates.length == 0 && movie.type != MovieType.SERIES) {
-            screeningDatesPromise = movie.getScreenings(fetch).then((data: ScreeningApiContext[]) => {
+        if (movie.type != MovieType.SERIES) {
+            screeningDatesPromise = movie.getScreenings(fetch).then((data: Screening[]) => {
                 // Fill the table
                 for (let i = 0; i < 7 /* Week days*/; i++)
                 {
@@ -57,7 +57,7 @@
     import moment from "moment";
 import { MovieType } from "$/data/MovieType";
 
-    export let movie: MovieApiContext;
+    export let movie: Movie;
 </script>
 
 <div class="wrapper">

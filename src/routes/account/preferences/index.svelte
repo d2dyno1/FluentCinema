@@ -2,9 +2,9 @@
     import { ActionBlock } from "$lib";
     import { InfoBar, TextBlock, ToggleSwitch } from "fluent-svelte";
     import { accountSession } from "$/stores";
-    import { SettingsApiContext } from "$api/SettingsApiContext";
+    import { Settings } from "$api/Settings";
     import { PromiseButton } from "$lib";
-    import { EmailVerificationApiContext } from "$api/EmailVerificationApiContext";
+    import { EmailVerification } from "$api/EmailVerification";
     import ChangeEmail from "$layout/preferences/ChangeEmail/ChangeEmail.svelte";
     import DeleteAccount from "$layout/preferences/DeleteAccount.svelte";
     import KeyIcon from "@fluentui/svg-icons/icons/key_32_filled.svg?raw";
@@ -13,7 +13,7 @@
 
     async function uploadSettings(): Promise<void>
     {
-        await SettingsApiContext.update($accountSession.user.settings);
+        await Settings.update($accountSession.user.settings);
     }
 
     function updateAndUploadSettings(newValue: any, updateSettingCallback: (newValue: any) => void)
@@ -23,7 +23,7 @@
     }
 
     async function resendVerificationEmail(): Promise<void> {
-        return EmailVerificationApiContext.beginVerification();
+        return EmailVerification.beginVerification();
     }
 </script>
 

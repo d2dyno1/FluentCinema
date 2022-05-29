@@ -1,10 +1,10 @@
 import type { IMovie } from "$data/model/IMovie";
 import type { Fetch } from "./ApiContext";
-import { ReviewApiContext } from "./ReviewApiContext";
-import { ScreeningApiContext } from "./ScreeningApiContext";
+import { Review } from "./Review";
+import { Screening } from "./Screening";
 import type { MovieType } from "$data/MovieType";
 
-export class MovieApiContext implements IMovie {
+export class Movie implements IMovie {
     readonly description: string;
     readonly descriptionExtended: string;
     readonly id: number;
@@ -26,20 +26,20 @@ export class MovieApiContext implements IMovie {
     }
 
     async getReviews(fetch: Fetch) {
-        return ReviewApiContext.getFromMovieId(fetch, this.id);
+        return Review.getFromMovieId(fetch, this.id);
     }
 
     async getScreenings(fetch: Fetch) {
-        return ScreeningApiContext.getFromMovieId(fetch, this.id);
+        return Screening.getFromMovieId(fetch, this.id);
     }
 
-    static async getAll(fetch: Fetch): Promise<MovieApiContext[]> {
-        return fetch("/api/cinema/movie/list").then(response => response.json()).then((movies: IMovie[]) => {
-            return movies.map((movie) => new MovieApiContext(movie))
+    static async getList(fetch: Fetch): Promise<Movie[]> {
+        return fetch("/api/movie/list").then(response => response.json()).then((movies: IMovie[]) => {
+            return movies.map((movie) => new Movie(movie))
         });
     }
 
-    static async getFromId(fetch: Fetch, id: string | number): Promise<MovieApiContext | null> {
-        return fetch(`/api/cinema/movie/${id}`).then(response => response.json()).then((movie: IMovie) => new MovieApiContext(movie));
+    static async getFromId(fetch: Fetch, id: string | number): Promise<Movie | null> {
+        return fetch(`/api/movie/${id}`).then(response => response.json()).then((movie: IMovie) => new Movie(movie));
     }
 }

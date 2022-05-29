@@ -1,9 +1,9 @@
 import type { RequestHandler } from "@sveltejs/kit";
 import { badRequest } from "$api/responses";
-import { MovieDatabaseContext } from "$db/MovieDatabaseContext";
+import { MovieController } from "$db/MovieController";
 
 export const get: RequestHandler = async ({ params }) => {
-    let movie = await MovieDatabaseContext.getFromId(params.id);
+    let movie = await MovieController.getFromId(params.id);
     if (movie == null) {
         return badRequest;
     }

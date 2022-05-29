@@ -2,9 +2,9 @@ import { object } from "yup";
 import type { InferType } from "yup";
 import { emailSchema } from "$api/validation";
 import type { RequestHandler } from "@sveltejs/kit";
-import { SessionDatabaseContext } from "$db/SessionDatabaseContext";
+import { SessionController } from "$db/SessionController";
 import { badRequest, badRequestWithMessage, forbidden, ok } from "$api/responses";
-import { AccountDatabaseContext } from "$db/AccountDatabaseContext";
+import { AccountController } from "$db/AccountController";
 
 const schema = object({
     email: emailSchema
@@ -13,7 +13,7 @@ const schema = object({
 interface Schema extends InferType<typeof schema> {}
 
 export const put: RequestHandler = async ({ request }) => {
-    let session = await SessionDatabaseContext.getFromRequest(request);
+    let session = await SessionController.getFromRequest(request);
     if (session == null) {
         return forbidden;
     }
@@ -23,7 +23,7 @@ export const put: RequestHandler = async ({ request }) => {
         return badRequest;
     }
 
-    if (await AccountDatabaseContext.getFromEmail(params.email)) {
+    if (await AccountController.getFromEmail(params.email)) {
         return badRequestWithMessage("This e-mail address is already in use.");
     }
     await (await session.getUser()).changeEmail(params.email);

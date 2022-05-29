@@ -21,12 +21,12 @@
 
 <script lang="ts">
     import { onMount } from "svelte";
-    import { EmailVerificationApiContext } from "$api/EmailVerificationApiContext";
+    import { EmailVerification } from "src/api/EmailVerification";
 
     export let token: string;
     let promise: Promise<boolean>
 
-    onMount(() => promise = EmailVerificationApiContext.verifyEmail(token));
+    onMount(() => promise = EmailVerification.verifyEmail(token));
 </script>
 
 {#if promise != null}

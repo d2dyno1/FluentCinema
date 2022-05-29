@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { ReviewApiContext } from "$api/ReviewApiContext";
+    import type { Review } from "$api/Review";
     import { MovieReview } from "$lib";
     import { TextBlock } from "fluent-svelte";
     import { fade } from "svelte/transition";
@@ -7,7 +7,7 @@
     import RightArrow from "@fluentui/svg-icons/icons/caret_right_24_filled.svg?raw";
     import LeftArrow from "@fluentui/svg-icons/icons/caret_left_24_filled.svg?raw";
 
-    export let reviews: ReviewApiContext[];
+    export let reviews: Review[];
     export let currentReview = 0;
 
     let isRightVisible = true;

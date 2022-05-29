@@ -1,20 +1,20 @@
 import crypto from "crypto";
 import { promisify } from "util";
-import {client} from ".";
+import { client } from ".";
 import moment from "moment";
-import type {AccountDatabaseContext} from "./AccountDatabaseContext";
+import type { AccountController } from "$db/AccountController";
 import type { IExpirable } from "./IExpirable";
 
 const randomIntAsync = promisify(crypto.randomInt);
 
-export class TwoFactorAuthenticationDatabaseContext implements IExpirable {
+export class TwoFactorAuthenticationController implements IExpirable {
     private static readonly TOKEN_LIFESPAN = 5; // in minutes
 
     private readonly user_id!: string;
     private readonly otp!: string;
     private readonly expires_at!: Date;
 
-    private constructor(twoFactorAuthentication: Partial<TwoFactorAuthenticationDatabaseContext>) {
+    private constructor(twoFactorAuthentication: Partial<TwoFactorAuthenticationController>) {
         Object.assign(this, twoFactorAuthentication);
     }
 
@@ -26,21 +26,21 @@ export class TwoFactorAuthenticationDatabaseContext implements IExpirable {
         return moment().isAfter(this.expires_at);
     }
 
-    static async isValid(user: AccountDatabaseContext, otp: string) {
+    static async isValid(user: AccountController, otp: string) {
         let query = await client.query("SELECT * FROM two_factor_authentication WHERE user_id=$1 AND otp=$2;", [user.id, otp]);
         if (query.rowCount == 0) {
             return false;
         }
-        let twoFactorAuthentication = new TwoFactorAuthenticationDatabaseContext(query.rows[0]);
+        let twoFactorAuthentication = new TwoFactorAuthenticationController(query.rows[0]);
         await twoFactorAuthentication.invalidate();
         return !twoFactorAuthentication.isExpired();
     }
 
-    static async sendOtpToUser(user: AccountDatabaseContext) {
-        await user.sendMail("test", await TwoFactorAuthenticationDatabaseContext.generateCode(user));
+    static async sendOtpToUser(user: AccountController) {
+        await user.sendMail("test", await TwoFactorAuthenticationController.generateCode(user));
     }
 
-    static async generateCode(user: AccountDatabaseContext) {
+    static async generateCode(user: AccountController) {
         let i = await randomIntAsync(1000000) as number;
         let otp = i.toString().padStart(6, "0");
         let expiresAt = moment().add(this.TOKEN_LIFESPAN, "minutes").toDate();
@@ -55,5 +55,5 @@ export class TwoFactorAuthenticationDatabaseContext implements IExpirable {
 }
 
 setInterval(async () => {
-    await TwoFactorAuthenticationDatabaseContext.deleteExpiredEntries();
+    await TwoFactorAuthenticationController.deleteExpiredEntries();
 }, 600000);

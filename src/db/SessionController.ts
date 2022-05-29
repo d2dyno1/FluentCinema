@@ -1,16 +1,16 @@
 import crypto from "crypto";
-import {parse, serialize} from "cookie";
+import { parse, serialize } from "cookie";
 import moment from "moment";
-import {promisify} from "util";
-import {client} from ".";
-import {AccountDatabaseContext} from "./AccountDatabaseContext";
+import { promisify } from "util";
+import { client } from ".";
+import { AccountController } from "$db/AccountController";
 import type { IExpirable } from "$db/IExpirable";
 
 const randomBytesAsync = promisify(crypto.randomBytes);
 
 const sessionTimespan = 7; // in days
 
-export class SessionDatabaseContext implements IExpirable {
+export class SessionController implements IExpirable {
     private readonly user_id!: string;
     private readonly session!: string; // TODO rename to token
     private readonly expires_at!: Date;
@@ -48,20 +48,20 @@ export class SessionDatabaseContext implements IExpirable {
         })
     }
 
-    public async getUser(): Promise<AccountDatabaseContext> {
-        return await AccountDatabaseContext.getFromSession(this.session) as AccountDatabaseContext;
+    public async getUser(): Promise<AccountController> {
+        return await AccountController.getFromSession(this.session) as AccountController;
     }
 
     public static async getFromRequest(request: Request) {
-        return await SessionDatabaseContext.getFromToken(parse(request.headers.get("cookie") || "").session);
+        return await SessionController.getFromToken(parse(request.headers.get("cookie") || "").session);
     }
 
-    public static async getFromToken(token: string): Promise<SessionDatabaseContext | null> {
+    public static async getFromToken(token: string): Promise<SessionController | null> {
         let query = await client.query("SELECT * FROM sessions WHERE session=$1", [token]);
         if (query.rowCount == 0) {
             return null;
         }
-        let session: SessionDatabaseContext = Object.assign(new SessionDatabaseContext(), query.rows[0]);
+        let session: SessionController = Object.assign(new SessionController(), query.rows[0]);
         if (session.isExpired()) {
             await session.invalidate();
             return null;
@@ -69,19 +69,19 @@ export class SessionDatabaseContext implements IExpirable {
         return session;
     }
 
-    public static async create(user: AccountDatabaseContext): Promise<SessionDatabaseContext> {
+    public static async create(user: AccountController): Promise<SessionController> {
         let bytes = await randomBytesAsync(64);
         let token = bytes.toString("base64");
 
-        const existingUser = await AccountDatabaseContext.getFromSession(token);
+        const existingUser = await AccountController.getFromSession(token);
         if (existingUser != null) {
-            return SessionDatabaseContext.create(user);
+            return SessionController.create(user);
         }
 
         let createdAt = moment().toDate();
         let expiresAt = moment().add(sessionTimespan, "days").toDate();
         await client.query("INSERT INTO sessions(user_id, session, created_at, expires_at) VALUES ($1, $2, $3, $4)", [user.id, token, createdAt, expiresAt]);
-        return Object.assign(new SessionDatabaseContext(), await SessionDatabaseContext.getFromToken(token));
+        return Object.assign(new SessionController(), await SessionController.getFromToken(token));
     }
 
     static async deleteExpiredEntries(): Promise<void> {
@@ -90,5 +90,5 @@ export class SessionDatabaseContext implements IExpirable {
 }
 
 setInterval(async () => {
-    await SessionDatabaseContext.deleteExpiredEntries();
+    await SessionController.deleteExpiredEntries();
 }, 600000);

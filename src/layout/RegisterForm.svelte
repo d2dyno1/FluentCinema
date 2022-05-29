@@ -4,7 +4,7 @@
     import type { RegisterSchema } from "$data/schema/RegisterSchema";
     import { InfoBarSeverity } from "$data/InfoBarSeverity";
     import type { GeneralResponse } from "$data/response/GeneralResponse";
-    import { AccountApiContext } from "$api/AccountApiContext";
+    import { Account } from "$api/Account";
     import { emailSchema, passwordSchema, usernameSchema } from "$api/validation";
     import { string } from "yup";
     import ValidatedTextBox from "$lib/ValidatedTextBox/ValidatedTextBox.svelte";
@@ -26,7 +26,7 @@
     } as RegisterSchema;
 
     async function onRegister(): Promise<GeneralResponse> {
-        let promise = AccountApiContext.register(params);
+        let promise = Account.register(params);
         try {
             let response = await promise;
             if (response.success) {

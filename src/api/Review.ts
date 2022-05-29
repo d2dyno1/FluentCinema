@@ -1,7 +1,7 @@
 import type { IReview } from "$data/model/IReview";
 import type { Fetch } from "./ApiContext";
 
-export class ReviewApiContext implements IReview {
+export class Review implements IReview {
     readonly userId: number;
     readonly rating: number;
     readonly content: string;
@@ -14,9 +14,9 @@ export class ReviewApiContext implements IReview {
         this.username = review.username;
     }
 
-    static async getFromMovieId(fetch: Fetch, movieId: string | number): Promise<ReviewApiContext[]> {
-        return fetch(`/api/cinema/movie/${movieId}/reviews`).then(response => response.json()).then((reviews: IReview[]) => {
-            return reviews.map(review => new ReviewApiContext(review))
+    static async getFromMovieId(fetch: Fetch, movieId: string | number): Promise<Review[]> {
+        return fetch(`/api/movie/${movieId}/reviews`).then(response => response.json()).then((reviews: IReview[]) => {
+            return reviews.map(review => new Review(review))
         });
     }
 }
