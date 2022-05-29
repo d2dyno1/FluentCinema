@@ -9,4 +9,5 @@ export interface IMovie {
     readonly release: string | Date;
     readonly rating: number;
     readonly type: MovieType;
+    readonly price: number;
 }

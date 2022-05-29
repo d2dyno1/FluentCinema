@@ -15,7 +15,7 @@ interface MovieImages {
 const imageCache = new NodeCache({ stdTTL: 0 });
 
 const QUERY_ALL_MOVIES = `
-    SELECT name, description, "descriptionExtended", id, length, release, type, (
+    SELECT name, description, "descriptionExtended", id, length, release, type, price, (
         SELECT coalesce(ROUND(AVG(reviews.rating), 1), 0) 
         FROM reviews
         JOIN movies ON reviews."movieId" = movies.id 
@@ -38,6 +38,7 @@ export class MovieController implements IMovie, IDatabaseContext<Movie> {
     readonly rating!: number;
     readonly release!: Date;
     readonly type!: MovieType;
+    readonly price!: number;
 
     readonly bannerImage: Uint8Array;
     readonly posterImage: Uint8Array;

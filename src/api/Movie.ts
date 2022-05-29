@@ -13,6 +13,7 @@ export class Movie implements IMovie {
     readonly rating: number;
     readonly release: string | Date;
     readonly type: MovieType;
+    readonly price: number;
 
     constructor(movie: IMovie) {
         this.description = movie.description;
@@ -23,6 +24,7 @@ export class Movie implements IMovie {
         this.rating = movie.rating;
         this.release = new Date(movie.release);
         this.type = movie.type;
+        this.price = movie.price;
     }
 
     async getReviews(fetch: Fetch) {
