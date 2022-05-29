@@ -4,6 +4,7 @@ import type { ScreeningType } from "$data/ScreeningType";
 
 export class Screening implements IScreening {
     readonly movieId: string;
+    readonly cinemaId: string;
     readonly seatRowCount: number;
     readonly seatRowLength: number;
     readonly soldOut: boolean;
@@ -12,6 +13,7 @@ export class Screening implements IScreening {
 
     constructor(screening: IScreening) {
         this.movieId = screening.movieId;
+        this.cinemaId = screening.cinemaId;
         this.seatRowCount = screening.seatRowCount;
         this.seatRowLength = screening.seatRowLength;
         this.soldOut = screening.soldOut;
