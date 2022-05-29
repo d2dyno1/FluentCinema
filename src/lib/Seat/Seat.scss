@@ -1,3 +1,5 @@
+@use "src/styles/mixins" as *;
+
 .seat {
     border-radius: var(--fds-control-corner-radius);
     width: 35px;

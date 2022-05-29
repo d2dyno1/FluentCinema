@@ -1,29 +1,18 @@
 <script lang="ts">
-    import { NumberBox } from "fluent-svelte";
-
-    import TicketIcon from "@fluentui/svg-icons/icons/ticket_diagonal_24_filled.svg?raw";
+    import { TicketCard } from "$lib";
 
     export let childrenTickets: number = 0;
+    export let adultTickets: number = 0;
+    export let seniorTickets: number = 0;
     export let maxSeats: number;
 
-    $: maxSeatsAvailalbe = maxSeats - (childrenTickets + 0);
+    $: maxSeatsAvailable = maxSeats - (childrenTickets + adultTickets + seniorTickets);
 </script>
 
 <div class="wrapper">
-    <div class="ticket-frame">
-        <div class="ticket-title">
-            {@html TicketIcon}
-            Reduced ticket (Children only)
-        </div>
-        <NumberBox inline={true} min={0} max={maxSeatsAvailalbe} value={childrenTickets} />
-    </div>
-    <div class="ticket-frame">
-        <div class="ticket-title">
-            {@html TicketIcon}
-            Normal ticket
-        </div>
-        <NumberBox inline={true} min={0} max={maxSeatsAvailalbe} value={childrenTickets} />
-    </div>
+    <TicketCard maxTickets={maxSeatsAvailable} tickets={childrenTickets} title="Reduced ticket" subtitle="Children below 16"/>
+    <TicketCard maxTickets={maxSeatsAvailable} tickets={adultTickets} title="Normal ticket" subtitle="All adults"/>
+    <TicketCard maxTickets={maxSeatsAvailable} tickets={seniorTickets} title="Senior ticket" subtitle="Senior, 60 and above"/>
 </div>
 
 <style lang="scss">
