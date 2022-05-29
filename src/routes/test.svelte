@@ -28,9 +28,9 @@
         Seat selection
         <svelte:fragment slot="content">
             <SeatSelection 
-            seatRowCount={20}
-            seatRowLength={10} 
-            reservedSeats={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 22, 25, 29]}/>
+                seatRowCount={20}
+                seatRowLength={10} 
+                reservedSeats={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 22, 25, 29]}/>
         </svelte:fragment>
     </Expander>
     </div>

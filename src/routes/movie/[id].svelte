@@ -21,11 +21,11 @@
 </script>
 
 <script lang="ts">
+    import type { TableDateItem } from "$data/table";
+    import type { Screening } from "$api/Screening";
     import { MovieHeroSection, MovieDateSection, MovieReviewsSection } from "$layout";
     import { ProgressRing } from "fluent-svelte";
     import { MovieType } from "$data/MovieType";
-    import type { TableDateItem } from "$data/table";
-    import { Screening } from "$api/Screening";
     import moment from "moment";
 
     export let movie: Movie;

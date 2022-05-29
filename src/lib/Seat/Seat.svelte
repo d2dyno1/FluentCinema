@@ -2,11 +2,14 @@
     import { TextBlock } from "fluent-svelte";
 
     export let number: number;
-    export let reserved: boolean;
-    export let selected: boolean;
+    export let reserved: boolean = false;
+    export let selected: boolean = false;
+
+    let className = "";
+    export { className as class };
 </script>
 
-<div class="seat" class:reserved class:selected>
+<div class="seat {className}" class:reserved class:selected>
     {#if number != null}
         <div class="number">
             <TextBlock variant="body">{number}</TextBlock>

@@ -4,7 +4,7 @@
     export let seatRowCount: number;
     export let seatRowLength: number;
     export let reservedSeats: number[];
-    export let selectedSeat;
+    export let selectedSeat: number;
 
     let seats: number[][] = [];
 
@@ -31,7 +31,7 @@
     </div>
     <div class="legend">
         <div>
-            <Seat/>Seat
+            <Seat class="rounded-seat"/>Seat
         </div>
         <div>
             <Seat reserved={true}/>Reserved seat

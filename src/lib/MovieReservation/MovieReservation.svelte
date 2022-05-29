@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { Reservation } from "$api/Reservation";
+    import type { Reservation } from "$api/Reservation";
     import { TextBlock } from "fluent-svelte";
     import moment from "moment";
 
