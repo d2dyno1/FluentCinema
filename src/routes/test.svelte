@@ -4,13 +4,25 @@
 
     import TicketIcon from "@fluentui/svg-icons/icons/ticket_diagonal_24_filled.svg?raw";
     import SeatsIcon from "@fluentui/svg-icons/icons/people_audience_24_filled.svg?raw";
+    import DetailsIcon from "@fluentui/svg-icons/icons/multiselect_ltr_24_filled.svg?raw";
 
+    let dateSelectionExpanded = false;
     let bookingSelectionExpanded = true;
     let seatSelectionExpanded = false;
 </script>
 
 
 <div class="wrapper">
+    <Expander bind:expanded={dateSelectionExpanded}>
+        <svelte:fragment slot="icon">
+            {@html DetailsIcon}
+        </svelte:fragment>
+        Details
+        <svelte:fragment slot="content">
+            What did you think was going to happen? 😆
+        </svelte:fragment>
+    </Expander>
+
     <Expander bind:expanded={bookingSelectionExpanded}>
         <svelte:fragment slot="icon">
             {@html TicketIcon}
@@ -25,11 +37,11 @@
         <svelte:fragment slot="icon">
             {@html SeatsIcon}
         </svelte:fragment>
-        Seat selection
+        Seats
         <svelte:fragment slot="content">
             <SeatSelection 
                 seatRowCount={20}
-                seatRowLength={10} 
+                seatRowLength={10}
                 reservedSeats={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 22, 25, 29]}/>
         </svelte:fragment>
     </Expander>
