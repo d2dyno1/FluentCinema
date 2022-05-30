@@ -16,9 +16,9 @@
 
 <div class="wrapper">
     <div class="tickets-list">
-        <TicketCard maxTickets={maxSeatsAvailable} tickets={childrenTickets} title="Reduced ticket" subtitle="Children below 16"/>
-        <TicketCard maxTickets={maxSeatsAvailable} tickets={adultTickets} title="Normal ticket" subtitle="All adults, children age 16 and above"/>
-        <TicketCard maxTickets={maxSeatsAvailable} tickets={seniorTickets} title="Senior ticket" subtitle="Senior, age 60 and above"/>
+        <TicketCard maxTickets={maxSeatsAvailable} bind:tickets={childrenTickets} title="Reduced ticket" subtitle="Children below 16"/>
+        <TicketCard maxTickets={maxSeatsAvailable} bind:tickets={adultTickets} title="Normal ticket" subtitle="All adults, children age 16 and above"/>
+        <TicketCard maxTickets={maxSeatsAvailable} bind:tickets={seniorTickets} title="Senior ticket" subtitle="Senior, age 60 and above"/>
     </div>
     <div class="description">
         <div class="total-title">

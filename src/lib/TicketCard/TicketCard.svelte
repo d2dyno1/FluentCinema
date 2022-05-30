@@ -21,7 +21,7 @@
         </div>
     </div>
     <div class="ticket-numberbox">
-        <NumberBox inline={true} min={0} max={maxTickets} value={tickets} clearButton={false}/>
+        <NumberBox inline={true} min={0} max={maxTickets} bind:value={tickets} clearButton={false}/>
     </div>
 </div>
 
