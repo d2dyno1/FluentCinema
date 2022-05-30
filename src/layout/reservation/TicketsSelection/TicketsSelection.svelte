@@ -6,9 +6,14 @@
     export let seniorTickets: number = 0;
     export let maxSeats: number;
 
-    const childrenTicketPrice = 100;
-    const adultTicketPrice = 100;
-    const seniorTicketPrice = 100;
+    const childrenTicketPrice = 16.75;
+    const adultTicketPrice = 21.99;
+    const seniorTicketPrice = 16.75;
+
+    const currencyFormatter = new Intl.NumberFormat('pl-PL', {
+        style: 'currency',
+        currency: 'PLN'
+    });
 
     $: maxSeatsAvailable = maxSeats - (childrenTickets + adultTickets + seniorTickets);
     $: totalPrice = (childrenTickets * childrenTicketPrice) + (adultTickets * adultTicketPrice) + (seniorTickets * seniorTicketPrice);
@@ -16,20 +21,20 @@
 
 <div class="wrapper">
     <div class="tickets-list">
-        <TicketCard maxTickets={maxSeatsAvailable} bind:tickets={childrenTickets} title="Reduced ticket" subtitle="Children below 16"/>
-        <TicketCard maxTickets={maxSeatsAvailable} bind:tickets={adultTickets} title="Normal ticket" subtitle="All adults, children age 16 and above"/>
-        <TicketCard maxTickets={maxSeatsAvailable} bind:tickets={seniorTickets} title="Senior ticket" subtitle="Senior, age 60 and above"/>
+        <TicketCard bind:maxTickets={maxSeatsAvailable} bind:tickets={childrenTickets} title="Reduced ticket" subtitle="Children below 16"/>
+        <TicketCard bind:maxTickets={maxSeatsAvailable} bind:tickets={adultTickets} title="Normal ticket" subtitle="All adults, children age 16 and above"/>
+        <TicketCard bind:maxTickets={maxSeatsAvailable} bind:tickets={seniorTickets} title="Senior ticket" subtitle="Senior, age 60 and above"/>
     </div>
     <div class="description">
         <div class="total-title">
-            Total: {totalPrice}
+            Total: {currencyFormatter.format(totalPrice)}
         </div>
         <p class="ticket-prices-list">
-            Reduced ticket: {childrenTickets * childrenTicketPrice}
+            Reduced ticket: {currencyFormatter.format(childrenTickets * childrenTicketPrice)}
             <br/>
-            Normal ticket: {adultTickets * adultTicketPrice}
+            Normal ticket: {currencyFormatter.format(adultTickets * adultTicketPrice)}
             <br/>
-            Senior ticket: {seniorTickets * seniorTicketPrice}
+            Senior ticket: {currencyFormatter.format(seniorTickets * seniorTicketPrice)}
         </p>
     </div>
 </div>

@@ -7,7 +7,6 @@
     export let tickets: number;
     export let title: string;
     export let subtitle: string;
-
 </script>
 
 <div class="ticket-frame">
@@ -21,7 +20,7 @@
         </div>
     </div>
     <div class="ticket-numberbox">
-        <NumberBox inline={true} min={0} max={maxTickets} bind:value={tickets} clearButton={false}/>
+        <NumberBox inline={true} min={0} bind:max={maxTickets} bind:value={tickets} clearButton={false}/>
     </div>
 </div>
 

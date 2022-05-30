@@ -29,7 +29,7 @@
         </svelte:fragment>
         Tickets
         <svelte:fragment slot="content">
-            <TicketsSelection/>
+            <TicketsSelection maxSeats={200-29}/>
         </svelte:fragment>
     </Expander>
 

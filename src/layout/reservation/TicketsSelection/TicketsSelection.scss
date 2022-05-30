@@ -1,15 +1,15 @@
 @use "src/styles/mixins" as *;
 
 .wrapper {
-    @include flex($direction: row, $justify: center, $align: start, $gap: 48px);
+    @include flex($direction: row, $justify: center, $align: start, $wrap: wrap, $gap: 64px);
 }
 
 .tickets-list {
-    @include flex($direction: column, $align: center, $gap: 16px);
+    @include flex($direction: column, $gap: 16px);
 }
 
 .description {
-    @include flex($direction: column);
+    @include flex($direction: column, $justify: start);
     padding: 1% 0 1% 0;
 }
 
