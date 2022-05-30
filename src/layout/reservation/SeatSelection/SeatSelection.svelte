@@ -1,10 +1,11 @@
 <script lang="ts">
-    import Seat from "$lib/Seat/Seat.svelte";
+    import { Seat } from "$lib";
 
     export let seatRowCount: number;
     export let seatRowLength: number;
     export let reservedSeats: number[];
-    export let selectedSeat: number;
+    export let selectedSeats: number[] = [];
+    export let maxSelection = 0;
 
     let seats: number[][] = [];
 
@@ -15,6 +16,16 @@
             seats[i].push(seat++);
         }
     }
+
+    function addSelectedSeat(seat: number) {
+        if (selectedSeats.length >= maxSelection) {
+            selectedSeats.shift();
+        }
+        if (maxSelection != 0 && !selectedSeats.includes(seat)) {
+            selectedSeats.push(seat);
+        }
+    }
+
 </script>
 
 <div class="seat-selection">
@@ -22,8 +33,8 @@
         {#each seats as row}
             <div class="row">
                 {#each row as seat}
-                    <div on:click={() => selectedSeat = seat}>
-                        <Seat number={seat} selected={selectedSeat == seat} reserved={reservedSeats.indexOf(seat) != -1}/>
+                    <div on:click={() => addSelectedSeat(seat)}>
+                        <Seat number={seat} selected={selectedSeats.includes(seat)} reserved={reservedSeats.includes(seat)}/>
                     </div>
                 {/each}
             </div>

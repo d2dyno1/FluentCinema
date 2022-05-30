@@ -9,6 +9,11 @@
     let dateSelectionExpanded = false;
     let bookingSelectionExpanded = true;
     let seatSelectionExpanded = false;
+
+    let reducedTickets: number = 0;
+    let normalTickets: number = 0;
+    let seniorTickets: number = 0;
+
 </script>
 
 
@@ -29,7 +34,10 @@
         </svelte:fragment>
         Tickets
         <svelte:fragment slot="content">
-            <TicketsSelection maxSeats={200-29}/>
+            <TicketsSelection maxSeats={200-29}
+                bind:reducedTickets={reducedTickets}
+                bind:normalTickets={normalTickets}
+                bind:seniorTickets={seniorTickets}/>
         </svelte:fragment>
     </Expander>
 
@@ -40,6 +48,7 @@
         Seats
         <svelte:fragment slot="content">
             <SeatSelection 
+                maxSelection={(+reducedTickets + +normalTickets + +seniorTickets)}
                 seatRowCount={20}
                 seatRowLength={10}
                 reservedSeats={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 22, 25, 29]}/>

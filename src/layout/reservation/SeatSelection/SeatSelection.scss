@@ -7,7 +7,6 @@
 .seats {
     @include flex($direction: row, $gap: 5px);
     border-radius: var(--fds-control-corner-radius);
-    padding: 20px 100px 20px 20px;
     width: fit-content;
 }
 
