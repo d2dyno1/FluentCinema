@@ -18,14 +18,16 @@
     }
 
     function addSelectedSeat(seat: number) {
-        if (selectedSeats.length >= maxSelection) {
-            selectedSeats.shift();
-        }
         if (maxSelection != 0 && !selectedSeats.includes(seat)) {
             selectedSeats.push(seat);
         }
+        selectedSeats = [...selectedSeats];
     }
 
+    $: if (selectedSeats.length > maxSelection) {
+        selectedSeats.splice(0, selectedSeats.length - maxSelection);
+        selectedSeats = [...selectedSeats];
+    }
 </script>
 
 <div class="seat-selection">
