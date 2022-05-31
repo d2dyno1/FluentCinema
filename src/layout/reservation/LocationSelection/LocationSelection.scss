@@ -1,0 +1,20 @@
+@use "src/styles/mixins" as *;
+
+.wrapper {
+    @include flex($direction: row, $justify: center, $gap: 32px);
+}
+
+.map {
+    border-style: dotted;
+    width: 264px;
+    height: 264px;
+}
+
+.description {
+    @include flex($direction: column);
+}
+
+.location-details {
+    opacity: 0.8;
+    line-height: 32px;
+}

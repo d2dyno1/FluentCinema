@@ -13,3 +13,4 @@ export { default as MovieReservation } from "./MovieReservation/MovieReservation
 export { default as ValidatedTextBox } from "./ValidatedTextBox/ValidatedTextBox.svelte";
 export { default as TicketCard } from "./TicketCard/TicketCard.svelte";
 export { default as Seat } from "./Seat/Seat.svelte";
+export { default as ProgressiveFormSection } from "./ProgressiveFormSection/ProgressiveFormSection.svelte";
