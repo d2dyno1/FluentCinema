@@ -27,6 +27,12 @@
     -webkit-user-drag: none;
 }
 
+.title {
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-user-drag: none;
+}
+
 .icon {
     max-width: 32px;
     max-height: 32px;

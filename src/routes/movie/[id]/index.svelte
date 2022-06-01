@@ -41,7 +41,8 @@
                 // Fill the table
                 for (let i = 0; i < 7 /* Week days */; i++)
                 {
-                    screeningDates.push({dayName: moment().add(i, 'day').format('dddd')});
+                    let now = moment().add(i, 'day');
+                    screeningDates.push({ day: now.day(), dayName: now.format('dddd') });
                 }
 
                 // Fill screenings

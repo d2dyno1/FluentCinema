@@ -11,7 +11,7 @@
                 redirect: "/"
             }
         }
-        let token = decodeURIComponent(url.searchParams.get("token"));
+        let token = decodeURIComponent(url.searchParams.get("token")!);
         let success = await EmailVerification.verifyEmail(fetch, token);
         return {
             status: 200,

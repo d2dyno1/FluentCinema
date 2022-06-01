@@ -5,11 +5,15 @@
     import moment from "moment";
 
     export let movie: Movie;
-    export let screeningDates: TableDateItem[];
+    export let screeningDates: TableDateItem[] = [];
     export let selectedDate: Date = new Date();
 
+    const today: Date = new Date();
     const yesterday = new Date();
     const nextMonth = new Date();
+
+    $: dates = screeningDates[screeningDates.findIndex(x => x.day == today.getDay())]?.dates;
+
     yesterday.setDate(yesterday.getDate() - 1);
     nextMonth.setMonth(nextMonth.getMonth() + 1);
 </script>
@@ -27,6 +31,13 @@
         <div class="details">
             {#if selectedDate}
             <div class="time-list">
+                {#if dates}
+                {#each dates as sc}
+                    <div>
+                        <Button variant="standard">{moment(sc.date).format('hh:mm')}</Button>
+                    </div>
+                {/each}
+                {/if}
                 <Button variant="standard">17:30</Button>
                 <Button variant="accent">19:30</Button>
                 <Button variant="standard">22:00</Button>
