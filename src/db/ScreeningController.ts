@@ -4,6 +4,7 @@ import { Screening } from "$api/Screening";
 import type { IScreening } from "$data/model/IScreening";
 import type { QueryResult } from "pg";
 import type { ScreeningType } from "$data/ScreeningType";
+import moment from "moment";
 
 const QUERY_SELECT = `
     SELECT screening.*, screening_rooms."seatRowCount", screening_rooms."seatRowLength", (
@@ -61,6 +62,16 @@ export class ScreeningController implements IScreening, IDatabaseContext<Screeni
         if (movieId != null) {
             screenings = screenings.filter(screening => screening.movieId == movieId);
         }
+        screenings = screenings.sort((a, b) => {
+            let momentA = moment(a.start);
+            let momentB = moment(b.start);
+            if (momentA.isAfter(momentB)) {
+                return 1;
+            } else if (momentB.isAfter(momentA)) {
+                return -1;
+            }
+            return 0;
+        });
         return screenings;
     }
 
