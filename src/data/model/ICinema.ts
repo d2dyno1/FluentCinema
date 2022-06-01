@@ -1,5 +1,5 @@
 export interface ICinema {
-    readonly id: number;
+    readonly id: string;
     readonly city: string;
     readonly address: string;
     readonly latitude: number;
