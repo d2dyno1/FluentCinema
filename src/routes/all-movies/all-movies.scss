@@ -21,7 +21,7 @@
 }
 
 .movie-list {
-    @include flex($align: center, $justify: start);
+    @include flex($justify: center);
     flex: 1 1 auto;
     flex-wrap: wrap;
 }

@@ -49,7 +49,11 @@
                 {/if}
             </div>
             <p class="screening-details">
-                Type: {getFriendlyScreeningTypeName(selectedScreening?.type)}
+                {#if selectedScreening}
+                    Type: {getFriendlyScreeningTypeName(selectedScreening?.type)}
+                {:else}
+                    Type: Select time...
+                {/if}
                 <br/>
                 Length: {movie.length}min
             </p>

@@ -55,6 +55,8 @@
     let normalTickets: number = 0;
     let seniorTickets: number = 0;
 
+    let selectedSeats: number[] = [];
+
     function finishReservation() {
         // TODO
     }
@@ -132,7 +134,7 @@
             <ProgressiveFormSection bind:currentSection={seatSelectionExpanded} bind:nextSection={summarySectionExpanded}>
                 <svelte:fragment slot="content">
                     {#if screening != null && (+reducedTickets + +normalTickets + +seniorTickets) > 0}
-                        <SeatSelection maxSelection={(+reducedTickets + +normalTickets + +seniorTickets)} {screening}/>
+                        <SeatSelection bind:selectedSeats={selectedSeats} maxSelection={(+reducedTickets + +normalTickets + +seniorTickets)} {screening}/>
                     {/if}
                 </svelte:fragment>
             </ProgressiveFormSection>
@@ -147,7 +149,7 @@
         <svelte:fragment slot="content">
             <ProgressiveFormSection bind:currentSection={summarySectionExpanded} buttonText="Make reservation" continueCallback={finishReservation}>
                 <svelte:fragment slot="content">
-                    <SummarySection/>
+                    <SummarySection {selectedSeats} totalPrice={-1} {reducedTickets} {normalTickets} {seniorTickets} {movie} {screening}/>
                 </svelte:fragment>
             </ProgressiveFormSection>
         </svelte:fragment>

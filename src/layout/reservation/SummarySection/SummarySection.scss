@@ -1,1 +1,14 @@
 @use "src/styles/mixins" as *;
+
+.wrapper {
+    @include flex($direction: row, $justify: space-evenly);
+}
+
+.column {
+    @include flex($direction: column, $align: center, $gap: 32px);
+}
+
+.column-item {
+    @include flex($direction: column, $align: center, $gap: 4px);
+    opacity: 0.8;
+}

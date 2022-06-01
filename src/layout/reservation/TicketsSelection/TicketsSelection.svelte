@@ -1,6 +1,6 @@
 <script lang="ts">
+    import type { Screening } from "$api/Screening";
     import { TicketCard } from "$lib";
-    import { Screening } from "$api/Screening";
     import { onMount } from "svelte";
 
     export let screening: Screening;
@@ -22,7 +22,7 @@
 
     onMount(async () => {
         reservedSeats = (await screening.getReservedSeats()).length;
-    })
+    });
 
     $: maxSeatsAvailable = maxSeats - (reducedTickets + normalTickets + seniorTickets);
     $: totalPrice = (reducedTickets * reducedTicketPrice) + (normalTickets * normalTicketPrice) + (seniorTickets * seniorTicketPrice);
