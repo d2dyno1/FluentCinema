@@ -1,40 +1,38 @@
 <script lang="ts" context="module">
     import type { Load } from "@sveltejs/kit";
+    import { EmailVerification } from "$api/EmailVerification";
 
     let token;
 
-    export const load: Load = async ({ session, url }) => {
+    export const load: Load = async ({ fetch, session, url }) => {
         if (!session.isLoggedIn || session.user?.isVerified) {
             return {
                 status: 302,
                 redirect: "/"
             }
         }
+        let token = decodeURIComponent(url.searchParams.get("token"));
+        let success = await EmailVerification.verifyEmail(fetch, token);
         return {
             status: 200,
-            props: {
-                token: decodeURIComponent(url.searchParams.get("token"))
-            }
+            props: { success }
         };
     }
 </script>
 
 <script lang="ts">
-    import { onMount } from "svelte";
-    import { EmailVerification } from "$api/EmailVerification";
+    import { Button, ContentDialog, TextBlock } from "fluent-svelte";
 
-    export let token: string;
-    let promise: Promise<boolean>
-
-    onMount(() => promise = EmailVerification.verifyEmail(token));
+    export let success: boolean;
 </script>
 
-{#if promise != null}
-    {#await promise then isSuccess}
-        {#if isSuccess}
-            <p>Your e-mail address has been verified successfully. You may now close this tab or return to the home page.</p>
+<ContentDialog open={true} title={success ? "Success" : "Error"} closable={false}>
+    <TextBlock>
+        {#if success}
+            Your e-mail address has been verified successfully. You may now close this tab or return to the home page.
         {:else}
-            <p>Invalid token.</p>
+            Invalid or expired token.
         {/if}
-    {/await}
-{/if}
+    </TextBlock>
+    <Button slot="footer" variant="accent" on:click={() => window.location.reload()}>Home</Button>
+</ContentDialog>
