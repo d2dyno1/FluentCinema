@@ -76,6 +76,10 @@
 {/if}
 
 <div class="wrapper">
+    <div class="title">
+        {movie.name}: {movie.description}
+    </div>
+
     <Expander bind:expanded={locationSelectionExpanded}>
         <svelte:fragment slot="icon">
             {@html MapIcon}
@@ -147,9 +151,11 @@
         </svelte:fragment>
         Summary
         <svelte:fragment slot="content">
-            <ProgressiveFormSection bind:currentSection={summarySectionExpanded} buttonText="Make reservation" continueCallback={finishReservation}>
+            <ProgressiveFormSection bind:currentSection={seatSelectionExpanded} buttonText="Make reservation" continueCallback={finishReservation}>
                 <svelte:fragment slot="content">
-                    <SummarySection {selectedSeats} totalPrice={-1} {reducedTickets} {normalTickets} {seniorTickets} {movie} {screening}/>
+                    {#if selectedSeats?.length > 0}
+                        <SummarySection {selectedSeats} totalPrice={-1} {reducedTickets} {normalTickets} {seniorTickets} {movie} {screening}/>
+                    {/if}
                 </svelte:fragment>
             </ProgressiveFormSection>
         </svelte:fragment>
