@@ -1,12 +1,22 @@
 <script lang="ts" context="module">
     import type { Load } from "@sveltejs/kit";
     import { Cinema } from "$api/Cinema";
+    import { Movie } from "$api/Movie";
 
-    export const load: Load = async ({ fetch }) => {
+    export const load: Load = async ({ fetch, params }) => {
+        let movie = await Movie.getFromId(fetch, params.id);
+        console.log(movie);
+        if (!movie) {
+            return {
+                status: 302,
+                redirect: "/"
+            };
+        }
         return {
             status: 200,
             props: {
-                cinemas: await Cinema.getList(fetch)
+                cinemas: await Cinema.getList(fetch),
+                movie
             }
         };
     }
@@ -23,6 +33,7 @@
     import MapIcon from "@fluentui/svg-icons/icons/map_24_filled.svg?raw";
 
     export let cinemas: Cinema[];
+    export let movie: Movie;
 
     let selectedCinema: Cinema;
 
@@ -79,9 +90,9 @@
             <ProgressiveFormSection bind:currentSection={bookingSelectionExpanded} bind:nextSection={seatSelectionExpanded}>
                 <svelte:fragment slot="content">
                     <TicketsSelection maxSeats={200-29}
-                        bind:reducedTickets={reducedTickets}
-                        bind:normalTickets={normalTickets}
-                        bind:seniorTickets={seniorTickets}/>
+                                      bind:reducedTickets={reducedTickets}
+                                      bind:normalTickets={normalTickets}
+                                      bind:seniorTickets={seniorTickets}/>
                 </svelte:fragment>
             </ProgressiveFormSection>
         </svelte:fragment>
@@ -95,17 +106,17 @@
         <svelte:fragment slot="content">
             <ProgressiveFormSection bind:currentSection={dateSelectionExpanded} buttonText="Finish" continueCallback={finishReservation}>
                 <svelte:fragment slot="content">
-                    <SeatSelection 
-                        maxSelection={(+reducedTickets + +normalTickets + +seniorTickets)}
-                        seatRowCount={20}
-                        seatRowLength={10}
-                        reservedSeats={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 22, 25, 29]}/>
+                    <SeatSelection
+                            maxSelection={(+reducedTickets + +normalTickets + +seniorTickets)}
+                            seatRowCount={20}
+                            seatRowLength={10}
+                            reservedSeats={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 22, 25, 29]}/>
                 </svelte:fragment>
             </ProgressiveFormSection>
         </svelte:fragment>
     </Expander>
-    </div>
+</div>
 
 <style lang="scss">
-    @use "test";
+    @use "reservation";
 </style>
