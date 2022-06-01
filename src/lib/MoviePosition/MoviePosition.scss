@@ -4,7 +4,7 @@ picture {
     @include flex($justify: center, $align: center);
     flex: 0 1 auto;
     height: 152px;
-    width: 100%;
+    width: 108px;
     margin-right: 16px;
 }
 
@@ -81,7 +81,11 @@ picture {
     font-size: small;
     margin: 0px 0px 4px 0px;
     opacity: 0.8;
-    text-overflow: ellipsis;
+    display: -webkit-box;
+    max-width: 200px;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 .description-overlay {

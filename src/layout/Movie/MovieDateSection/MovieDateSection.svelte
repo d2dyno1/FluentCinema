@@ -64,7 +64,6 @@
         {/each}
     </div>
 </div>
-
 {/if}
 
 <style lang="scss">

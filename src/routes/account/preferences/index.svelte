@@ -27,7 +27,7 @@
     }
 </script>
 
-{#if !$accountSession.user.isVerified}
+{#if !$accountSession.user?.isVerified}
     <InfoBar title="Unverified e-mail address" message="In order to verify your e-mail address, follow the instructions within the e-mail that was sent. If you can't find it even after checking the spam folder, press the button below." severity="caution" closable={false}>
         <PromiseButton slot="action" onClick={resendVerificationEmail}>Resend verification e-mail</PromiseButton>
     </InfoBar>
@@ -35,14 +35,16 @@
 <div class="settings-list">
     <ProfilePicture/>
     <ChangeEmail/>
-    <TextBlock variant="bodyStrong">Security</TextBlock>
+    <div class="section-title">
+        <TextBlock variant="bodyStrong">Security</TextBlock>
+    </div>
     <InvalidateSessions/>
     <ActionBlock title="Two-factor authentication" description="You will need to enter a 6-digit code sent to your e-mail every time you log in. Requires a verified e-mail address." icon={KeyIcon}>
         <ToggleSwitch
                 bind:checked={$accountSession.user.settings.twoFactorAuthentication}
                 on:click={(e) => updateAndUploadSettings(e.target.checked, (x) => $accountSession.user.settings.twoFactorAuthentication = x)}
                 slot="action"
-                disabled={!$accountSession.user.isVerified}>
+                disabled={!$accountSession.user?.isVerified ?? true}>
             {#if $accountSession.user?.settings.twoFactorAuthentication}
                 On
             {:else}
@@ -50,7 +52,9 @@
             {/if}
         </ToggleSwitch>
     </ActionBlock>
-    <TextBlock variant="bodyStrong">Other</TextBlock>
+    <div class="section-title">
+        <TextBlock variant="bodyStrong">Other</TextBlock>
+    </div>
     <DeleteAccount/>
 </div>
 
