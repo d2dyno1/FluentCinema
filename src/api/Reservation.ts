@@ -1,4 +1,5 @@
 import type { IReservation } from "$data/model/IReservation";
+import type { GeneralResponse } from "$data/response/GeneralResponse";
 
 export class Reservation implements IReservation {
     readonly seat: number;
@@ -17,5 +18,16 @@ export class Reservation implements IReservation {
         let response = await fetch("/api/account/reservation/list");
         let json: Reservation[] = await response.json();
         return json.map(reservation => new Reservation(reservation));
+    }
+
+    static async create(screeningId: number, seats: number[]): Promise<GeneralResponse> {
+        let response = await fetch("/api/account/reservation/create", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ screeningId, seats })
+        });
+        return await response.json();
     }
 }
