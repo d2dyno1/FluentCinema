@@ -42,7 +42,7 @@
                     {#if item.dates}
                         {#each item.dates as dateWithType}
                             <div class="item-date">
-                                {moment(dateWithType.date).format('hh:mm')} {getFriendlyScreeningTypeName(dateWithType.type)}
+                                {moment(dateWithType.date).format('HH:mm')} {getFriendlyScreeningTypeName(dateWithType.type)}
                             </div>
                         {/each}
                     {/if}

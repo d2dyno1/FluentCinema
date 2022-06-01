@@ -43,7 +43,7 @@
             Date
         </div>
         <div class="column-item">
-            <div>{moment(screening?.start).format('hh:mm')}</div>
+            <div>{moment(screening?.start).format('HH:mm')}</div>
             Time
         </div>
         <div class="column-item">
@@ -51,13 +51,13 @@
             Length
         </div>
         <div class="column-item">
-            <div>{moment(screening?.start).add(movie?.length, 'minutes').format('hh:mm')}</div>
+            <div>{moment(screening?.start).add(movie?.length, 'minutes').format('HH:mm')}</div>
             End time
         </div>
     </div>
     <div class="column">
         <div class="column-item">
-            <div>{selectedSeats.join(', ')}</div>
+            <div class="text-overflow">{selectedSeats.join(', ')}</div>
             Seats
         </div>
         <div class="column-item">

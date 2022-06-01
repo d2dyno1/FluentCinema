@@ -1,7 +1,7 @@
 @use "src/styles/mixins" as *;
 
 .wrapper {
-    @include flex($direction: row, $justify: space-evenly);
+    @include flex($direction: row, $justify: around);
 }
 
 .column {
@@ -11,4 +11,9 @@
 .column-item {
     @include flex($direction: column, $align: center, $gap: 4px);
     opacity: 0.8;
+}
+
+.text-overflow {
+    max-width: 104px;
+    text-overflow: wrap;
 }
