@@ -31,7 +31,7 @@ export class ScreeningController implements IScreening, IDatabaseContext<Screeni
     readonly seatRowLength!: number;
     readonly reservedSeatCount!: number;
 
-    readonly id!: number;
+    readonly id!: string;
     readonly roomId!: number;
     readonly movieId!: string;
     readonly cinemaId!: string;
@@ -45,7 +45,7 @@ export class ScreeningController implements IScreening, IDatabaseContext<Screeni
         return (await client.query(QUERY_RESERVED_SEATS, [this.id])).rows.map(seat => seat.seat as number);
     }
 
-    public static async getFromId(id: number): Promise<ScreeningController | null> {
+    public static async getFromId(id: string): Promise<ScreeningController | null> {
         let query: QueryResult<ScreeningController> = await client.query(QUERY_SELECT_ID, [id]);
         if (query.rowCount == 0) {
             return null;
