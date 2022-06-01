@@ -1,10 +1,12 @@
 import { badRequest, badRequestWithMessage, forbidden, ok } from "$api/responses";
 import type { RequestHandler } from "@sveltejs/kit";
 import { SessionController } from "$db/SessionController";
-import { createReservationSchema } from "$data/schema/CreateReservationSchema";
 import type { CreateReservationSchema } from "$data/schema/CreateReservationSchema"
+import { createReservationSchema } from "$data/schema/CreateReservationSchema";
 import { ScreeningController } from "$db/ScreeningController";
 import { ReservationController } from "$db/ReservationController";
+import { MovieController } from "$db/MovieController";
+import { MovieType } from "$data/MovieType";
 
 export const post: RequestHandler = async ({ request }) => {
     let session = await SessionController.getFromRequest(request);
@@ -18,7 +20,7 @@ export const post: RequestHandler = async ({ request }) => {
     }
 
     let screening = await ScreeningController.getFromId(params.screeningId);
-    if (screening == null) {
+    if (screening == null || (await MovieController.getFromId(screening.movieId))!.type == MovieType.SERIES) {
         return badRequest;
     }
 

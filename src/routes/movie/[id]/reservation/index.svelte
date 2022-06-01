@@ -2,10 +2,11 @@
     import type { Load } from "@sveltejs/kit";
     import { Cinema } from "$api/Cinema";
     import { Movie } from "$api/Movie";
+    import { MovieType } from "$data/MovieType";
 
     export const load: Load = async ({ session, fetch, params }) => {
         let movie = await Movie.getFromId(fetch, params.id);
-        if (!movie) {
+        if (!movie || movie.type == MovieType.SERIES) {
             return {
                 status: 302,
                 redirect: "/"
