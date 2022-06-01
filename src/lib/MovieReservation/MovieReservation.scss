@@ -2,7 +2,7 @@
 
 .reservation {
     @include flex($direction: row, $gap: 20px);
-    background-color: var(--fds-solid-background-secondary);
+    background-color: var(--fds-control-fill-default);
     border-radius: var(--fds-control-corner-radius);
     padding: 20px;
 
