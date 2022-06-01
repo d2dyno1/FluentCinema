@@ -82,6 +82,11 @@ export class AccountController {
         await EmailVerificationController.beginVerification(await AccountController.getFromId(this.id) as AccountController);
     }
 
+    async changePassword(password: string): Promise<void> {
+        let hashedPassword = await argon2.hash(password);
+        await client.query("UPDATE users SET hashed_password=$1 WHERE id=$2;", [hashedPassword, this.id]);
+    }
+
     async sendMail(subject: string, content: string): Promise<void> {
         await mailTransporter.sendMail({
             from: "FluentCinema <fluentcinema+noreply@zsti.eu>",
