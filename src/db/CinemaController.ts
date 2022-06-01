@@ -4,7 +4,7 @@ import { Cinema } from "$api/Cinema";
 import { client } from "$db";
 
 export class CinemaController implements ICinema, IDatabaseContext<Cinema> {
-    readonly id!: number;
+    readonly id!: string;
     readonly city!: string;
     readonly address!: string;
     readonly latitude!: number;

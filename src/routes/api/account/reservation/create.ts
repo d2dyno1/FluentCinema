@@ -22,12 +22,16 @@ export const post: RequestHandler = async ({ request }) => {
         return badRequest;
     }
 
-    if (params.seat > screening.seatRowCount * screening.seatRowLength) {
-        return badRequestWithMessage("Invalid seat.");
-    } else if ((await screening.getReservedSeats()).indexOf(params.seat) != -1) {
-        return badRequestWithMessage("This seat is already taken.");
+    let reservedSeats = await screening.getReservedSeats();
+    let maxSeat = screening.seatRowCount * screening.seatRowLength;
+    let user = await session.getUser();
+    for (let seat of params.seats) {
+        if (reservedSeats.indexOf(seat!) != -1) {
+            return badRequestWithMessage(`Seat ${seat} is already reserved.`);
+        } else if (seat! > maxSeat) {
+            return badRequest;
+        }
+        await ReservationController.create(user, params.screeningId, seat!);
     }
-
-    await ReservationController.create(await session.getUser(), params.screeningId, params.seat);
     return ok;
 }

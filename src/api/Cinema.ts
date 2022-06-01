@@ -2,7 +2,7 @@ import type { ICinema } from "$data/model/ICinema";
 import type { Fetch } from "$api/ApiContext";
 
 export class Cinema implements ICinema {
-    readonly id: number;
+    readonly id: string;
     readonly city: string;
     readonly address: string;
     readonly latitude: number;

@@ -6,7 +6,8 @@
         let movie = await Movie.getFromId(fetch, params.id);
         if (!movie) {
             return {
-                status: 403,
+                status: 302,
+                redirect: "/"
             };
         }
         return {

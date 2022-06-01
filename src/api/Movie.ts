@@ -42,6 +42,10 @@ export class Movie implements IMovie {
     }
 
     static async getFromId(fetch: Fetch, id: string | number): Promise<Movie | null> {
-        return fetch(`/api/movie/${id}`).then(response => response.json()).then((movie: IMovie) => new Movie(movie));
+        let movie: IMovie = await fetch(`/api/movie/${id}`).then(response => response.json())
+        if (movie.id == null) {
+            return null;
+        }
+        return new Movie(movie);
     }
 }

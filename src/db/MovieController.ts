@@ -76,9 +76,12 @@ export class MovieController implements IMovie, IDatabaseContext<Movie> {
         return movies;
     }
 
-    static async getFromId(id: number | string): Promise<MovieController> {
-        let movie = (await client.query(QUERY_MOVIE_BY_ID, [id])).rows[0];
-        return MovieController.construct(movie);
+    static async getFromId(id: number | string): Promise<MovieController | null> {
+        let query = await client.query(QUERY_MOVIE_BY_ID, [id]);
+        if (query.rowCount == 0) {
+            return null;
+        }
+        return MovieController.construct(query.rows[0]);
     }
 
     toApiContext(): Movie {

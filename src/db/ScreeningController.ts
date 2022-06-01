@@ -14,7 +14,7 @@ const QUERY_SELECT = `
     FROM screenings screening
     JOIN screening_rooms ON screening."roomId" = screening_rooms.id
 `;
-const QUERY_SELECT_ID = QUERY_SELECT + "WHERE id=$1";
+const QUERY_SELECT_ID = QUERY_SELECT + " WHERE screening.id=$1";
 const QUERY_RESERVED_SEATS = `
     SELECT seat as seat FROM reservations
     JOIN screenings ON reservations."screeningId" = screenings.id
