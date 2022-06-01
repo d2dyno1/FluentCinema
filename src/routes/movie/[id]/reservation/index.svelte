@@ -23,8 +23,8 @@
 </script>
 
 <script lang="ts">
-    import { TicketsSelection, SeatSelection } from "$layout";
-    import { CinemaSelection, ProgressiveFormSection } from "$lib";
+    import { CinemaSelection, TicketsSelection, SeatSelection } from "$layout";
+    import { ProgressiveFormSection } from "$lib";
     import { Expander } from "fluent-svelte";
 
     import TicketIcon from "@fluentui/svg-icons/icons/ticket_diagonal_24_filled.svg?raw";

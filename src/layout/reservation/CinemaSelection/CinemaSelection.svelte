@@ -1,14 +1,14 @@
 <script lang="ts">
-    import { Cinema } from "$api/Cinema";
+    import type { Cinema } from "$api/Cinema";
     import LocationIcon from "@fluentui/svg-icons/icons/location_48_filled.svg?raw";
-    import { TextBlock } from "fluent-svelte";
+    import { ProgressRing, TextBlock } from "fluent-svelte";
     import { onMount } from "svelte";
 
     export let cinemas: Cinema[];
     export let selectedCinema: Cinema;
 
-    let mapContainer;
-    let ready;
+    let mapContainer: any;
+    let ready = false;
 
     function initMap() {
         let map = new google.maps.Map(mapContainer, {
@@ -32,13 +32,27 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBunHici73nuGFjNgAB8cRoNvqK1nOGIxI&callback=initMap&v=weekly"/>
 {/if}
 
-<div bind:this={mapContainer} id="map"></div>
-{#if selectedCinema != null}
+<div class="wrapper">
     <div class="cinema-info">
-        {@html LocationIcon}
-        <TextBlock>{selectedCinema.address}</TextBlock>
+        <div class="mark-icon">
+            {@html LocationIcon}
+        </div>
+        <div>
+            {#if selectedCinema}
+                <TextBlock>{selectedCinema.address}</TextBlock>
+            {:else}
+                <TextBlock>No cinema selected</TextBlock>
+            {/if}
+        </div>
     </div>
-{/if}
+    {#if ready}
+        <div bind:this={mapContainer} id="map"/>
+    {:else}
+        <div class="progress-ring-overlay">
+            <ProgressRing/>
+        </div>
+    {/if}
+</div>
 
 <style lang="scss">
     @use "CinemaSelection";

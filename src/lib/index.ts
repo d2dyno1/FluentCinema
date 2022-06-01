@@ -14,4 +14,3 @@ export { default as ValidatedTextBox } from "./ValidatedTextBox/ValidatedTextBox
 export { default as TicketCard } from "./TicketCard/TicketCard.svelte";
 export { default as Seat } from "./Seat/Seat.svelte";
 export { default as ProgressiveFormSection } from "./ProgressiveFormSection/ProgressiveFormSection.svelte";
-export { default as CinemaSelection } from "./CinemaSelection/CinemaSelection.svelte";
