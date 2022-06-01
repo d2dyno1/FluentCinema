@@ -60,8 +60,6 @@
     <DeleteAccount/>
 </div>
 
-
-
 <style lang="scss">
     @use "preferences";
 </style>

@@ -8,7 +8,7 @@
 }
 
 .reviewer {
-    text-align: center;
+    @include flex($direction: column, $align: center, $gap: 8px);
 }
 
 .content {

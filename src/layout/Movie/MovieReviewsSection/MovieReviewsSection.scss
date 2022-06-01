@@ -15,7 +15,6 @@
 
 .flipview-button {
     @include flex($inline: true, $align: center, $justify: center);
-
 	position: relative;
 	box-sizing: border-box;
 	padding-block: 6px 6px;
@@ -44,17 +43,15 @@
 }
 
 .content-wrapper {
-    display: inline-block;
-    top: 50%;
-    height: fit-content;
-    position: relative;
+    @include flex($align: end);
     width: 100%;
+    height: 100%;
+    overflow: auto;
 }
 
 .content {
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    @include flex($justify: center);
+    padding: 2% 6% 2% 6%;
 }
 
 .title {

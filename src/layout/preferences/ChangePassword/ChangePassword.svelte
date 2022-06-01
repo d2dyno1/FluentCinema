@@ -45,7 +45,7 @@
         {#if success}
             <Button variant="accent" on:click={() => showDialog = false}>Close</Button>
         {:else}
-            <PromiseButton disabled={!isPasswordValid || !isConfirmedPasswordValid} variant="accent" onClick={changePassword}>Change</PromiseButton>
+            <PromiseButton disabled={!isPasswordValid || !isConfirmedPasswordValid} variant="accent" onClick={changePassword}>Confirm</PromiseButton>
             <Button on:click={() => showDialog = false}>Cancel</Button>
         {/if}
     </svelte:fragment>
