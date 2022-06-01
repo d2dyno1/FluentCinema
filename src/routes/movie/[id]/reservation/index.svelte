@@ -23,19 +23,19 @@
 </script>
 
 <script lang="ts">
-    import { CinemaSelection, ScreeningDateSelection, TicketsSelection, SeatSelection } from "$layout";
+    import type { Screening } from "$api/Screening";
+    import { CinemaSelection, ScreeningDateSelection, TicketsSelection, SeatSelection, SummarySection } from "$layout";
     import { ProgressiveFormSection } from "$lib";
     import { Button, ContentDialog, Expander } from "fluent-svelte";
+    import { accountSession } from "$/stores";
+    import { goto } from "$app/navigation";
+    import { dev } from "$app/env";
 
     import MapIcon from "@fluentui/svg-icons/icons/map_24_filled.svg?raw";
     import CalendarIcon from "@fluentui/svg-icons/icons/calendar_clock_24_filled.svg?raw";
     import TicketIcon from "@fluentui/svg-icons/icons/ticket_diagonal_24_filled.svg?raw";
     import SeatsIcon from "@fluentui/svg-icons/icons/people_audience_24_filled.svg?raw";
     import SummaryIcon from "@fluentui/svg-icons/icons/multiselect_ltr_24_filled.svg?raw";
-    import { accountSession } from "$/stores";
-    import { goto } from "$app/navigation";
-    import { dev } from "$app/env";
-    import { Screening } from "$api/Screening";
 
     export let cinemas: Cinema[];
     export let movie: Movie;
@@ -49,6 +49,7 @@
     let dateSelectionExpanded = false;
     let bookingSelectionExpanded = false;
     let seatSelectionExpanded = false;
+    let summarySectionExpanded = false;
 
     let reducedTickets: number = 0;
     let normalTickets: number = 0;
@@ -128,11 +129,25 @@
         </svelte:fragment>
         Seats
         <svelte:fragment slot="content">
-            <ProgressiveFormSection bind:currentSection={dateSelectionExpanded} buttonText="Finish" continueCallback={finishReservation}>
+            <ProgressiveFormSection bind:currentSection={seatSelectionExpanded} bind:nextSection={summarySectionExpanded}>
                 <svelte:fragment slot="content">
-                    {#if screening != null}
+                    {#if screening != null && (+reducedTickets + +normalTickets + +seniorTickets) > 0}
                         <SeatSelection maxSelection={(+reducedTickets + +normalTickets + +seniorTickets)} {screening}/>
                     {/if}
+                </svelte:fragment>
+            </ProgressiveFormSection>
+        </svelte:fragment>
+    </Expander>
+
+    <Expander bind:expanded={summarySectionExpanded}>
+        <svelte:fragment slot="icon">
+            {@html SummaryIcon}
+        </svelte:fragment>
+        Summary
+        <svelte:fragment slot="content">
+            <ProgressiveFormSection bind:currentSection={summarySectionExpanded} buttonText="Make reservation" continueCallback={finishReservation}>
+                <svelte:fragment slot="content">
+                    <SummarySection/>
                 </svelte:fragment>
             </ProgressiveFormSection>
         </svelte:fragment>

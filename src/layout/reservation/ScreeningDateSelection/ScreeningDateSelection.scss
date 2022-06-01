@@ -6,10 +6,11 @@
 
 .date-section {
     @include flex($direction: column, $align: start, $gap: 24px);
+    padding: 2% 0 2% 0;
 }
 
 .time-list {
-    @include flex($direction: row, $gap: 8px);
+    @include flex($direction: row, $gap: 8px, $wrap: true);
 }
 
 .details {

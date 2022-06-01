@@ -1,12 +1,10 @@
 <script lang="ts">
     import type { Movie } from "$api/Movie";
-    import type { DateWithType, TableDateItem } from "$data/table";
+    import type { Cinema } from "$api/Cinema";
     import { Button, CalendarView } from "fluent-svelte";
-    import { getFriendlyScreeningTypeName, getScreeningsFormatted } from "$lib/utils";
-    import moment from "moment";
-    import { Cinema } from "$api/Cinema";
-    import { onMount } from "svelte";
+    import { getFriendlyScreeningTypeName } from "$lib/utils";
     import { Screening } from "$api/Screening";
+    import moment from "moment";
 
     export let cinema: Cinema;
     export let movie: Movie;
@@ -19,12 +17,11 @@
     const nextMonth = new Date();
 
     $: filteredScreenings = screenings.filter(screening => (screening.start as Date).getDate() == selectedDate.getDate());
-
     $: {
         (async () => {
             screenings = await Screening.getFromMovieAndCinemaId(fetch, movie.id, cinema.id);
         })();
-    }
+    };
 
     yesterday.setDate(yesterday.getDate() - 1);
     nextMonth.setMonth(nextMonth.getMonth() + 1);
@@ -54,7 +51,7 @@
             <p class="screening-details">
                 Type: {getFriendlyScreeningTypeName(selectedScreening?.type)}
                 <br/>
-                Length: {movie.length}
+                Length: {movie.length}min
             </p>
             {/if}
         </div>
