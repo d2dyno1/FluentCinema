@@ -1,8 +1,8 @@
 <script lang="ts">
     import type { TableDateItem } from "$data/table";
     import type { CinemaLocation } from "$data/CinemaLocation";
-    import { ScreeningType } from "$data/ScreeningType";
     import { ComboBox, TextBlock } from "fluent-svelte";
+    import { getFriendlyScreeningTypeName } from "$lib/utils";
     import moment from "moment";
 
     export let screeningDates: TableDateItem[] = [];
@@ -12,19 +12,6 @@
     let innerWidth = 869;
     
     $: comboboxLocations = locations.map((x, i) => ({ name: x.name, value: i }) as any);
-
-    function getFriendlyTypeName(movieType: ScreeningType): string {
-        switch (movieType.toString())
-        {
-            case ScreeningType.SUBTITLES_2D: return "Sub 2D";
-            case ScreeningType.SUBTITLES_3D: return "Sub 3D";
-
-            case ScreeningType.DUBBING_2D: return "Dub 2D";
-            case ScreeningType.DUBBING_3D: return "Dub 3D";
-
-            default: return "";
-        }
-    }
 </script>
 
 <svelte:window bind:innerWidth />
@@ -55,7 +42,7 @@
                     {#if item.dates}
                         {#each item.dates as dateWithType}
                             <div class="item-date">
-                                {moment(dateWithType.date).format('hh:mm')} {getFriendlyTypeName(dateWithType.type)}
+                                {moment(dateWithType.date).format('hh:mm')} {getFriendlyScreeningTypeName(dateWithType.type)}
                             </div>
                         {/each}
                     {/if}

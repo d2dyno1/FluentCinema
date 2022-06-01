@@ -93,7 +93,7 @@
         <svelte:fragment slot="content">
             <ProgressiveFormSection bind:currentSection={dateSelectionExpanded} bind:nextSection={bookingSelectionExpanded}>
                 <svelte:fragment slot="content">
-                    <ScreeningDateSelection/>
+                    <ScreeningDateSelection {movie}/>
                 </svelte:fragment>
             </ProgressiveFormSection>
         </svelte:fragment>

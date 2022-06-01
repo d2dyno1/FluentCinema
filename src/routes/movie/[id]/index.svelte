@@ -23,11 +23,10 @@
 
 <script lang="ts">
     import type { TableDateItem } from "$data/table";
-    import type { Screening } from "$api/Screening";
     import { MovieHeroSection, MovieDateSection, MovieReviewsSection } from "$layout";
     import { ProgressRing } from "fluent-svelte";
     import { MovieType } from "$data/MovieType";
-    import moment from "moment";
+    import { getScreeningsFormatted } from "$lib/utils";
 
     export let movie: Movie;
     export let reviewsPromise: Promise<any>;
@@ -37,29 +36,7 @@
 
     function fillScreenings(cinemaId: string) {
         if (movie.type != MovieType.SERIES) {
-            screeningDatesPromise.then((data: Screening[]) => {
-                // Fill the table
-                for (let i = 0; i < 7 /* Week days */; i++)
-                {
-                    let now = moment().add(i, 'day');
-                    screeningDates.push({ day: now.day(), dayName: now.format('dddd') });
-                }
-
-                // Fill screenings
-                data.forEach(x => {
-                    if (x.cinemaId != cinemaId) {
-                        return;
-                    }
-
-                    let startDate = x.start as Date;
-                    let day = startDate.getDay() - 1;
-                    if (day < 0) {
-                        day = 6;
-                    }
-                    screeningDates[day].dates ??= [];
-                    screeningDates[day].dates?.push({ date: startDate, type: x.type });
-                });
-            });
+            screeningDates = getScreeningsFormatted(cinemaId, screeningDatesPromise);
         }
     }
 </script>

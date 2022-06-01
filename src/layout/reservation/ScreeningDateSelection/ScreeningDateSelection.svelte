@@ -1,11 +1,13 @@
 <script lang="ts">
     import type { Movie } from "$api/Movie";
-    import type { TableDateItem } from "$data/table";
+    import type { DateWithType, TableDateItem } from "$data/table";
     import { Button, CalendarView } from "fluent-svelte";
+    import { getFriendlyScreeningTypeName } from "$lib/utils";
     import moment from "moment";
 
     export let movie: Movie;
     export let screeningDates: TableDateItem[] = [];
+    export let selectedScreening: DateWithType;
     export let selectedDate: Date = new Date();
 
     const today: Date = new Date();
@@ -42,9 +44,11 @@
                 <Button variant="accent">19:30</Button>
                 <Button variant="standard">22:00</Button>
             </div>
-            <div class="screening-details">
-                
-            </div>
+            <p class="screening-details">
+                Type: {getFriendlyScreeningTypeName(selectedScreening?.type)}
+                <br/>
+                Length: {movie.length}
+            </p>
             {/if}
         </div>
     </div>
