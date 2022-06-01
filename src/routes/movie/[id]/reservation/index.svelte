@@ -32,11 +32,12 @@
     import MapIcon from "@fluentui/svg-icons/icons/map_24_filled.svg?raw";
     import { accountSession } from "$/stores";
     import { goto } from "$app/navigation";
+    import { dev } from "$app/env";
 
     export let cinemas: Cinema[];
     export let movie: Movie;
 
-    const DEBUG = !process.env.ROLLUP_WATCH
+    const DEBUG = dev;
 
     let selectedCinema: Cinema;
 
@@ -55,12 +56,12 @@
 
 </script>
 
-{#if !DEBUG}
 <ContentDialog title="Error" open={!$accountSession.isLoggedIn}>
     You need to be logged-in in order to make a reservation.
     <Button variant="accent" slot="footer" on:click={() => goto("/")}>Home</Button>
 </ContentDialog>
 
+{#if !DEBUG}
 <ContentDialog title="Error" open={$accountSession.isLoggedIn && !$accountSession.user.isVerified}>
     You need to verify your e-mail address in order to make a reservation.
     <Button variant="accent" slot="footer" on:click={() => goto("/account/preferences")}>Verify account</Button>
