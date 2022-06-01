@@ -10,6 +10,7 @@
     import KeyIcon from "@fluentui/svg-icons/icons/key_32_filled.svg?raw";
     import InvalidateSessions from "$layout/preferences/InvalidateSessions.svelte";
     import ProfilePicture from "$layout/preferences/ProfilePicture/ProfilePicture.svelte";
+    import ChangePassword from "$layout/preferences/ChangePassword/ChangePassword.svelte";
 
     async function uploadSettings(): Promise<void>
     {
@@ -38,6 +39,7 @@
     <div class="section-title">
         <TextBlock variant="bodyStrong">Security</TextBlock>
     </div>
+    <ChangePassword/>
     <InvalidateSessions/>
     <ActionBlock title="Two-factor authentication" description="You will need to enter a 6-digit code sent to your e-mail every time you log in. Requires a verified e-mail address." icon={KeyIcon}>
         <ToggleSwitch

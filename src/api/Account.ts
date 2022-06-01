@@ -18,6 +18,16 @@ export class Account {
         return response;
     }
 
+    static async changePassword(password: string): Promise<void> {
+        await fetch("/api/account/password/change", {
+            headers: {
+                "Content-Type": "application/json"
+            },
+            method: "PUT",
+            body: JSON.stringify({ password })
+        });
+    }
+
     static async invalidateOtherSessions(): Promise<void> {
         await fetch("/api/account/invalidateothersessions", { method: "DELETE" });
     }
