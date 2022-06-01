@@ -39,13 +39,29 @@
         }
         return promise;
     }
+
+    async function handleKeyboardEvent(event: KeyboardEvent | CustomEvent, value: string, isValid: boolean, validator: any) {
+        const { key } = <KeyboardEvent>event;
+        event.stopPropagation();
+        
+        if (isValid && key == "Enter") {
+            event.preventDefault();
+            try {
+                await validator.validate(value)
+                await onRegister();
+            }
+            catch (ex) {
+                return;
+            }
+        }
+    }
 </script>
 
 <DialogForm title="Register" bind:this={formComponent}>
-    <ValidatedTextBox placeholder="Username" validator={usernameSchema} bind:value={username} bind:isValid={isUsernameValid}></ValidatedTextBox>
-    <ValidatedTextBox type="email" placeholder="E-mail" validator={emailSchema} bind:value={email} bind:isValid={isEmailValid}></ValidatedTextBox>
-    <ValidatedTextBox type="password" placeholder="Password" validator={passwordSchema} bind:value={password} bind:isValid={isPasswordValid}></ValidatedTextBox>
-    <ValidatedTextBox type="password" placeholder="Confirm password" validator={string().equals([password], "Passwords don't match.")} bind:isValid={isConfirmedPasswordValid}></ValidatedTextBox>
+    <ValidatedTextBox placeholder="Username" validator={usernameSchema} bind:value={username} bind:isValid={isUsernameValid}/>
+    <ValidatedTextBox type="email" placeholder="E-mail" validator={emailSchema} bind:value={email} bind:isValid={isEmailValid}/>
+    <ValidatedTextBox type="password" placeholder="Password" validator={passwordSchema} bind:value={password} bind:isValid={isPasswordValid}/>
+    <ValidatedTextBox type="password" placeholder="Confirm password" validator={string().equals([password], "Passwords don't match.")} bind:isValid={isConfirmedPasswordValid} on:keydown={e => handleKeyboardEvent(e, password, isConfirmedPasswordValid, string().equals([password], "Passwords don't match."))}/>
     <PromiseButton
             disabled={!isUsernameValid || !isEmailValid || !isPasswordValid || !isConfirmedPasswordValid}
             variant="accent" keepDisabledAfterResolve={true} slot="footer-left" onClick={onRegister}>Register</PromiseButton>

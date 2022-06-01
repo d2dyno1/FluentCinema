@@ -61,13 +61,13 @@
 
 </script>
 
-<ContentDialog title="Error" open={!$accountSession.isLoggedIn} closable={false}>
+<ContentDialog title="Invalid operation" open={!$accountSession.isLoggedIn} closable={false}>
     You need to be logged-in in order to make a reservation.
     <Button variant="accent" slot="footer" on:click={() => goto("/")}>Home</Button>
 </ContentDialog>
 
 {#if !DEBUG}
-<ContentDialog title="Error" open={$accountSession.isLoggedIn && !$accountSession.user?.isVerified} closable={false}>
+<ContentDialog title="Invalid operation" open={$accountSession.isLoggedIn && !$accountSession.user?.isVerified} closable={false}>
     You need to verify your e-mail address in order to make a reservation.
     <Button variant="accent" slot="footer" on:click={() => goto("/account/preferences")}>Verify account</Button>
 </ContentDialog>

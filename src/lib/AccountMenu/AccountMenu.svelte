@@ -60,7 +60,7 @@
             </LoginForm>
         {:else}
             <RegisterForm>
-                <TextBlock>Don't have an account? <a href="#" on:click={() => isLoginPage = true}>Log in</a></TextBlock>
+                <TextBlock>Already have an account? <a href="#" on:click={() => isLoginPage = true}>Log in</a></TextBlock>
             </RegisterForm>
         {/if}
     </div>
