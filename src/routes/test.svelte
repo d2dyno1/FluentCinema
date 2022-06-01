@@ -1,13 +1,30 @@
+<script lang="ts" context="module">
+    import type { Load } from "@sveltejs/kit";
+    import { Cinema } from "$api/Cinema";
+
+    export const load: Load = async ({ fetch }) => {
+        return {
+            status: 200,
+            props: {
+                cinemas: await Cinema.getList(fetch)
+            }
+        };
+    }
+</script>
+
 <script lang="ts">
-    import type { CinemaLocation } from "$/data/CinemaLocation";
-    import { LocationSelection, TicketsSelection, SeatSelection } from "$layout";
-    import { ProgressiveFormSection } from "$lib";
+    import { TicketsSelection, SeatSelection } from "$layout";
+    import { CinemaSelection, ProgressiveFormSection } from "$lib";
     import { Expander } from "fluent-svelte";
 
     import TicketIcon from "@fluentui/svg-icons/icons/ticket_diagonal_24_filled.svg?raw";
     import SeatsIcon from "@fluentui/svg-icons/icons/people_audience_24_filled.svg?raw";
     import DetailsIcon from "@fluentui/svg-icons/icons/multiselect_ltr_24_filled.svg?raw";
     import MapIcon from "@fluentui/svg-icons/icons/map_24_filled.svg?raw";
+
+    export let cinemas: Cinema[];
+
+    let selectedCinema: Cinema;
 
     let locationSelectionExpanded = true;
     let dateSelectionExpanded = false;
@@ -17,20 +34,6 @@
     let reducedTickets: number = 0;
     let normalTickets: number = 0;
     let seniorTickets: number = 0;
-
-    let cinemaLocations: CinemaLocation[] = [
-        {
-            name: "ABC",
-            city: "somewhere1",
-            street: "somewhere1 2"
-        },
-        {
-            name: "DEF",
-            city: "somewhere2",
-            street: "somewhere2 2"
-        }
-    ];
-    let selectedCinemaLocationIndex: number = 0;
 
     function finishReservation() {
         // TODO
@@ -47,7 +50,7 @@
         <svelte:fragment slot="content">
             <ProgressiveFormSection bind:currentSection={locationSelectionExpanded} bind:nextSection={dateSelectionExpanded}>
                 <svelte:fragment slot="content">
-                    <LocationSelection bind:selectedIndex={selectedCinemaLocationIndex} locations={cinemaLocations}/>
+                    <CinemaSelection {cinemas} bind:selectedCinema={selectedCinema}/>
                 </svelte:fragment>
             </ProgressiveFormSection>
         </svelte:fragment>

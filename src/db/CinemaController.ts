@@ -7,6 +7,8 @@ export class CinemaController implements ICinema, IDatabaseContext<Cinema> {
     readonly id!: number;
     readonly city!: string;
     readonly address!: string;
+    readonly latitude!: number;
+    readonly longitude!: number;
 
     private constructor(cinema: Partial<CinemaController>) {
         Object.assign(this, cinema);

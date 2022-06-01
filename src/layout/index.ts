@@ -15,4 +15,3 @@ export { default as MovieDateSection } from "./Movie/MovieDateSection/MovieDateS
 
 export { default as SeatSelection } from "./reservation/SeatSelection/SeatSelection.svelte";
 export { default as TicketsSelection } from "./reservation/TicketsSelection/TicketsSelection.svelte";
-export { default as LocationSelection } from "./reservation/LocationSelection/LocationSelection.svelte";

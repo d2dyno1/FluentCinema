@@ -16,7 +16,7 @@
 </script>
 
 <div class="wrapper">
-    <div>
+    <div class="content">
         <slot name="content"/>
     </div>
     <div>

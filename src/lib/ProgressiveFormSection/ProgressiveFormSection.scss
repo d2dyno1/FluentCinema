@@ -4,3 +4,8 @@
     @include flex($direction: column, $align: center, $gap: 32px);
     flex: 1 1 auto;
 }
+
+.content {
+    height: 100%;
+    width: 100%;
+}
