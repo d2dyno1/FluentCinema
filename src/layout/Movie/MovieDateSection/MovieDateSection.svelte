@@ -1,12 +1,17 @@
 <script lang="ts">
     import type { TableDateItem } from "$data/table";
+    import type { CinemaLocation } from "$data/CinemaLocation";
     import { ScreeningType } from "$data/ScreeningType";
-    import { TextBlock } from "fluent-svelte";
+    import { ComboBox, TextBlock } from "fluent-svelte";
     import moment from "moment";
 
     export let screeningDates: TableDateItem[] = [];
+    export let locations: CinemaLocation[];
+    export let selectedLocationIndex: number = 0;
 
     let innerWidth = 869;
+    
+    $: comboboxLocations = locations.map((x, i) => ({ name: x.name, value: i }) as any);
 
     function getFriendlyTypeName(movieType: ScreeningType): string {
         switch (movieType.toString())
@@ -28,6 +33,9 @@
 <div class="wrapper">
     <div class="title">
         <TextBlock variant="title">Available on</TextBlock>
+    </div>
+    <div class="cinema-selection">
+        <ComboBox bind:value={selectedLocationIndex} items={comboboxLocations}/>
     </div>
     <div class="calendar-wrapper">
         {#each screeningDates as item, i}

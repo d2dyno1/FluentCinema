@@ -34,25 +34,32 @@
 
     let screeningDates: TableDateItem[] = [];
 
-    if (movie.type != MovieType.SERIES) {
-        screeningDatesPromise.then((data: Screening[]) => {
-            // Fill the table
-            for (let i = 0; i < 7 /* Week days */; i++)
-            {
-                screeningDates.push({dayName: moment().add(i, 'day').format('dddd')});
-            }
 
-            // Fill screenings
-            data.forEach(x => {
-                let startDate = x.start as Date;
-                let day = startDate.getDay() - 1;
-                if (day < 0) {
-                    day = 6;
+    function fillScreenings(cinemaId: string) {
+        if (movie.type != MovieType.SERIES) {
+            screeningDatesPromise.then((data: Screening[]) => {
+                // Fill the table
+                for (let i = 0; i < 7 /* Week days */; i++)
+                {
+                    screeningDates.push({dayName: moment().add(i, 'day').format('dddd')});
                 }
-                screeningDates[day].dates ??= [];
-                screeningDates[day].dates?.push({ date: startDate, type: x.type });
+
+                // Fill screenings
+                data.forEach(x => {
+                    if (x.cinemaId != cinemaId) {
+                        return;
+                    }
+
+                    let startDate = x.start as Date;
+                    let day = startDate.getDay() - 1;
+                    if (day < 0) {
+                        day = 6;
+                    }
+                    screeningDates[day].dates ??= [];
+                    screeningDates[day].dates?.push({ date: startDate, type: x.type });
+                });
             });
-        });
+        }
     }
 </script>
 
