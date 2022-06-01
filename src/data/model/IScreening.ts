@@ -1,6 +1,7 @@
 import type { ScreeningType } from "$data/ScreeningType";
 
 export interface IScreening {
+    readonly id: string;
     readonly movieId: string;
     readonly cinemaId: string;
     readonly seatRowCount: number;

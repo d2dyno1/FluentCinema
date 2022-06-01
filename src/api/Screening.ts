@@ -3,6 +3,7 @@ import type { Fetch } from "./ApiContext";
 import type { ScreeningType } from "$data/ScreeningType";
 
 export class Screening implements IScreening {
+    readonly id: string;
     readonly movieId: string;
     readonly cinemaId: string;
     readonly seatRowCount: number;
@@ -12,6 +13,7 @@ export class Screening implements IScreening {
     readonly type: ScreeningType;
 
     constructor(screening: IScreening) {
+        this.id = screening.id;
         this.movieId = screening.movieId;
         this.cinemaId = screening.cinemaId;
         this.seatRowCount = screening.seatRowCount;
@@ -19,6 +21,14 @@ export class Screening implements IScreening {
         this.soldOut = screening.soldOut;
         this.start = new Date(screening.start);
         this.type = screening.type;
+    }
+
+    async getReservedSeats(): Promise<number[]> {
+        return fetch(`/api/screening/${this.id}/reserved-seats`).then(response => response.json());
+    }
+
+    static async getFromId(id: string): Promise<Screening> {
+        return fetch(`/api/screening/${id}`).then(response => response.json()).then(screening => new Screening(screening));
     }
 
     static async getFromMovieId(fetch: Fetch, movieId: string | number): Promise<Screening[]> {

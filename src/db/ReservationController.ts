@@ -26,7 +26,7 @@ export class ReservationController implements IReservation, IDatabaseContext<Res
         Object.assign(this, reservation);
     }
 
-    public static async create(user: AccountController, screeningId: number, seat: number) {
+    public static async create(user: AccountController, screeningId: string, seat: number) {
         await client.query('INSERT INTO reservations("userId", "screeningId", seat) VALUES ($1, $2, $3);', [user.id, screeningId, seat]);
     }
 
