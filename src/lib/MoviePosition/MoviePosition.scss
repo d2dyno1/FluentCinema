@@ -32,6 +32,10 @@ picture {
     &:hover {
         background-color: var(--fds-control-fill-secondary);
         transform: translateY(-2px);
+
+        .description-overlay {
+            background: linear-gradient(0deg, var(--fds-solid-background-quarternary) 0%, rgba(0, 0, 0, 0) 80%);
+        }
     }
 
     &:active {
@@ -39,6 +43,10 @@ picture {
         background-color: var(--fds-control-fill-tertiary);
         color: var(--fds-text-secondary);
         transform: translateY(0px);
+
+        .description-overlay {
+            background: linear-gradient(0deg, var(--fds-solid-background-base) 0%, rgba(0, 0, 0, 0) 80%);
+        }
     }
 }
 
@@ -85,14 +93,6 @@ picture {
     width: 70%;
     background: linear-gradient(0deg, var(--fds-solid-background-tertiary) 0%, rgba(0, 0, 0, 0) 80%);
     transition: var(--fds-control-faster-duration) ease background-color;
-
-    &:hover {
-        background: linear-gradient(0deg, var(--fds-solid-background-quarternary) 0%, rgba(0, 0, 0, 0) 80%);
-    }
-
-    &:active {
-        background: linear-gradient(0deg, var(--fds-solid-background-base) 0%, rgba(0, 0, 0, 0) 80%);
-    }
 }
 
 .details {
