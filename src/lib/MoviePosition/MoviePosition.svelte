@@ -1,8 +1,9 @@
 <script lang="ts">
+    import type { Movie } from "$api/Movie";
     import { MovieRating } from "$lib";
-    import { Movie } from "$api/Movie";
 
     export let movie: Movie;
+    
 </script>
 
 <a class="item" href="/movie/{movie.id}" sveltekit:prefetch>
