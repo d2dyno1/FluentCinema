@@ -26,9 +26,11 @@
             </div>
         </div>
         <div class="length-and-premiere">
-            <div>
-                {@html TimerIcon} {movie.length}min
-            </div>
+            {#if movie.type == MovieType.MOVIE}
+                <div>
+                    {@html TimerIcon} {movie.length}min
+                </div>
+            {/if}
             <div>
                 {@html CalendarIcon} {new Date(movie.release).toLocaleDateString()}
             </div>
