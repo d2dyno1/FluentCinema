@@ -12,6 +12,18 @@
     margin-bottom: 8px;
 }
 
+.title-text {
+    @include flex($direction: row, $gap: 16px);
+}
+
+.subtitle-text {
+    opacity: 0.8;
+    font-size: 18px;
+    font-weight: 400;
+    margin-top: auto;
+    margin-bottom: 8px;
+}
+
 .length-and-premiere {
     @include flex($direction: row, $gap: 128px);
     margin-bottom: 16px;

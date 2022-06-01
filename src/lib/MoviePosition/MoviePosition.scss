@@ -78,7 +78,7 @@ picture {
 }
 
 .description-text {
-    font-size: small;
+    font-size: 12px;
     margin: 0px 0px 4px 0px;
     opacity: 0.8;
     display: -webkit-box;
@@ -94,7 +94,7 @@ picture {
     bottom: 16%;
     position: absolute;
     height: 20%;
-    width: 70%;
+    width: 62%;
     background: linear-gradient(0deg, var(--fds-solid-background-tertiary) 0%, rgba(0, 0, 0, 0) 80%);
     transition: var(--fds-control-faster-duration) ease background-color;
 }

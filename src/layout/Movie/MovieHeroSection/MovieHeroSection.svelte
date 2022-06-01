@@ -16,7 +16,14 @@
     </picture>
     <div class="description">
         <div class="title">
-            {movie.name}
+            <div class="title-text">
+                {movie.name}
+                {#if movie.type != MovieType.SERIES}
+                    <div class="subtitle-text">
+                        {movie.description}
+                    </div>
+                {/if}
+            </div>
             <div>
                 {#if movie.type != MovieType.SERIES}
                     <Button variant="accent">Watch now</Button>
