@@ -3,9 +3,8 @@
     import { Cinema } from "$api/Cinema";
     import { Movie } from "$api/Movie";
 
-    export const load: Load = async ({ fetch, params }) => {
+    export const load: Load = async ({ session, fetch, params }) => {
         let movie = await Movie.getFromId(fetch, params.id);
-        console.log(movie);
         if (!movie) {
             return {
                 status: 302,
@@ -25,12 +24,14 @@
 <script lang="ts">
     import { TicketsSelection, SeatSelection } from "$layout";
     import { CinemaSelection, ProgressiveFormSection } from "$lib";
-    import { Expander } from "fluent-svelte";
+    import { Button, ContentDialog, Expander } from "fluent-svelte";
 
     import TicketIcon from "@fluentui/svg-icons/icons/ticket_diagonal_24_filled.svg?raw";
     import SeatsIcon from "@fluentui/svg-icons/icons/people_audience_24_filled.svg?raw";
     import DetailsIcon from "@fluentui/svg-icons/icons/multiselect_ltr_24_filled.svg?raw";
     import MapIcon from "@fluentui/svg-icons/icons/map_24_filled.svg?raw";
+    import { accountSession } from "$/stores";
+    import { goto } from "$app/navigation";
 
     export let cinemas: Cinema[];
     export let movie: Movie;
@@ -51,6 +52,17 @@
     }
 
 </script>
+
+<ContentDialog title="Error" open={!$accountSession.isLoggedIn}>
+    You need to be logged in in order to make a reservation.
+    <Button variant="accent" slot="footer" on:click={() => goto("/")}>Home</Button>
+</ContentDialog>
+
+<ContentDialog title="Error" open={$accountSession.isLoggedIn && !$accountSession.user.isVerified}>
+    You need to verify your e-mail address in order to make a reservation.
+    <Button variant="accent" slot="footer" on:click={() => goto("/account/preferences")}>Preferences</Button>
+</ContentDialog>
+
 
 <div class="wrapper">
     <Expander bind:expanded={locationSelectionExpanded}>
