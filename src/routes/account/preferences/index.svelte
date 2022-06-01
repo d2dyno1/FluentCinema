@@ -35,7 +35,7 @@
 <div class="settings-list">
     <ProfilePicture/>
     <ChangeEmail/>
-    <TextBlock>Security</TextBlock>
+    <TextBlock variant="bodyStrong">Security</TextBlock>
     <InvalidateSessions/>
     <ActionBlock title="Two-factor authentication" description="You will need to enter a 6-digit code sent to your e-mail every time you log in. Requires a verified e-mail address." icon={KeyIcon}>
         <ToggleSwitch
@@ -50,7 +50,7 @@
             {/if}
         </ToggleSwitch>
     </ActionBlock>
-    <TextBlock>Other</TextBlock>
+    <TextBlock variant="bodyStrong">Other</TextBlock>
     <DeleteAccount/>
 </div>
 

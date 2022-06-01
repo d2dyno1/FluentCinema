@@ -35,7 +35,6 @@
 
     let screeningDates: TableDateItem[] = [];
 
-
     function fillScreenings(cinemaId: string) {
         if (movie.type != MovieType.SERIES) {
             screeningDatesPromise.then((data: Screening[]) => {

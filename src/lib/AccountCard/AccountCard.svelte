@@ -11,7 +11,7 @@
     <div class="card">
         {#if $accountSession.isLoggedIn}
             <AccountPicture size={64} userId={$accountSession.user.id}/>
-            <div>{$accountSession.user.username}</div>
+            <div class="username-text">{$accountSession.user.username}</div>
             <div class="email-text">{$accountSession.user.email}</div>
         {:else}
             <div>AccountName</div>

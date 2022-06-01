@@ -15,7 +15,9 @@
         </div>
     {:then response}
         {#if response.length == 0}
-            <TextBlock>You don't have any reservations.</TextBlock>
+            <div class="no-reservations-text">
+                <TextBlock>You don't have any reservations.</TextBlock>
+            </div>
         {/if}
         {#each response as reservation}
             <MovieReservation {reservation}/>
