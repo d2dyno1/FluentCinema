@@ -20,9 +20,11 @@
 
     $: filteredScreenings = screenings.filter(screening => (screening.start as Date).getDate() == selectedDate.getDate());
 
-    onMount(async () => {
-        screenings = await Screening.getFromMovieAndCinemaId(fetch, movie.id, cinema.id);
-    })
+    $: {
+        (async () => {
+            screenings = await Screening.getFromMovieAndCinemaId(fetch, movie.id, cinema.id);
+        })();
+    }
 
     yesterday.setDate(yesterday.getDate() - 1);
     nextMonth.setMonth(nextMonth.getMonth() + 1);
