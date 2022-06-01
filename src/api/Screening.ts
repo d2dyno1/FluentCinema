@@ -36,4 +36,10 @@ export class Screening implements IScreening {
             return screenings.map(screening => new Screening(screening))
         });
     }
+
+    static async getFromMovieAndCinemaId(fetch: Fetch, movieId: string | number, cinemaId: string): Promise<Screening[]> {
+        return fetch(`/api/screening/list?movieId=${movieId}&cinemaId=${cinemaId}`).then(response => response.json()).then((screenings: IScreening[]) => {
+            return screenings.map(screening => new Screening(screening))
+        });
+    }
 }

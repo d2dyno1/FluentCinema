@@ -2,19 +2,27 @@
     import type { Movie } from "$api/Movie";
     import type { DateWithType, TableDateItem } from "$data/table";
     import { Button, CalendarView } from "fluent-svelte";
-    import { getFriendlyScreeningTypeName } from "$lib/utils";
+    import { getFriendlyScreeningTypeName, getScreeningsFormatted } from "$lib/utils";
     import moment from "moment";
+    import { Cinema } from "$api/Cinema";
+    import { onMount } from "svelte";
+    import { Screening } from "$api/Screening";
 
+    export let cinema: Cinema;
     export let movie: Movie;
-    export let screeningDates: TableDateItem[] = [];
-    export let selectedScreening: DateWithType;
-    export let selectedDate: Date = new Date();
+    export let selectedScreening: Screening;
 
-    const today: Date = new Date();
+    let screenings: Screening[] = [];
+    let selectedDate: Date = new Date();
+
     const yesterday = new Date();
     const nextMonth = new Date();
 
-    $: dates = screeningDates[screeningDates.findIndex(x => x.day == today.getDay())]?.dates;
+    $: filteredScreenings = screenings.filter(screening => (screening.start as Date).getDate() == selectedDate.getDate());
+
+    onMount(async () => {
+        screenings = await Screening.getFromMovieAndCinemaId(fetch, movie.id, cinema.id);
+    })
 
     yesterday.setDate(yesterday.getDate() - 1);
     nextMonth.setMonth(nextMonth.getMonth() + 1);
@@ -33,16 +41,13 @@
         <div class="details">
             {#if selectedDate}
             <div class="time-list">
-                {#if dates}
-                {#each dates as sc}
-                    <div>
-                        <Button variant="standard">{moment(sc.date).format('hh:mm')}</Button>
-                    </div>
-                {/each}
+                {#if screenings}
+                    {#each filteredScreenings as screening}
+                        <div>
+                            <Button variant={screening == selectedScreening ? "accent" : "standard"} on:click={() => selectedScreening = screening}>{moment(screening.start).format('HH:mm')}</Button>
+                        </div>
+                    {/each}
                 {/if}
-                <Button variant="standard">17:30</Button>
-                <Button variant="accent">19:30</Button>
-                <Button variant="standard">22:00</Button>
             </div>
             <p class="screening-details">
                 Type: {getFriendlyScreeningTypeName(selectedScreening?.type)}

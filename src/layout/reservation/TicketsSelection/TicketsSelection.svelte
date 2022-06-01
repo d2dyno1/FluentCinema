@@ -1,10 +1,15 @@
 <script lang="ts">
     import { TicketCard } from "$lib";
+    import { Screening } from "$api/Screening";
+    import { onMount } from "svelte";
 
+    export let screening: Screening;
     export let reducedTickets: number = 0;
     export let normalTickets: number = 0;
     export let seniorTickets: number = 0;
-    export let maxSeats: number;
+
+    let reservedSeats: number = 0;
+    $: maxSeats = screening.seatRowLength * screening.seatRowCount - reservedSeats;
 
     const reducedTicketPrice = 16.75;
     const normalTicketPrice = 21.99;
@@ -14,6 +19,10 @@
         style: 'currency',
         currency: 'PLN'
     });
+
+    onMount(async () => {
+        reservedSeats = (await screening.getReservedSeats()).length;
+    })
 
     $: maxSeatsAvailable = maxSeats - (reducedTickets + normalTickets + seniorTickets);
     $: totalPrice = (reducedTickets * reducedTicketPrice) + (normalTickets * normalTicketPrice) + (seniorTickets * seniorTicketPrice);
