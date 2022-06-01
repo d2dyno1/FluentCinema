@@ -7,6 +7,7 @@ import { ScreeningController } from "$db/ScreeningController";
 import { ReservationController } from "$db/ReservationController";
 import { MovieController } from "$db/MovieController";
 import { MovieType } from "$data/MovieType";
+import moment from "moment";
 
 export const post: RequestHandler = async ({ request }) => {
     let session = await SessionController.getFromRequest(request);
@@ -22,6 +23,9 @@ export const post: RequestHandler = async ({ request }) => {
     let screening = await ScreeningController.getFromId(params.screeningId);
     if (screening == null || (await MovieController.getFromId(screening.movieId))!.type == MovieType.SERIES) {
         return badRequest;
+    }
+    if (moment().isAfter(moment(screening.start))) {
+        return badRequestWithMessage("This screening has already started or ended.");
     }
 
     let reservedSeats = await screening.getReservedSeats();

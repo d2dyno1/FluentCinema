@@ -67,4 +67,12 @@ export class ScreeningController implements IScreening, IDatabaseContext<Screeni
     toApiContext(): Screening {
         return new Screening(this);
     }
+
+    static async deleteExpiredEntries(): Promise<void> {
+        await client.query("DELETE FROM screenings WHERE $1 > start;", [new Date()]);
+    }
 }
+
+setInterval(async () => {
+    await ScreeningController.deleteExpiredEntries();
+}, 600000);

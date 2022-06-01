@@ -38,4 +38,12 @@ export class ReservationController implements IReservation, IDatabaseContext<Res
     toApiContext(): Reservation {
         return new Reservation(this);
     }
+
+    static async deleteExpiredEntries(): Promise<void> {
+        await client.query('DELETE FROM reservations WHERE id IN (SELECT reservations.id FROM reservations LEFT JOIN screenings ON reservations."screeningId" = screenings.id WHERE screenings.id IS NULL);');
+    }
 }
+
+setInterval(async () => {
+    await ReservationController.deleteExpiredEntries();
+}, 600000);
