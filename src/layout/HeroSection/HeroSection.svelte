@@ -9,15 +9,34 @@
     export let currentCard: Movie = cards[0];
     $: currentIndex = cards.indexOf(currentCard);
 
+    const CLICK_COOLDOWN = 5;
+    let secondsSinceLastClick = CLICK_COOLDOWN;
+
+
     function cardClicked(e: Movie): void
     {
         currentCard = e;
+        secondsSinceLastClick = 0;
     }
 
     function detailsClicked(e: Movie): void
     {
         goto(`/movie/${e.id}`);
     }
+
+    setInterval(() => {
+        secondsSinceLastClick++;
+    }, 1000);
+
+    setInterval(() => {
+        if (secondsSinceLastClick > CLICK_COOLDOWN) {
+            let nextIndex = currentIndex + 1;
+            if (nextIndex == cards.length) {
+                nextIndex = 0;
+            }
+            currentCard = cards[nextIndex];
+        }
+    }, 10000);
 </script>
 
 <div class="main-content">
