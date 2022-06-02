@@ -7,6 +7,7 @@
     export let reducedTickets: number = 0;
     export let normalTickets: number = 0;
     export let seniorTickets: number = 0;
+    export let totalPrice: number;
 
     let reservedSeats: number = 0;
     $: maxSeats = screening.seatRowLength * screening.seatRowCount - reservedSeats;
@@ -25,7 +26,9 @@
     });
 
     $: maxSeatsAvailable = maxSeats - (reducedTickets + normalTickets + seniorTickets);
-    $: totalPrice = (reducedTickets * reducedTicketPrice) + (normalTickets * normalTicketPrice) + (seniorTickets * seniorTicketPrice);
+    $: {
+        totalPrice = reducedTickets * reducedTicketPrice + normalTickets * normalTicketPrice + seniorTickets * seniorTicketPrice;
+    }
 </script>
 
 <div class="wrapper">

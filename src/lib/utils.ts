@@ -3,29 +3,27 @@ import type { TableDateItem } from "$data/table";
 import { ScreeningType } from "$data/ScreeningType";
 import moment from "moment";
 
-export const getScreeningsFormatted = (cinemaId: string, screeningDatesPromise: Promise<any>): TableDateItem[] => {
+export const getScreeningsFormatted = (cinemaId: string, data: Screening[]): TableDateItem[] => {
     let screeningDates: TableDateItem[] = [];
 
-    screeningDatesPromise.then((data: Screening[]) => {
-        // Fill the table
-        for (let i = 0; i < 7 /* Week days */; i++)
-        {
-            let now = moment().add(i, 'day');
-            screeningDates.push({ day: now.day(), dayName: now.format('dddd') });
+    // Fill the table
+    for (let i = 0; i < 7 /* Week days */; i++)
+    {
+        let now = moment().add(i, 'day');
+        screeningDates.push({ day: now.day(), dayName: now.format('dddd') });
+    }
+    // Fill screenings
+    data.forEach(x => {
+        if (x.cinemaId != cinemaId) {
+            return;
         }
-        // Fill screenings
-        data.forEach(x => {
-            if (x.cinemaId != cinemaId) {
-                return;
-            }
-            let startDate = x.start as Date;
-            let day = startDate.getDay() - 1;
-            if (day < 0) {
-                day = 6;
-            }
-            screeningDates[day].dates ??= [];
-            screeningDates[day].dates?.push({ date: startDate, type: x.type });
-        });
+        let startDate = x.start as Date;
+        let day = startDate.getDay() - 1;
+        if (day < 0) {
+            day = 6;
+        }
+        screeningDates[day].dates ??= [];
+        screeningDates[day].dates?.push({ date: startDate, type: x.type });
     });
 
     return screeningDates;

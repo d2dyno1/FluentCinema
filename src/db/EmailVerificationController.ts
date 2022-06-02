@@ -47,7 +47,8 @@ export class EmailVerificationController implements IExpirable {
     }
 
     static async beginVerification(user: AccountController) {
-        await user.sendMail("test", await EmailVerificationController.generateVerificationLink(user));
+        let link = await EmailVerificationController.generateVerificationLink(user);
+        await user.sendMail("E-mail verification", `In order to verify your e-mail address, please click on the link below.\n${link}`);
     }
 
     private static async generateVerificationLink(user: AccountController) {

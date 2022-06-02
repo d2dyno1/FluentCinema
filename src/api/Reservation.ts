@@ -20,7 +20,7 @@ export class Reservation implements IReservation {
         return json.map(reservation => new Reservation(reservation));
     }
 
-    static async create(screeningId: number, seats: number[]): Promise<GeneralResponse> {
+    static async create(screeningId: string, seats: number[]): Promise<GeneralResponse> {
         let response = await fetch("/api/account/reservation/create", {
             method: "POST",
             headers: {

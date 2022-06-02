@@ -4,7 +4,7 @@
     import { onMount } from "svelte";
 
     export let screening: Screening;
-    export let selectedSeats: number[];
+    export let selectedSeats: number[] = [];
     export let maxSelection = 0;
 
     let reservedSeats: number[] = [];
@@ -15,20 +15,15 @@
     });
 
     let seat = 1;
-    $: if (screening != null) {
-        seat = 1;
-        seats = [];
-        selectedSeats = [];
-        for (let i = 0; i < screening.seatRowCount; i++) {
-            seats.push([]);
-            for (let j = 0; j < screening.seatRowLength; j++) {
-                seats[i].push(seat++);
-            }
+    for (let i = 0; i < screening.seatRowCount; i++) {
+        seats.push([]);
+        for (let j = 0; j < screening.seatRowLength; j++) {
+            seats[i].push(seat++);
         }
     }
 
     function addSelectedSeat(seat: number) {
-        if (maxSelection != 0 && !selectedSeats.includes(seat)) {
+        if (maxSelection != 0 && !selectedSeats.includes(seat) && !reservedSeats.includes(seat)) {
             selectedSeats.push(seat);
         }
         selectedSeats = [...selectedSeats];

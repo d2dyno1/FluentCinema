@@ -5,6 +5,7 @@
     export let nextSection: boolean = false;
     export let continueCallback: (() => void) = () => { };
     export let buttonText: string = "Continue";
+    export let useCustomButton: boolean;
 
     function switchSection() {
         currentSection = false;
@@ -20,7 +21,11 @@
         <slot name="content"/>
     </div>
     <div>
-        <Button on:click={switchSection}>{buttonText}</Button>
+        {#if useCustomButton}
+            <slot name="button"/>
+        {:else}
+            <Button on:click={switchSection}>{buttonText}</Button>
+        {/if}
     </div>
 </div>
 

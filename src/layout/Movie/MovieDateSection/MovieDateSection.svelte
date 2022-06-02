@@ -1,17 +1,12 @@
 <script lang="ts">
     import type { TableDateItem } from "$data/table";
-    import type { CinemaLocation } from "$data/CinemaLocation";
-    import { ComboBox, TextBlock } from "fluent-svelte";
+    import { TextBlock } from "fluent-svelte";
     import { getFriendlyScreeningTypeName } from "$lib/utils";
     import moment from "moment";
 
     export let screeningDates: TableDateItem[] = [];
-    export let locations: CinemaLocation[];
-    export let selectedLocationIndex: number = 0;
 
     let innerWidth = 869;
-    
-    $: comboboxLocations = locations.map((x, i) => ({ name: x.name, value: i }) as any);
 </script>
 
 <svelte:window bind:innerWidth />
@@ -20,9 +15,6 @@
 <div class="wrapper">
     <div class="title">
         <TextBlock variant="title">Available on</TextBlock>
-    </div>
-    <div class="cinema-selection">
-        <ComboBox bind:value={selectedLocationIndex} items={comboboxLocations}/>
     </div>
     <div class="calendar-wrapper">
         {#each screeningDates as item, i}

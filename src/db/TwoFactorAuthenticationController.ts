@@ -37,7 +37,9 @@ export class TwoFactorAuthenticationController implements IExpirable {
     }
 
     static async sendOtpToUser(user: AccountController) {
-        await user.sendMail("test", await TwoFactorAuthenticationController.generateCode(user));
+        let code = await TwoFactorAuthenticationController.generateCode(user);
+        await user.sendMail("Two-factor authentication", `Your two-factor authentication code: ${code}.
+If you did not expect this message, someone else is trying to log into your account.`);
     }
 
     static async generateCode(user: AccountController) {

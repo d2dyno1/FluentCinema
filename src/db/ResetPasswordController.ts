@@ -45,7 +45,10 @@ export class ResetPasswordController {
     }
 
     static async beginProcess(user: AccountController) {
-        await user.sendMail("test", await this.generateLink(user));
+        let link = await this.generateLink(user);
+        await user.sendMail("Password reset", `A password reset has been requested. In order to change your password, please click on the link below.
+${link}
+If you did not request this, you can safely ignore this message.`);
     }
 
     private static async generateLink(user: AccountController): Promise<string> {

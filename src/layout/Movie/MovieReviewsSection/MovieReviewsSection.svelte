@@ -36,8 +36,8 @@
     }
 
     function updateButtons() {
-        isRightVisible = (currentReview + 1) < reviews.length;
-        isLeftVisible = (currentReview - 1) > 0;
+        // isRightVisible = (currentReview + 1) < reviews.length;
+        // isLeftVisible = (currentReview - 1) > 0;
     }
 </script>
 
