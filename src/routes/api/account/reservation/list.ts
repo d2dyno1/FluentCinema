@@ -1,11 +1,11 @@
 import { forbidden } from "$api/responses";
 import type { RequestHandler } from "@sveltejs/kit";
-import { SessionDatabaseContext } from "$db/SessionDatabaseContext";
-import type { ReservationApiContext } from "$api/ReservationApiContext";
+import { SessionController } from "$db/SessionController";
+import type { Reservation } from "$api/Reservation";
 
 // @ts-ignore
-export const get: RequestHandler<any, ReservationApiContext> = async ({ request }) => {
-    let session = await SessionDatabaseContext.getFromRequest(request);
+export const get: RequestHandler<any, Reservation> = async ({ request }) => {
+    let session = await SessionController.getFromRequest(request);
     if (session == null) {
         return forbidden;
     }

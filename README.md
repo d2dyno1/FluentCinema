@@ -1,38 +1,24 @@
-# create-svelte
+# Fluent Cinema
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+The Fluent Cinema project tries to portrait how modern cinema experience should look like.
+<br/><br/>
+Created by [d2dyno](https://github.com/d2dyno1) and [taj-ny](https://github.com/taj-ny) for a school project. The code is not production ready.
 
-## Creating a project
+Building
+---
 
-If you're seeing this, you've probably already done this step. Congrats!
+1. Install dependencies:
 
 ```bash
-# create a new project in the current directory
-npm init svelte
-
-# create a new project in my-app
-npm init svelte my-app
+npm i
 ```
 
-## Developing
-
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+2. Run `dev` configuration:
 
 ```bash
 npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
 ```
 
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+**Important note**
+---
+FluentCinema consumes database to access movie data. In order to run the project, you'll need to establish a database and provide `credentials.json` in the root directory.

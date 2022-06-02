@@ -1,13 +1,13 @@
 import { badRequest, badRequestWithMessage, forbidden, forbiddenWithMessage } from "$api/responses";
-import { AccountDatabaseContext } from "$db/AccountDatabaseContext";
-import { SessionDatabaseContext } from "$db/SessionDatabaseContext";
+import { AccountController } from "$db/AccountController";
+import { SessionController } from "$db/SessionController";
 import { loginSchema } from "$data/schema/LoginSchema";
-import { TwoFactorAuthenticationDatabaseContext } from "$db/TwoFactorAuthenticationDatabaseContext";
+import { TwoFactorAuthenticationController } from "$db/TwoFactorAuthenticationController";
 import type { RequestHandler } from "@sveltejs/kit";
 import type { LoginSchema } from "$data/schema/LoginSchema";
 
 export const post: RequestHandler = async ({ request }) => {
-    if (await SessionDatabaseContext.getFromRequest(request) != null) {
+    if (await SessionController.getFromRequest(request) != null) {
         return forbidden;
     }
 
@@ -16,7 +16,7 @@ export const post: RequestHandler = async ({ request }) => {
         return badRequest;
     }
 
-    let user = await AccountDatabaseContext.getFromEmail(params.email);
+    let user = await AccountController.getFromEmail(params.email);
     if (user == null) {
         return badRequestWithMessage("Account does not exist.");
     } else if (!await user.verifyPassword(params.password)) {
@@ -25,7 +25,7 @@ export const post: RequestHandler = async ({ request }) => {
 
     if ((await user.getSettings()).twoFactorAuthentication) {
         if (!params.otp) {
-            await TwoFactorAuthenticationDatabaseContext.sendOtpToUser(user);
+            await TwoFactorAuthenticationController.sendOtpToUser(user);
             return {
                 status: 200,
                 body: {
@@ -33,7 +33,7 @@ export const post: RequestHandler = async ({ request }) => {
                     otpRequired: true
                 }
             }
-        } else if (!await TwoFactorAuthenticationDatabaseContext.isValid(user, params.otp)) {
+        } else if (!await TwoFactorAuthenticationController.isValid(user, params.otp)) {
             return badRequestWithMessage("Incorrect one-time password.");
         }
     }
@@ -43,7 +43,7 @@ export const post: RequestHandler = async ({ request }) => {
             success: true
         },
         headers: {
-            'Set-Cookie': (await SessionDatabaseContext.create(user)).getCookie()
+            'Set-Cookie': (await SessionController.create(user)).getCookie()
         }
     };
 }

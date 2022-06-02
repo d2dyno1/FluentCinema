@@ -1,13 +1,13 @@
 import { badRequest, badRequestWithMessage, forbidden } from "$api/responses";
 import type { RequestHandler } from "@sveltejs/kit";
-import { SessionDatabaseContext } from "$db/SessionDatabaseContext";
-import { AccountDatabaseContext } from "$db/AccountDatabaseContext";
-import { EmailVerificationDatabaseContext } from "$db/EmailVerificationDatabaseContext";
+import { SessionController } from "$db/SessionController";
+import { AccountController } from "$db/AccountController";
+import { EmailVerificationController } from "$db/EmailVerificationController";
 import { registerSchema } from "$data/schema/RegisterSchema";
 import type { RegisterSchema } from "$data/schema/RegisterSchema";
 
 export const post: RequestHandler = async ({ request }) => {
-    if (await SessionDatabaseContext.getFromRequest(request) != null) {
+    if (await SessionController.getFromRequest(request) != null) {
         return forbidden;
     }
 
@@ -16,14 +16,14 @@ export const post: RequestHandler = async ({ request }) => {
         return badRequest;
     }
 
-    if (await AccountDatabaseContext.getFromEmail(params.email) != undefined) {
+    if (await AccountController.getFromEmail(params.email) != undefined) {
         return badRequestWithMessage("This e-mail address is already in use.");
-    } else if (await AccountDatabaseContext.isUsernameTaken(params.username)) {
+    } else if (await AccountController.isUsernameTaken(params.username)) {
         return badRequestWithMessage("This username is already taken.");
     }
 
-    let user = await AccountDatabaseContext.create(params.username, params.email, params.password);
-    await EmailVerificationDatabaseContext.beginVerification(user);
+    let user = await AccountController.create(params.username, params.email, params.password);
+    await EmailVerificationController.beginVerification(user);
 
     return {
         status: 200,
@@ -31,7 +31,7 @@ export const post: RequestHandler = async ({ request }) => {
             success: true
         },
         headers: {
-            "Set-Cookie": (await SessionDatabaseContext.create(user)).getCookie(),
+            "Set-Cookie": (await SessionController.create(user)).getCookie(),
         }
     };
 }

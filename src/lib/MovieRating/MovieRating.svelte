@@ -1,8 +1,8 @@
 <script lang="ts">
-    import { MovieApiContext } from "$api/MovieApiContext";
+    import { Movie } from "$api/Movie";
     import { Rating } from "$lib";
 
-    export let movie: MovieApiContext;
+    export let movie: Movie;
 </script>
 
 <Rating rating={movie.rating} text={movie.rating == 0 ? "No reviews" : `${movie.rating}/5`}/>

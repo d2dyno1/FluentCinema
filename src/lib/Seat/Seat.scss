@@ -1,0 +1,31 @@
+@use "src/styles/mixins" as *;
+
+.seat {
+    border-radius: var(--fds-control-corner-radius);
+    width: 35px;
+    height: 35px;
+    background-color: var(--fds-solid-background-base);
+    transition-duration: 0.2s;
+    cursor: default;
+    user-select: none;
+
+    .number {
+        margin-left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        position: relative;
+        width: fit-content;
+    }
+
+    &.reserved {
+        background-color: var(--fds-system-background-critical);
+    }
+
+    &.selected {
+        background-color: var(--fds-accent-tertiary);
+    }
+
+    &:hover {
+        filter: brightness(1.1);
+    }
+}

@@ -11,7 +11,7 @@
         let computedTheme = getComputedStyle(document.body);
         config = {
             fullColor: computedTheme.getPropertyValue('--fds-text-secondary'),
-            emptyColor: "hsla(0, 0%, 0%, 12%)",
+            emptyColor: "hsla(0, 0%, 0%, 32%)",
             size: 16
         }
     });

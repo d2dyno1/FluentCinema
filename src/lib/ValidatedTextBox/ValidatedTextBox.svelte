@@ -22,7 +22,7 @@
 </script>
 
 <div class="validated-text-box">
-    <TextBox {...$$restProps} bind:value={value} on:focusin={() => focused = true}/>
+    <TextBox {...$$restProps} bind:value={value} on:focusin={() => focused = true} on:keydown/>
     <InfoBar severity="critical" message={errorMessage} closable={false} open={focused && !isValid}></InfoBar>
 </div>
 

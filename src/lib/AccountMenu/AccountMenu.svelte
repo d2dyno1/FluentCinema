@@ -4,7 +4,7 @@
     import { default as RegisterForm } from "$layout/RegisterForm.svelte";
     import { accountSession } from "$/stores";
     import { AccountPicture } from "$lib";
-    import {AccountApiContext} from "../../api/AccountApiContext";
+    import {Account} from "$api/Account";
     import { goto } from "$app/navigation";
 
     import ProfileIcon from "@fluentui/svg-icons/icons/person_32_filled.svg?raw";
@@ -14,7 +14,7 @@
     let isLoginPage = true;
 
     async function logout() {
-        await AccountApiContext.logout();
+        await Account.logout();
         window.location.reload();
     }
 </script>
@@ -60,7 +60,7 @@
             </LoginForm>
         {:else}
             <RegisterForm>
-                <TextBlock>Don't have an account? <a href="#" on:click={() => isLoginPage = true}>Log in</a></TextBlock>
+                <TextBlock>Already have an account? <a href="#" on:click={() => isLoginPage = true}>Log in</a></TextBlock>
             </RegisterForm>
         {/if}
     </div>

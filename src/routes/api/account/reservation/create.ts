@@ -1,13 +1,16 @@
 import { badRequest, badRequestWithMessage, forbidden, ok } from "$api/responses";
 import type { RequestHandler } from "@sveltejs/kit";
-import { SessionDatabaseContext } from "$db/SessionDatabaseContext";
-import { createReservationSchema } from "$data/schema/CreateReservationSchema";
+import { SessionController } from "$db/SessionController";
 import type { CreateReservationSchema } from "$data/schema/CreateReservationSchema"
-import { ScreeningDatabaseContext } from "$db/ScreeningDatabaseContext";
-import { ReservationDatabaseContext } from "$db/ReservationDatabaseContext";
+import { createReservationSchema } from "$data/schema/CreateReservationSchema";
+import { ScreeningController } from "$db/ScreeningController";
+import { ReservationController } from "$db/ReservationController";
+import { MovieController } from "$db/MovieController";
+import { MovieType } from "$data/MovieType";
+import moment from "moment";
 
 export const post: RequestHandler = async ({ request }) => {
-    let session = await SessionDatabaseContext.getFromRequest(request);
+    let session = await SessionController.getFromRequest(request);
     if (session == null) {
         return forbidden;
     }
@@ -17,17 +20,24 @@ export const post: RequestHandler = async ({ request }) => {
         return badRequest;
     }
 
-    let screening = await ScreeningDatabaseContext.getFromId(params.screeningId);
-    if (screening == null) {
+    let screening = await ScreeningController.getFromId(params.screeningId);
+    if (screening == null || (await MovieController.getFromId(screening.movieId))!.type == MovieType.SERIES) {
         return badRequest;
     }
-
-    if (params.seat > screening.room.seatRowCount * screening.room.seatRowLength) {
-        return badRequestWithMessage("Invalid seat.");
-    } else if (screening.reservedSeats.indexOf(params.seat) != -1) {
-        return badRequestWithMessage("This seat is already taken.");
+    if (moment().isAfter(moment(screening.start))) {
+        return badRequestWithMessage("This screening has already started or ended.");
     }
 
-    await ReservationDatabaseContext.create(await session.getUser(), params.screeningId, params.seat);
+    let reservedSeats = await screening.getReservedSeats();
+    let maxSeat = screening.seatRowCount * screening.seatRowLength;
+    let user = await session.getUser();
+    for (let seat of params.seats) {
+        if (reservedSeats.indexOf(seat!) != -1) {
+            return badRequestWithMessage(`Seat ${seat} is already reserved.`);
+        } else if (seat! > maxSeat) {
+            return badRequest;
+        }
+        await ReservationController.create(user, params.screeningId, seat!);
+    }
     return ok;
 }

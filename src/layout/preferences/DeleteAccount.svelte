@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { AccountApiContext } from "$api/AccountApiContext";
+    import { Account } from "$api/Account";
     import PersonDeleteIcon from "@fluentui/svg-icons/icons/person_delete_24_filled.svg?raw";
     import { ActionBlock, PromiseButton } from "$lib";
     import { Button, ContentDialog } from "fluent-svelte";
@@ -7,7 +7,7 @@
     let showDialog = false;
 
     async function deleteAccount(): Promise<void> {
-        return AccountApiContext.delete().then(() => {
+        return Account.delete().then(() => {
             window.location.reload();
         });
     }

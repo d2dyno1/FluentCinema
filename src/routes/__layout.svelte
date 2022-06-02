@@ -30,9 +30,17 @@
     ];
 
     export const load: Load = async ({ session }) => {
-        accountSession.set(session);
-        return ok;
+        return {
+            status: 200,
+            props: { session }
+        };
     }
+</script>
+
+<script lang="ts">
+    export let session;
+
+    accountSession.set(session);
 </script>
 
 <Navbar navbarItems={navbarItems} navbarButtons={navbarButtons}/>

@@ -27,12 +27,17 @@
     border: 1px solid;
     border-color: var(--fds-control-border-default);
     background-color: var(--fds-control-fill-default);
+    padding: 4px 0 4px 0;
 }
 
 .email-text {
     opacity: 0.8;
     font-size: small;
     margin-top: 4px;
+}
+
+.username-text {
+    margin-top: 12px;
 }
 
 .divider {

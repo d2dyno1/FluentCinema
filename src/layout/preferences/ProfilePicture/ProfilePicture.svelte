@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { AccountApiContext } from "$api/AccountApiContext";
+    import { Account } from "$api/Account";
     import ProfileIcon from "@fluentui/svg-icons/icons/person_32_filled.svg?raw";
     import { ActionBlock, PromiseButton } from "$lib";
     import { accountSession } from "$/stores";
@@ -8,11 +8,11 @@
     let uploadFiles: HTMLInputElement;
 
     async function uploadPicture(): Promise<void> {
-        return AccountApiContext.uploadProfilePicture(uploadFiles.files[0]).then(() => window.location.reload());
+        return Account.uploadProfilePicture(uploadFiles.files[0]).then(() => window.location.reload());
     }
 
     async function deletePicture(): Promise<void> {
-        return AccountApiContext.uploadProfilePicture(null).then(() => {
+        return Account.uploadProfilePicture(null).then(() => {
             window.location.reload();
         });
     }

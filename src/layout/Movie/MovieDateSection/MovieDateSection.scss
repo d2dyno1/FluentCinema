@@ -37,7 +37,7 @@
 }
 
 .wrapper {
-    @include flex($direction: column);
+    @include flex($direction: column, $gap: 32px);
 }
 
 .item-date {
@@ -53,4 +53,15 @@
     margin-bottom: -8px;
     font-size: 18px;
     padding: 12px;
+}
+
+.title {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.cinema-selection {
+    @include flex($justify: end);
+    margin-top: -32px;
+    margin-bottom: -28px;
 }

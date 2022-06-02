@@ -1,10 +1,10 @@
 <script lang="ts">
+    import type { Review } from "$api/Review";
     import { AccountPicture } from "$lib";
     import { TextBlock } from "fluent-svelte";
-    import { ReviewApiContext } from "../../api/ReviewApiContext";
     import Rating from "$lib/Rating/Rating.svelte";
 
-    export let review: ReviewApiContext;
+    export let review: Review;
 </script>
 
 <div class="movie-review">
@@ -14,7 +14,7 @@
     </div>
     <div class="content">
         <Rating rating={review.rating} text="{review.rating}/5"></Rating>
-        <TextBlock>{review.content}</TextBlock>
+        <div>{review.content}</div>
     </div>
 </div>
 

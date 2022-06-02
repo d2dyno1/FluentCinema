@@ -1,6 +1,6 @@
 <script lang="ts">
     import { InfoBar, TextBlock } from "fluent-svelte";
-    import {InfoBarSeverity} from "../../data/InfoBarSeverity";
+    import {InfoBarSeverity} from "$data/InfoBarSeverity";
 
     export let title;
 

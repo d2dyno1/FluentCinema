@@ -12,3 +12,9 @@ export { default as MovieHeroSection } from "./Movie/MovieHeroSection/MovieHeroS
 export { default as MovieReviewsSection } from "./Movie/MovieReviewsSection/MovieReviewsSection.svelte";
 export { default as MovieDetailsSection } from "./Movie/MovieDetailsSection/MovieDetailsSection.svelte";
 export { default as MovieDateSection } from "./Movie/MovieDateSection/MovieDateSection.svelte";
+
+export { default as SeatSelection } from "./reservation/SeatSelection/SeatSelection.svelte";
+export { default as TicketsSelection } from "./reservation/TicketsSelection/TicketsSelection.svelte";
+export { default as CinemaSelection } from "./reservation/CinemaSelection/CinemaSelection.svelte";
+export { default as ScreeningDateSelection } from "./reservation/ScreeningDateSelection/ScreeningDateSelection.svelte";
+export { default as SummarySection } from "./reservation/SummarySection/SummarySection.svelte";

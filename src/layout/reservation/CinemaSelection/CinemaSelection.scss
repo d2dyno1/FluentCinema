@@ -1,0 +1,25 @@
+@use "src/styles/mixins" as *;
+
+#map {
+    height: 400px;
+    border-radius: var(--fds-control-corner-radius);
+}
+
+.wrapper {
+    @include flex($direction: column, $justify: center, $gap: 32px);
+}
+
+.cinema-info {
+    @include flex($direction: column, $align: center, $gap: 16px);
+}
+
+.mark-icon {
+    margin-top: 12px;
+    transform: scale(2.5);
+}
+
+.progress-ring-overlay {
+    @include flex($align: center, $justify: center);
+    width: 100%;
+    height: 64px;
+}

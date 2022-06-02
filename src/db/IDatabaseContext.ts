@@ -1,3 +1,3 @@
-export interface IDatabaseContext<T> {
-    toApiContext(): T;
+export interface IDatabaseContext<ApiContext> {
+    toApiContext(): ApiContext;
 }

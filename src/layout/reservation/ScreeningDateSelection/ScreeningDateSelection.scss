@@ -1,0 +1,27 @@
+@use "src/styles/mixins" as *;
+
+.wrapper {
+    @include flex($direction: row, $justify: center, $gap: 32px);
+}
+
+.date-section {
+    @include flex($direction: column, $align: start, $gap: 24px);
+    padding: 2% 0 2% 0;
+}
+
+.time-list {
+    @include flex($direction: row, $gap: 8px, $wrap: true);
+}
+
+.details {
+    @include flex($direction: column, $gap: 16px);
+}
+
+.screening-details {
+    line-height: 24px;
+    opacity: 0.8;
+}
+
+.day-title {
+    font-size: 24px;
+}

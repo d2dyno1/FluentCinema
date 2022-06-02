@@ -1,6 +1,7 @@
 import path from 'path';
 import adapter from '@sveltejs/adapter-node';
 import preprocess from 'svelte-preprocess';
+import * as fs from "fs";
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -25,6 +26,10 @@ const config = {
                             fs: {
                                 allow: ['static'],
                             },
+                            https: {
+                                // key: fs.readFileSync('/path/to/key'),
+                                // cert: fs.readFileSync('/path/to/cert.pem')
+                            }
                     },
             },
 		adapter: adapter()

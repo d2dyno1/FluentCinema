@@ -11,11 +11,10 @@
     {#if icon != null}
         {@html icon}
     {/if}
-<!--    <div class="icon">-->
-<!--        <slot name="icon"/>-->
-<!--    </div>-->
     <div class="column">
-        <TextBlock>{title}</TextBlock>
+        <div class="title">
+            <TextBlock>{title}</TextBlock>
+        </div>
         <div class="description-section">{description}</div>
     </div>
     <div class="align-right">

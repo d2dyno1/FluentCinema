@@ -2,12 +2,12 @@
     import { HeroSection, MoviesSection } from "$layout";
     import { ok } from "$api/responses";
     import type { Load } from "@sveltejs/kit";
-    import { MovieApiContext } from "$api/MovieApiContext";
+    import { Movie } from "$api/Movie";
 
     export let promise: Promise<any>;
 
     export const load: Load = async ({ fetch }) => {
-        promise = MovieApiContext.getAll(fetch);
+        promise = Movie.getList(fetch);
         return ok;
     }
 

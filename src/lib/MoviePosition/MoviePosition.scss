@@ -4,7 +4,7 @@ picture {
     @include flex($justify: center, $align: center);
     flex: 0 1 auto;
     height: 152px;
-    width: 90px;
+    width: 108px;
     margin-right: 16px;
 }
 
@@ -32,6 +32,10 @@ picture {
     &:hover {
         background-color: var(--fds-control-fill-secondary);
         transform: translateY(-2px);
+
+        .description-overlay {
+            background: linear-gradient(0deg, var(--fds-solid-background-quarternary) 0%, rgba(0, 0, 0, 0) 80%);
+        }
     }
 
     &:active {
@@ -39,6 +43,10 @@ picture {
         background-color: var(--fds-control-fill-tertiary);
         color: var(--fds-text-secondary);
         transform: translateY(0px);
+
+        .description-overlay {
+            background: linear-gradient(0deg, var(--fds-solid-background-base) 0%, rgba(0, 0, 0, 0) 80%);
+        }
     }
 }
 
@@ -70,8 +78,25 @@ picture {
 }
 
 .description-text {
-    font-size: small;
+    font-size: 12px;
     margin: 0px 0px 4px 0px;
+    opacity: 0.8;
+    display: -webkit-box;
+    max-width: 200px;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.description-overlay {
+    @include flex($direction: column, $align: start, $justify: center);
+    flex: 1 1 auto;
+    bottom: 16%;
+    position: absolute;
+    height: 20%;
+    width: 62%;
+    background: linear-gradient(0deg, var(--fds-solid-background-tertiary) 0%, rgba(0, 0, 0, 0) 80%);
+    transition: var(--fds-control-faster-duration) ease background-color;
 }
 
 .details {

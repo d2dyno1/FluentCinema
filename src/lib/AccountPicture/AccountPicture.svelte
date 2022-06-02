@@ -3,7 +3,7 @@
 
     import ProfileIcon from "@fluentui/svg-icons/icons/person_32_filled.svg?raw";
     import {onMount} from "svelte";
-    import {AccountApiContext} from "../../api/AccountApiContext";
+    import {Account} from "$api/Account";
 
     export let userId: string;
     export let size: number;
@@ -11,7 +11,7 @@
     let base64: Promise<string | null>;
 
     onMount(async () => {
-        base64 = AccountApiContext.getProfilePicture(userId);
+        base64 = Account.getProfilePicture(userId);
     });
 </script>
 

@@ -1,9 +1,9 @@
 import { forbidden, ok } from "$api/responses";
 import type { RequestHandler } from "@sveltejs/kit";
-import { SessionDatabaseContext } from "$db/SessionDatabaseContext";
+import { SessionController } from "$db/SessionController";
 
 export const del: RequestHandler = async ({ request }) => {
-    let session = await SessionDatabaseContext.getFromRequest(request);
+    let session = await SessionController.getFromRequest(request);
     if (session == null) {
         return forbidden;
     }

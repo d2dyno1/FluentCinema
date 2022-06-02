@@ -1,10 +1,10 @@
 <script lang="ts">
     import { ActionBlock, PromiseButton } from "$lib";
-    import { AccountApiContext } from "$api/AccountApiContext";
+    import { Account } from "$api/Account";
     import DeleteIcon from "@fluentui/svg-icons/icons/delete_48_filled.svg?raw";
 
     async function invalidateSessions(): Promise<void> {
-        return AccountApiContext.invalidateOtherSessions();
+        return Account.invalidateOtherSessions();
     }
 </script>
 

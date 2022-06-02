@@ -1,11 +1,11 @@
-import { badRequest, ok, forbidden, badRequestWithMessage } from "$api/responses";
+import { badRequest, ok, forbidden } from "$api/responses";
 import type { RequestHandler } from "@sveltejs/kit";
-import { SessionDatabaseContext } from "$db/SessionDatabaseContext";
+import { SessionController } from "$db/SessionController";
 import { settingsSchema } from "$data/schema/SettingsSchema";
 import type { SettingsSchema } from "$data/schema/SettingsSchema";
 
 export const put: RequestHandler = async ({ request }) => {
-    let session = await SessionDatabaseContext.getFromRequest(request);
+    let session = await SessionController.getFromRequest(request);
     if (session == null) {
         return forbidden;
     }

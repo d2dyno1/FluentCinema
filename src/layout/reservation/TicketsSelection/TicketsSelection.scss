@@ -1,0 +1,24 @@
+@use "src/styles/mixins" as *;
+
+.wrapper {
+    @include flex($direction: row, $justify: center, $align: start, $wrap: wrap, $gap: 64px);
+}
+
+.tickets-list {
+    @include flex($direction: column, $gap: 16px);
+}
+
+.description {
+    @include flex($direction: column, $justify: start);
+    padding: 1% 0 1% 0;
+}
+
+.total-title {
+    font-size: 28px;
+    font-weight: 600;
+}
+
+.ticket-prices-list {
+    opacity: 0.8;
+    line-height: 24px;
+}
