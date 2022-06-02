@@ -30,7 +30,7 @@
     import type { ResetPasswordResponse } from "$data/response/ResetPasswordResponse";
     import { emailSchema } from "$api/validation";
     import { ValidatedTextBox } from "$lib";
-    import { passwordSchema } from "$api/validation.js";
+    import { passwordSchema } from "$api/validation";
     import { string } from "yup";
     import { goto } from "$app/navigation";
 

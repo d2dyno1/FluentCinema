@@ -5,7 +5,7 @@ import { SessionController } from "$db/SessionController";
 const requestCount = new Map<string, number>();
 
 const resetInterval = 600000;
-const maxRequests = 100;
+const maxRequests = 1000;
 
 export const handle: Handle = async ({ event, resolve }) => {
     // API rate limiting
