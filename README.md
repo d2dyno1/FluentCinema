@@ -2,7 +2,7 @@
 
 The Fluent Cinema project tries to portrait how modern cinema experience should look like.
 <br/><br/>
-Created by @d2dyno1 and @Taj_ny for a school project. The code is not production ready.
+Created by [d2dyno](https://github.com/d2dyno1) and [taj-ny](https://github.com/taj-ny) for a school project. The code is not production ready.
 
 Building
 ---
