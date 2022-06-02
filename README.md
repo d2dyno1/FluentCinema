@@ -21,4 +21,4 @@ npm run dev
 
 **Important note**
 ---
-FluentCinema consumes database to access its data. In order to run the project, you'll need to establish a database and provide `credentials.json` in the root directory.
+FluentCinema consumes database to access movie data. In order to run the project, you'll need to establish a database and provide `credentials.json` in the root directory.
